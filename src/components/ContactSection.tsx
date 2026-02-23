@@ -47,7 +47,7 @@ const ContactSection = () => {
                 </div>
                 <div className="flex gap-4 mt-6">
                   <a
-                    href="https://linkedin.com/saktheeswar-k"
+                    href="https://www.linkedin.com/in/saktheeswar-k-a888b61a7/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 rounded-lg bg-secondary hover:bg-primary/10 hover:text-primary transition-colors"
