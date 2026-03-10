@@ -8,8 +8,9 @@ const ParticleField = ({ count = 30 }: { count?: number }) => {
         size: Math.random() * 3 + 1,
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
-        delay: `${Math.random() * 6}s`,
-        duration: `${Math.random() * 4 + 4}s`,
+        delay: `${Math.random() * 8}s`,
+        duration: `${Math.random() * 6 + 6}s`,
+        isPurple: Math.random() > 0.5,
       })),
     [count]
   );
@@ -19,7 +20,7 @@ const ParticleField = ({ count = 30 }: { count?: number }) => {
       {particles.map((p) => (
         <span
           key={p.id}
-          className="particle"
+          className="absolute rounded-full"
           style={{
             width: p.size,
             height: p.size,
@@ -27,6 +28,8 @@ const ParticleField = ({ count = 30 }: { count?: number }) => {
             top: p.top,
             animationDelay: p.delay,
             animationDuration: p.duration,
+            background: p.isPurple ? "rgba(124, 58, 237, 0.3)" : "rgba(6, 182, 212, 0.2)",
+            animation: `float ${p.duration} ease-in-out infinite alternate`,
           }}
         />
       ))}
