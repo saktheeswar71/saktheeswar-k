@@ -20,14 +20,11 @@ const Navbar = () => {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      
       const sections = navItems.map(i => i.href.replace("#", "")).filter(Boolean);
       let current = "#";
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 150) {
-          current = `#${id}`;
-        }
+        if (el && el.getBoundingClientRect().top <= 150) current = `#${id}`;
       }
       setActiveSection(current);
     };
@@ -41,11 +38,12 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass-strong shadow-lg" : "bg-transparent"
+        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
+      style={{ borderBottom: scrolled ? "1px solid hsl(100 12% 81%)" : "none" }}
     >
-      <div className="container mx-auto flex items-center justify-between py-4 px-4 md:px-8">
-        <a href="#" className="text-xl font-bold text-gradient">Saktheeswar K</a>
+      <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
+        <a href="#" className="text-xl font-bold text-slate">Saktheeswar K</a>
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
@@ -54,15 +52,15 @@ const Navbar = () => {
               href={item.href}
               className={`text-sm font-medium transition-colors relative pb-1 ${
                 activeSection === item.href
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "text-steel"
+                  : "text-slate hover:text-steel"
               }`}
             >
               {item.label}
               {activeSection === item.href && (
                 <motion.span
                   layoutId="nav-underline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-primary rounded-full"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
                 />
               )}
             </a>
@@ -70,7 +68,7 @@ const Navbar = () => {
         </div>
 
         <button
-          className="md:hidden text-foreground"
+          className="md:hidden text-slate"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -84,7 +82,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-strong border-t border-border/30"
+            className="md:hidden bg-white/95 backdrop-blur-md border-t border-sage"
           >
             <div className="flex flex-col gap-4 p-6">
               {navItems.map((item) => (
@@ -93,7 +91,7 @@ const Navbar = () => {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={`text-sm font-medium transition-colors ${
-                    activeSection === item.href ? "text-gradient" : "text-muted-foreground hover:text-foreground"
+                    activeSection === item.href ? "text-steel" : "text-slate hover:text-steel"
                   }`}
                 >
                   {item.label}
