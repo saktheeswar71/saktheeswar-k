@@ -1,41 +1,61 @@
-import { BookOpen } from "lucide-react";
+import { BookOpen, Trophy } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
+const tags = ["TabNet", "XGBoost", "Deep Learning", "Healthcare Analytics", "ILPD Dataset"];
+
 const PublicationSection = () => (
-  <section id="publication" className="section-padding">
-    <div className="container mx-auto max-w-5xl">
+  <section id="publication" className="section-padding relative">
+    <div className="blob-cyan -top-40 -right-80 opacity-30" />
+    <div className="container mx-auto max-w-[1200px] relative z-10">
       <AnimatedSection>
+        <p className="section-label">// RESEARCH</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-12">
           <span className="text-gradient">Publication</span>
         </h2>
       </AnimatedSection>
 
       <AnimatedSection delay={0.1}>
-        <div className="glass rounded-xl p-8 hover:glow-border transition-shadow duration-300">
-          <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
-              <BookOpen className="text-primary" size={24} />
+        <div className="glass rounded-xl p-8 card-hover relative overflow-hidden">
+          {/* Decorative gradient bar */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-primary" />
+
+          <div className="flex items-start gap-5">
+            <div className="p-3 rounded-xl bg-primary/10 flex-shrink-0">
+              <BookOpen className="text-primary" size={28} />
             </div>
-            <div>
-              <h3 className="text-lg font-bold mb-1">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                  <Trophy size={12} /> Conference Paper — ICASET 2025
+                </span>
+              </div>
+
+              <h3 className="text-xl font-bold mb-2 text-foreground">
                 Liver Disease Prediction using Deep Learning: TabNet vs XGBoost
               </h3>
-              <p className="text-primary text-sm font-medium mb-4">
-                ICASET-2025 · Saktheeswar K, Venkatesan S
+              <p className="text-sm font-medium mb-1 text-cyan">March 2025</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Saktheeswar K, Venkatesan S · ICASET-2025
               </p>
-              <ul className="space-y-2">
-                {[
-                  "Applied TabNet on the ILPD dataset (583 records).",
-                  "Achieved 5–8% higher accuracy than XGBoost.",
-                  "Improved interpretability with feature-attention insights.",
-                  "Demonstrated TabNet's potential for reliable early-stage liver disease prediction.",
-                ].map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    {b}
-                  </li>
+
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                Applied TabNet on the ILPD dataset (583 records), achieving 5–8% higher accuracy
+                than XGBoost while improving interpretability through TabNet's feature-attention
+                mechanism. Demonstrated TabNet's potential for reliable early-stage liver disease
+                prediction in healthcare analytics.
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs font-mono px-2.5 py-1 rounded-md"
+                    style={{ background: "rgba(6, 182, 212, 0.1)", color: "#22D3EE" }}
+                  >
+                    {tag}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
