@@ -21,29 +21,18 @@ const ContactSection = () => {
       toast.error("Please fill in all required fields.");
       return;
     }
-    toast.success("Message sent! I'll get back to you soon.");
+    toast.success("Message sent! I'll get back to you before my next git commit. 🎉");
     setForm({ name: "", email: "", subject: "", message: "" });
   };
 
-  const inputClasses =
-    "w-full px-4 py-3 rounded-xl bg-transparent border text-foreground text-sm focus:outline-none transition-all duration-300";
-
-  const getInputStyle = (field: string) => ({
-    borderColor: focused === field ? "rgba(124, 58, 237, 0.6)" : "rgba(255,255,255,0.1)",
-    boxShadow: focused === field ? "0 0 20px rgba(124,58,237,0.15)" : "none",
-  });
-
   return (
-    <section id="contact" className="section-padding relative">
-      <div className="blob-cyan -bottom-40 -left-60 opacity-30" />
+    <section id="contact" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
       <div className="container mx-auto max-w-[1200px] relative z-10">
         <AnimatedSection>
-          <p className="section-label">// CONTACT</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            Let's <span className="text-gradient">Connect</span>
-          </h2>
-          <p className="text-muted-foreground text-sm mb-12">
-            Open to opportunities, collaborations, and research discussions.
+          <p className="section-label">// LET'S TALK</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Get In Touch</h2>
+          <p className="text-body text-sm mb-12">
+            Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
           </p>
         </AnimatedSection>
 
@@ -52,11 +41,11 @@ const ContactSection = () => {
             <div className="space-y-4">
               {contactInfo.map(({ icon: Icon, label, href }) => {
                 const content = (
-                  <div className="glass rounded-xl p-4 flex items-center gap-4 card-hover">
-                    <div className="p-2.5 rounded-lg bg-primary/10">
-                      <Icon className="text-primary" size={18} />
+                  <div className="soft-card p-4 flex items-center gap-4">
+                    <div className="p-2.5 rounded-xl bg-steel/10">
+                      <Icon className="text-steel" size={18} />
                     </div>
-                    <span className="text-sm text-muted-foreground">{label}</span>
+                    <span className="text-sm text-body">{label}</span>
                   </div>
                 );
                 return href ? (
@@ -77,15 +66,15 @@ const ContactSection = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <form onSubmit={handleSubmit} className="glass rounded-xl p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="soft-card p-8 space-y-5">
               {[
                 { key: "name", label: "Name", type: "text", required: true },
                 { key: "email", label: "Email", type: "email", required: true },
                 { key: "subject", label: "Subject", type: "text", required: false },
               ].map((f) => (
-                <div key={f.key} className="relative">
-                  <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                    {f.label} {f.required && <span className="text-primary">*</span>}
+                <div key={f.key}>
+                  <label className="text-xs font-medium text-body mb-1.5 block">
+                    {f.label} {f.required && <span className="text-steel">*</span>}
                   </label>
                   <input
                     type={f.type}
@@ -94,15 +83,18 @@ const ContactSection = () => {
                     onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
                     onFocus={() => setFocused(f.key)}
                     onBlur={() => setFocused(null)}
-                    className={inputClasses}
-                    style={getInputStyle(f.key)}
+                    className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300"
+                    style={{
+                      borderColor: focused === f.key ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
+                      boxShadow: focused === f.key ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
+                    }}
                     placeholder={f.label}
                   />
                 </div>
               ))}
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                  Message <span className="text-primary">*</span>
+                <label className="text-xs font-medium text-body mb-1.5 block">
+                  Message <span className="text-steel">*</span>
                 </label>
                 <textarea
                   rows={4}
@@ -111,13 +103,16 @@ const ContactSection = () => {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   onFocus={() => setFocused("message")}
                   onBlur={() => setFocused(null)}
-                  className={`${inputClasses} resize-none`}
-                  style={getInputStyle("message")}
+                  className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300 resize-none"
+                  style={{
+                    borderColor: focused === "message" ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
+                    boxShadow: focused === "message" ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
+                  }}
                   placeholder="Your message..."
                 />
               </div>
-              <button type="submit" className="w-full btn-gradient py-3 flex items-center justify-center gap-2 text-sm">
-                <Send size={16} /> Send Message
+              <button type="submit" className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-sm">
+                <Send size={16} /> Send It 🚀
               </button>
             </form>
           </AnimatedSection>
