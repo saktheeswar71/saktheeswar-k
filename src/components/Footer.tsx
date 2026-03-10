@@ -1,10 +1,10 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => (
-  <footer className="border-t border-border/30 py-12 px-4">
+  <footer className="py-12 px-4" style={{ background: "hsl(140 12% 40%)" }}>
     <div className="container mx-auto max-w-[1200px] text-center">
-      <h3 className="text-xl font-bold text-gradient mb-2">Saktheeswar K</h3>
-      <p className="text-muted-foreground text-sm mb-6">Data Analyst & AI Graduate</p>
+      <h3 className="text-xl font-bold text-white mb-2">Saktheeswar K</h3>
+      <p className="text-white/70 text-sm mb-6">Data Analyst & AI Graduate • Chennai</p>
 
       <div className="flex justify-center gap-4 mb-8">
         {[
@@ -17,7 +17,7 @@ const Footer = () => (
             href={href}
             target={href.startsWith("http") ? "_blank" : undefined}
             rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="p-2.5 rounded-lg glass hover:glow-border transition-all duration-300 text-muted-foreground hover:text-foreground"
+            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 text-white/70 hover:text-steel"
             aria-label={label}
           >
             <Icon size={18} />
@@ -25,11 +25,11 @@ const Footer = () => (
         ))}
       </div>
 
-      <p className="text-muted-foreground text-xs mb-1">
-        Built with ❤️ using React + Lovable
+      <p className="text-white/60 text-xs mb-1">
+        Built with way too many cups of coffee ☕ and React + Lovable
       </p>
-      <p className="text-muted-foreground/60 text-xs">
-        © 2025 Saktheeswar K. All rights reserved.
+      <p className="text-white/40 text-xs">
+        © 2025 Saktheeswar K — No neural networks were overfitted in the making of this site.
       </p>
     </div>
   </footer>
