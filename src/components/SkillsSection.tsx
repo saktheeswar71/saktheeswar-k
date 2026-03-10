@@ -2,77 +2,43 @@ import { Brain, Code, Package, Wrench, Users } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 const skillGroups = [
-  {
-    icon: Brain,
-    category: "Technologies",
-    skills: ["Data Science", "Data Analytics"],
-  },
-  {
-    icon: Code,
-    category: "Programming Languages",
-    skills: ["Python", "SQL", "Java"],
-  },
+  { icon: Brain, category: "Technologies", skills: ["Data Science", "Data Analytics"] },
+  { icon: Code, category: "Languages", skills: ["Python", "SQL", "Java"] },
   {
     icon: Package,
     category: "Frameworks & Libraries",
-    skills: [
-      "Scikit-learn", "NumPy", "Matplotlib", "Seaborn", "Pandas",
-      "ARIMA", "LSTM", "YOLOv7", "YOLOv8", "YOLOv9", "TabNet", "XGBoost",
-    ],
+    skills: ["Scikit-learn", "NumPy", "Pandas", "Matplotlib", "Seaborn", "ARIMA", "LSTM", "YOLOv7", "YOLOv8", "YOLOv9", "TabNet", "XGBoost"],
   },
-  {
-    icon: Wrench,
-    category: "Tools & Platforms",
-    skills: ["VSCode", "PyCharm", "Power BI", "MySQL", "HTML", "CSS", "Git", "Jupyter"],
-  },
-  {
-    icon: Users,
-    category: "Soft Skills",
-    skills: ["Leadership", "Team Management", "Creativity"],
-  },
+  { icon: Wrench, category: "Tools", skills: ["VSCode", "PyCharm", "Power BI", "MySQL", "Git", "Jupyter", "HTML", "CSS"] },
+  { icon: Users, category: "Soft Skills", skills: ["Leadership", "Team Management", "Creativity"] },
 ];
 
 const SkillsSection = () => (
-  <section id="skills" className="section-padding relative">
-    <div className="blob-cyan -top-40 -left-60 opacity-40" />
+  <section id="skills" className="section-padding relative bg-white">
     <div className="container mx-auto max-w-[1200px] relative z-10">
       <AnimatedSection>
-        <p className="section-label">// SKILLS</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
-          Technical <span className="text-gradient">Skills</span>
-        </h2>
+        <p className="section-label">// WHAT I WORK WITH</p>
+        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Skills & Tools</h2>
+        <p className="text-body text-sm mb-12">Things I can actually do — not just list on a resume.</p>
       </AnimatedSection>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {skillGroups.map((group, gi) => (
           <AnimatedSection key={group.category} delay={gi * 0.1}>
-            <div className="glass rounded-xl p-6 h-full card-hover">
+            <div className="rounded-[20px] p-6 h-full border border-sage" style={{ background: "hsl(150 30% 90%)" }}>
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <group.icon className="text-primary" size={20} />
+                <div className="p-2 rounded-xl bg-white">
+                  <group.icon className="text-steel" size={20} />
                 </div>
-                <h3 className="font-semibold text-sm uppercase tracking-wider text-foreground">
+                <h3 className="font-semibold text-sm uppercase tracking-wider text-slate">
                   {group.category}
                 </h3>
               </div>
               <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill, si) => (
+                {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 cursor-default"
-                    style={{
-                      background: "rgba(124, 58, 237, 0.08)",
-                      color: "#A855F7",
-                      animationDelay: `${si * 100}ms`,
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.target as HTMLElement).style.background = "rgba(124, 58, 237, 0.2)";
-                      (e.target as HTMLElement).style.boxShadow = "0 0 15px rgba(124,58,237,0.3)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.target as HTMLElement).style.background = "rgba(124, 58, 237, 0.08)";
-                      (e.target as HTMLElement).style.boxShadow = "none";
-                    }}
+                    className="px-3 py-1.5 rounded-full text-sm font-medium bg-white text-slate hover:bg-rose transition-all duration-300 cursor-default"
                   >
                     {skill}
                   </span>
