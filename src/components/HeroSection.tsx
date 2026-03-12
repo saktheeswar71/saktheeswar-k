@@ -107,7 +107,7 @@ const HeroSection = () => (
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="hidden lg:flex flex-col justify-center items-center relative"
+        className="flex flex-col justify-center items-center relative"
       >
         {/* Decorative blob behind photo */}
         <div
@@ -117,7 +117,7 @@ const HeroSection = () => (
 
         {/* Profile photo */}
         <div className="relative">
-          <div className="w-64 h-64 rounded-full overflow-hidden border-[3px] border-steel shadow-lg">
+          <div className="w-40 h-40 md:w-52 md:h-52 lg:w-64 lg:h-64 rounded-full overflow-hidden border-[3px] border-steel shadow-lg">
             <img
               src={profileImg}
               alt="Saktheeswar K"
@@ -146,12 +146,12 @@ const HeroSection = () => (
           </motion.div>
         </div>
 
-        {/* Lofi pixel art character below */}
+        {/* Lofi pixel art character below — hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.6 }}
-          className="mt-10 relative"
+          className="mt-10 relative hidden lg:block"
         >
           <img
             src={lofiCoding}
