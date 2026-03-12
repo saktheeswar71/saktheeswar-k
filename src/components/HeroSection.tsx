@@ -146,12 +146,12 @@ const HeroSection = () => (
           </motion.div>
         </div>
 
-        {/* Lofi pixel art character below */}
+        {/* Lofi pixel art character below — hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.6 }}
-          className="mt-10 relative"
+          className="mt-10 relative hidden lg:block"
         >
           <img
             src={lofiCoding}

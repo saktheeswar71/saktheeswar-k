@@ -43,7 +43,7 @@ const Navbar = () => {
       style={{ borderBottom: scrolled ? "1px solid hsl(100 12% 81%)" : "none" }}
     >
       <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
-        <a href="#" className="text-xl font-bold text-slate">Saktheeswar K</a>
+        <a href="#" className="text-lg md:text-xl font-bold text-slate whitespace-nowrap shrink-0">Saktheeswar K</a>
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
