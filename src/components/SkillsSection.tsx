@@ -1,5 +1,6 @@
 import { Brain, Code, Package, Wrench, Users } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import noDataDino from "@/assets/no-data-dino.png";
 
 const skillGroups = [
   { icon: Brain, category: "Technologies", skills: ["Data Science", "Data Analytics"] },
@@ -47,6 +48,18 @@ const SkillsSection = () => (
             </div>
           </AnimatedSection>
         ))}
+
+        {/* Fun dino card */}
+        <AnimatedSection delay={0.5}>
+          <div className="rounded-[20px] p-6 h-full border border-sage bg-white flex flex-col items-center justify-center text-center">
+            <img
+              src={noDataDino}
+              alt="No Data Found - pixel art dinosaur"
+              className="w-48 h-auto mb-3"
+            />
+            <p className="text-body text-xs italic">what happens when I forget to import pandas</p>
+          </div>
+        </AnimatedSection>
       </div>
     </div>
   </section>

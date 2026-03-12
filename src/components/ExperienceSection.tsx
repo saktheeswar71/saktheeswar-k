@@ -1,5 +1,6 @@
 import { Briefcase, GraduationCap } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import lofiDesk from "@/assets/lofi-desk.jpg";
 
 const timeline = [
   {
@@ -99,6 +100,22 @@ const ExperienceSection = () => (
           </AnimatedSection>
         ))}
       </div>
+
+      {/* Lofi desk illustration */}
+      <AnimatedSection delay={0.4}>
+        <div className="mt-8 max-w-lg mx-auto">
+          <div className="rounded-[20px] overflow-hidden shadow-sm border border-sage">
+            <img
+              src={lofiDesk}
+              alt="Lofi pixel art of a developer coding late at night"
+              className="w-full h-auto"
+            />
+          </div>
+          <p className="text-center text-body text-xs mt-3 italic">
+            accurate representation of me at 1 AM debugging LSTM layers
+          </p>
+        </div>
+      </AnimatedSection>
     </div>
   </section>
 );

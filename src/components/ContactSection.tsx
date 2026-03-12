@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, Linkedin, Github, Send, Phone, MapPin } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { toast } from "sonner";
+import contactRobot from "@/assets/contact-robot.png";
 
 const contactInfo = [
   { icon: Mail, label: "saktheeswar71.k@gmail.com", href: "mailto:saktheeswar71.k@gmail.com" },
@@ -28,13 +29,23 @@ const ContactSection = () => {
   return (
     <section id="contact" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
       <div className="container mx-auto max-w-[1200px] relative z-10">
-        <AnimatedSection>
-          <p className="section-label">// LET'S TALK</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Get In Touch</h2>
-          <p className="text-body text-sm mb-12">
-            Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
-          </p>
-        </AnimatedSection>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+          <AnimatedSection>
+            <p className="section-label">// LET'S TALK</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Get In Touch</h2>
+            <p className="text-body text-sm">
+              Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.1}>
+            <img
+              src={contactRobot}
+              alt="Pixel art robot holding a letter saying Let's talk!"
+              className="w-32 h-32 object-contain hidden md:block"
+            />
+          </AnimatedSection>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           <AnimatedSection delay={0.1}>

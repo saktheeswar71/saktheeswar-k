@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, FolderOpen, Download, Github, Linkedin, Mail } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
 import profileImg from "@/assets/profile.jpeg";
+import lofiCoding from "@/assets/lofi-coding.png";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center section-padding pt-24 overflow-hidden">
@@ -101,12 +102,12 @@ const HeroSection = () => (
         </motion.div>
       </div>
 
-      {/* Right — Profile photo */}
+      {/* Right — Profile photo + lofi pixel art */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="hidden lg:flex justify-center items-center relative"
+        className="hidden lg:flex flex-col justify-center items-center relative"
       >
         {/* Decorative blob behind photo */}
         <div
@@ -144,6 +145,21 @@ const HeroSection = () => (
             🎓 B.Tech AI & DS • 2025
           </motion.div>
         </div>
+
+        {/* Lofi pixel art character below */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="mt-10 relative"
+        >
+          <img
+            src={lofiCoding}
+            alt="Pixel art of a developer coding"
+            className="w-40 h-auto opacity-80"
+          />
+          <p className="text-center text-body text-[10px] mt-1 italic">me, right now, building this site</p>
+        </motion.div>
       </motion.div>
     </div>
 
