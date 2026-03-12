@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail } from "lucide-react";
+import noInternetDino from "@/assets/no-internet-dino.png";
 
 const Footer = () => (
   <footer className="py-12 px-4" style={{ background: "hsl(140 12% 40%)" }}>
@@ -23,6 +24,16 @@ const Footer = () => (
             <Icon size={18} />
           </a>
         ))}
+      </div>
+
+      {/* Fun dino easter egg */}
+      <div className="mb-6">
+        <img
+          src={noInternetDino}
+          alt="No Internet dino - try touching some plants"
+          className="w-48 h-auto mx-auto rounded-xl opacity-60 hover:opacity-100 transition-opacity duration-500"
+        />
+        <p className="text-white/30 text-[10px] mt-2">↑ easter egg for scrollers</p>
       </div>
 
       <p className="text-white/60 text-xs mb-1">

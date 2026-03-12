@@ -1,5 +1,6 @@
 import { Code, Cloud, Globe } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import certPixel from "@/assets/cert-pixel.png";
 
 const certs = [
   { name: "HTML & CSS", issuer: "PrepInsta", icon: Code, emoji: "🌐" },
@@ -10,11 +11,21 @@ const certs = [
 const CertificationsSection = () => (
   <section className="section-padding relative" style={{ background: "hsl(28 93% 91%)" }}>
     <div className="container mx-auto max-w-[1200px] relative z-10">
-      <AnimatedSection>
-        <p className="section-label">// CERTIFIED (OFFICIALLY)</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Certifications</h2>
-        <p className="text-body text-sm mb-12">Proof I didn't just watch the tutorial and close the tab.</p>
-      </AnimatedSection>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+        <AnimatedSection>
+          <p className="section-label">// CERTIFIED (OFFICIALLY)</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Certifications</h2>
+          <p className="text-body text-sm">Proof I didn't just watch the tutorial and close the tab.</p>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.1}>
+          <img
+            src={certPixel}
+            alt="Pixel art character holding a certificate"
+            className="w-28 h-28 object-contain hidden md:block"
+          />
+        </AnimatedSection>
+      </div>
 
       <div className="grid sm:grid-cols-3 gap-6">
         {certs.map((cert, i) => (

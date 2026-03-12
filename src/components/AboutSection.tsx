@@ -1,5 +1,6 @@
 import { BarChart3, Brain, Award, GraduationCap } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import dataOverwhelm from "@/assets/data-overwhelm.png";
 
 const stats = [
   { icon: BarChart3, label: "2+ Projects", sub: "Completed" },
@@ -19,19 +20,19 @@ const AboutSection = () => (
       </AnimatedSection>
 
       <div className="grid lg:grid-cols-2 gap-12 items-start">
-        {/* Left — decorative */}
+        {/* Left — pixel art illustration */}
         <AnimatedSection delay={0.1}>
-          <div className="relative w-full max-w-sm mx-auto aspect-square rounded-[20px] bg-white shadow-sm flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{ background: "linear-gradient(135deg, hsl(193 46% 72%), hsl(14 62% 82%))" }} />
-            <div className="relative z-10 text-center px-8">
-              <div className="text-6xl mb-4">📊</div>
-              <p className="text-slate font-semibold text-lg">Data × AI × Coffee</p>
-              <p className="text-body text-sm mt-2">Making sense of the messy stuff</p>
-            </div>
+          <div className="relative w-full max-w-sm mx-auto aspect-square rounded-[20px] bg-white shadow-sm flex items-center justify-center overflow-hidden p-6">
+            <img
+              src={dataOverwhelm}
+              alt="Pixel art of a data analyst surrounded by charts and code"
+              className="w-full h-full object-contain"
+            />
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 w-12 h-12 border-2 border-steel/30 rounded-lg rotate-12" />
             <div className="absolute bottom-6 left-6 w-8 h-8 border-2 border-rose/50 rounded-full" />
           </div>
+          <p className="text-center text-body text-xs mt-3 italic">me, trying to explain my model to the professor</p>
         </AnimatedSection>
 
         {/* Right — text */}
