@@ -8,6 +8,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import CertificationsSection from "@/components/CertificationsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import ChatbotWidget from "@/components/ChatbotWidget";
 
 const Index = () => (
   <div className="min-h-screen bg-background page-enter">
@@ -21,6 +22,7 @@ const Index = () => (
     <CertificationsSection />
     <ContactSection />
     <Footer />
+    <ChatbotWidget />
   </div>
 );
 

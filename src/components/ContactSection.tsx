@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Mail, Linkedin, Github, Send, Phone, MapPin } from "lucide-react";
+import { Mail, Linkedin, Github, Send, Phone, MapPin, Loader2 } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import contactRobot from "@/assets/contact-robot.png";
 
 const contactInfo = [
@@ -13,17 +14,48 @@ const contactInfo = [
 ];
 
 const ContactSection = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [lastSent, setLastSent] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       toast.error("Please fill in all required fields.");
       return;
     }
-    toast.success("Message sent! I'll get back to you before my next git commit. 🎉");
-    setForm({ name: "", email: "", subject: "", message: "" });
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    // Simple spam protection: 30s cooldown
+    if (Date.now() - lastSent < 30000) {
+      toast.error("Please wait a moment before sending another message.");
+      return;
+    }
+
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: { name: form.name.trim(), email: form.email.trim(), message: form.message.trim() },
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      toast.success("Message sent! I'll get back to you before my next git commit. 🎉");
+      setForm({ name: "", email: "", message: "" });
+      setLastSent(Date.now());
+    } catch (err) {
+      console.error("Contact form error:", err);
+      toast.error("Failed to send message. Please try again or email directly.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -37,13 +69,8 @@ const ContactSection = () => {
               Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
             </p>
           </AnimatedSection>
-
           <AnimatedSection delay={0.1}>
-            <img
-              src={contactRobot}
-              alt="Pixel art robot holding a letter saying Let's talk!"
-              className="w-32 h-32 object-contain hidden md:block"
-            />
+            <img src={contactRobot} alt="Pixel art robot" className="w-32 h-32 object-contain hidden md:block" />
           </AnimatedSection>
         </div>
 
@@ -60,13 +87,7 @@ const ContactSection = () => {
                   </div>
                 );
                 return href ? (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="block"
-                  >
+                  <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} className="block">
                     {content}
                   </a>
                 ) : (
@@ -79,13 +100,12 @@ const ContactSection = () => {
           <AnimatedSection delay={0.2}>
             <form onSubmit={handleSubmit} className="soft-card p-8 space-y-5">
               {[
-                { key: "name", label: "Name", type: "text", required: true },
-                { key: "email", label: "Email", type: "email", required: true },
-                { key: "subject", label: "Subject", type: "text", required: false },
+                { key: "name", label: "Name", type: "text" },
+                { key: "email", label: "Email", type: "email" },
               ].map((f) => (
                 <div key={f.key}>
                   <label className="text-xs font-medium text-body mb-1.5 block">
-                    {f.label} {f.required && <span className="text-steel">*</span>}
+                    {f.label} <span className="text-steel">*</span>
                   </label>
                   <input
                     type={f.type}
@@ -100,6 +120,7 @@ const ContactSection = () => {
                       boxShadow: focused === f.key ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
                     }}
                     placeholder={f.label}
+                    required
                   />
                 </div>
               ))}
@@ -120,10 +141,16 @@ const ContactSection = () => {
                     boxShadow: focused === "message" ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
                   }}
                   placeholder="Your message..."
+                  required
                 />
               </div>
-              <button type="submit" className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-sm">
-                <Send size={16} /> Send It 🚀
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-sm disabled:opacity-60"
+              >
+                {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                {sending ? "Sending..." : "Send It 🚀"}
               </button>
             </form>
           </AnimatedSection>
