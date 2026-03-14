@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Github } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
 
 type Category = "All" | "Machine Learning" | "Computer Vision" | "Forecasting";
