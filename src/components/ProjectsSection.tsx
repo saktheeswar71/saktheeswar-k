@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Github } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
 
 type Category = "All" | "Machine Learning" | "Computer Vision" | "Forecasting";
@@ -8,6 +9,7 @@ type Category = "All" | "Machine Learning" | "Computer Vision" | "Forecasting";
 const projects = [
   {
     title: "Netflix Subscriptions Forecasting",
+    slug: "netflix-forecasting",
     date: "Feb 2024",
     tag: "Machine Learning • Forecasting",
     description:
@@ -20,6 +22,7 @@ const projects = [
   },
   {
     title: "Wildlife Animal Classification",
+    slug: "wildlife-classification",
     date: "Mar 2024",
     tag: "Computer Vision • Deep Learning",
     description:
@@ -108,14 +111,22 @@ const ProjectsSection = () => {
                   ))}
                 </div>
 
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-steel hover:text-slate transition-colors mt-auto"
-                >
-                  <Github size={16} /> 🐙 View on GitHub
-                </a>
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  <Link
+                    to={`/projects/${proj.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-white bg-steel px-4 py-2 rounded-full hover:scale-105 transition-all"
+                  >
+                    Case Study <ArrowRight size={14} />
+                  </Link>
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-steel hover:text-slate transition-colors"
+                  >
+                    <Github size={16} /> GitHub 🐙
+                  </a>
+                </div>
               </div>
             ))}
           </motion.div>
