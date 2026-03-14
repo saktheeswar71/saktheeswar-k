@@ -43,13 +43,20 @@ const PublicationSection = () => (
                 Presented at ICASET-2025.
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-5">
                 {tags.map((tag) => (
                   <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-mint text-slate font-medium">
                     {tag}
                   </span>
                 ))}
               </div>
+
+              <Link
+                to="/publications/liver-disease-tabnet"
+                className="inline-flex items-center gap-2 text-sm font-medium text-white bg-steel px-4 py-2 rounded-full hover:scale-105 transition-all"
+              >
+                View Full Case Study <ArrowRight size={14} />
+              </Link>
             </div>
           </div>
         </div>

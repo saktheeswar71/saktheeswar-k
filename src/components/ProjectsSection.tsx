@@ -111,14 +111,22 @@ const ProjectsSection = () => {
                   ))}
                 </div>
 
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-steel hover:text-slate transition-colors mt-auto"
-                >
-                  <Github size={16} /> 🐙 View on GitHub
-                </a>
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  <Link
+                    to={`/projects/${proj.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-white bg-steel px-4 py-2 rounded-full hover:scale-105 transition-all"
+                  >
+                    Case Study <ArrowRight size={14} />
+                  </Link>
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-steel hover:text-slate transition-colors"
+                  >
+                    <Github size={16} /> GitHub 🐙
+                  </a>
+                </div>
               </div>
             ))}
           </motion.div>
