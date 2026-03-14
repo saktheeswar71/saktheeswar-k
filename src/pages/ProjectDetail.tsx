@@ -90,12 +90,12 @@ const ProjectDetail = () => {
       </section>
 
       {/* TOC for mobile/tablet */}
-      <TableOfContents items={tocItems} />
+      <TableOfContents items={tocItems} variant="mobile" />
 
       <div className="container mx-auto max-w-[1200px] px-4 md:px-8 flex gap-10">
         {/* Desktop TOC */}
         <div className="hidden lg:block pt-12">
-          <TableOfContents items={tocItems} />
+          <TableOfContents items={tocItems} variant="desktop" />
         </div>
 
         {/* Main content */}
