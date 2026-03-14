@@ -9,6 +9,7 @@ type Category = "All" | "Machine Learning" | "Computer Vision" | "Forecasting";
 const projects = [
   {
     title: "Netflix Subscriptions Forecasting",
+    slug: "netflix-forecasting",
     date: "Feb 2024",
     tag: "Machine Learning • Forecasting",
     description:
@@ -21,6 +22,7 @@ const projects = [
   },
   {
     title: "Wildlife Animal Classification",
+    slug: "wildlife-classification",
     date: "Mar 2024",
     tag: "Computer Vision • Deep Learning",
     description:
