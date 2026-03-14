@@ -1,4 +1,5 @@
-import { BookOpen, Trophy } from "lucide-react";
+import { BookOpen, Trophy, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
 
 const tags = ["TabNet", "XGBoost", "Healthcare Analytics", "Deep Learning", "ILPD Dataset"];
