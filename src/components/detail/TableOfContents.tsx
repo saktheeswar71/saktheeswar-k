@@ -8,6 +8,7 @@ interface TOCItem {
 
 interface TableOfContentsProps {
   items: TOCItem[];
+  variant?: "desktop" | "mobile";
 }
 
 const TableOfContents = ({ items }: TableOfContentsProps) => {
