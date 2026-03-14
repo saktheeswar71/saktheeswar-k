@@ -66,9 +66,6 @@ const ProjectDetail = () => {
       <section className="pt-20" style={{ background: project.heroGradient }}>
         <div className="container mx-auto max-w-[1200px] px-4 md:px-8 py-16 md:py-24">
           <motion.div {...fadeIn}>
-            <p className="text-xs text-slate/60 mb-4">
-              <Link to="/" className="hover:text-steel">Home</Link> → <Link to="/#projects" className="hover:text-steel">Projects</Link> → {project.title}
-            </p>
             <h1 className="text-3xl md:text-5xl font-bold text-slate mb-3">{project.title}</h1>
             <p className="text-lg text-body mb-5 max-w-2xl">{project.subtitle}</p>
             <div className="flex flex-wrap gap-2 mb-5">
