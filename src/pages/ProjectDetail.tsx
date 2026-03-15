@@ -222,17 +222,40 @@ const ProjectDetail = () => {
 
           {/* Visualizations */}
           <motion.section id="visualizations" className="py-10 sm:py-16" {...fadeIn}>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Charts & Visualizations</h2>
-            <p className="text-xs sm:text-sm text-body mb-6 sm:mb-8">Because a good chart is worth a thousand rows.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {project.visualizations.map((label) => (
-                <div key={label} className="rounded-xl border-2 border-dashed border-sage p-6 sm:p-10 flex flex-col items-center justify-center text-center bg-sage/10">
-                  <Upload className="text-slate/30 mb-2 sm:mb-3" size={28} />
-                  <p className="text-xs sm:text-sm font-medium text-slate/50">{label}</p>
-                  <p className="text-[10px] sm:text-xs text-body/40 mt-1">Upload chart image here</p>
+            <p className="text-xs font-mono text-body/50 mb-1">// VISUALIZATIONS</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Charts & Results</h2>
+            <p className="text-xs sm:text-sm text-body mb-6 sm:mb-8">
+              {project.slug === "netflix-forecasting"
+                ? "Because if you can't plot it, did it even happen? 📊"
+                : "2096 images, 150 epochs, and these charts to show for it. 🐾"}
+            </p>
+            {(() => {
+              const chartMap: Record<string, ChartItem[]> = {
+                "netflix-forecasting": [
+                  { src: "/charts/netflix_trend.png", title: "Subscription Trend Over Time", caption: "40 months of Netflix subscriber data showing steady growth with seasonal patterns detected before model training.", fullWidth: true },
+                  { src: "/charts/netflix_arima.png", title: "ARIMA — Actual vs Predicted", caption: "ARIMA forecast for the final 10 months. Confidence interval shown in shaded region. Short-term patterns captured well." },
+                  { src: "/charts/netflix_lstm.png", title: "LSTM — Actual vs Predicted", caption: "LSTM deep learning forecast for the same period. Tighter confidence bounds and smoother curve vs ARIMA." },
+                  { src: "/charts/netflix_comparison.png", title: "ARIMA vs LSTM — Error Metrics", caption: "Side-by-side comparison of MAE, RMSE, and MAPE. LSTM outperforms ARIMA across all three metrics after hyperparameter tuning.", fullWidth: true },
+                  { src: "/charts/netflix_rolling.png", title: "Rolling Average Analysis", caption: "4-month rolling average overlaid on raw data to smooth noise and highlight the underlying growth trend." },
+                  { src: "/charts/netflix_acf_pacf.png", title: "ACF & PACF — Stationarity Analysis", caption: "Autocorrelation and partial autocorrelation plots used to identify ARIMA p, d, q parameters and verify stationarity of the series." },
+                ],
+                "wildlife-classification": [
+                  { src: "/charts/wildlife_model_comparison.png", title: "YOLOv7 vs YOLOv8 vs YOLOv9 — All Metrics", caption: "Grouped bar chart comparing mAP@0.5, Precision, Recall, and F1-Score across all three YOLO generations. YOLOv9 leads on every metric.", fullWidth: true },
+                  { src: "/charts/wildlife_loss_curve.png", title: "Training & Validation Loss — YOLOv8 & YOLOv9", caption: "Loss curves across 150 epochs for the top two models. Both converge cleanly with no significant overfitting after early stopping.", fullWidth: true },
+                  { src: "/charts/wildlife_confusion_matrix.png", title: "Confusion Matrix — YOLOv9 (Normalized)", caption: "Normalized confusion matrix for YOLOv9 on the 7-class wildlife dataset. Strong diagonal indicates high per-class accuracy." },
+                  { src: "/charts/wildlife_map_epochs.png", title: "mAP@0.5 Over Training Epochs", caption: "All three YOLO models improving over 150 epochs. YOLOv9 reaches highest mAP of 0.88, validating the 88% accuracy result." },
+                  { src: "/charts/wildlife_class_dist.png", title: "Dataset — Class Distribution", caption: "Distribution of 2096 training images across 7 animal classes. Relatively balanced dataset with minor class imbalance handled via augmentation.", fullWidth: true },
+                ],
+              };
+              const charts = chartMap[project.slug] || [];
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {charts.map((chart, i) => (
+                    <ChartCard key={i} chart={chart} index={i} allCharts={charts} />
+                  ))}
                 </div>
-              ))}
-            </div>
+              );
+            })()}
           </motion.section>
 
           {/* Learnings */}

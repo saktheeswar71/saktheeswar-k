@@ -181,16 +181,27 @@ const PublicationDetail = () => {
 
           {/* Visualizations */}
           <motion.section id="visualizations" className="py-10 sm:py-16" {...fadeIn}>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate mb-4 sm:mb-6">Visualizations</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {pub.visualizations.map((label) => (
-                <div key={label} className="rounded-xl border-2 border-dashed border-sage p-6 sm:p-10 flex flex-col items-center justify-center text-center bg-sage/10">
-                  <Upload className="text-slate/30 mb-2 sm:mb-3" size={28} />
-                  <p className="text-xs sm:text-sm font-medium text-slate/50">{label}</p>
-                  <p className="text-[10px] sm:text-xs text-body/40 mt-1">Upload chart image here</p>
+            <p className="text-xs font-mono text-body/50 mb-1">// VISUALIZATIONS</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Charts & Results</h2>
+            <p className="text-xs sm:text-sm text-body mb-6 sm:mb-8">
+              The kind of charts that could actually help save lives. 🏥
+            </p>
+            {(() => {
+              const charts: ChartItem[] = [
+                { src: "/charts/liver_roc.png", title: "ROC Curve — TabNet vs XGBoost", caption: "TabNet achieves AUC of 0.91 vs XGBoost's 0.85 on the ILPD test set — a clear improvement in discriminative ability." },
+                { src: "/charts/liver_class_dist.png", title: "ILPD Dataset — Class Distribution", caption: "583 patient records: 416 with liver disease (71.4%) and 167 without (28.6%). Class imbalance handled during training." },
+                { src: "/charts/liver_metrics.png", title: "All Metrics — TabNet vs XGBoost", caption: "TabNet consistently outperforms XGBoost across Accuracy, Precision, Recall, F1, and AUC-ROC — with an average improvement of 5–8%.", fullWidth: true },
+                { src: "/charts/liver_confusion.png", title: "Confusion Matrices — Side by Side", caption: "TabNet reduces both false positives and false negatives compared to XGBoost, critical in a healthcare prediction context.", fullWidth: true },
+                { src: "/charts/liver_feature_importance.png", title: "Feature Importance: XGBoost vs TabNet Attention", caption: "Both models agree: Total Bilirubin and Albumin are the most critical predictors. TabNet's attention weights provide step-by-step interpretability that XGBoost cannot.", fullWidth: true },
+              ];
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {charts.map((chart, i) => (
+                    <ChartCard key={i} chart={chart} index={i} allCharts={charts} />
+                  ))}
                 </div>
-              ))}
-            </div>
+              );
+            })()}
           </motion.section>
 
           {/* Findings */}
