@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Github, Upload, ArrowUp, ExternalLink } from "lucide-react";
+import { Github, ArrowUp, ExternalLink } from "lucide-react";
+import ChartCard, { ChartItem } from "@/components/detail/ChartCard";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
