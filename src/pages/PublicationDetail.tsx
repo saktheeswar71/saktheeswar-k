@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Upload, ArrowUp, Copy, Check } from "lucide-react";
+import { ArrowUp, Copy, Check } from "lucide-react";
+import ChartCard, { ChartItem } from "@/components/detail/ChartCard";
 import DetailNavbar from "@/components/detail/DetailNavbar";
 import TableOfContents from "@/components/detail/TableOfContents";
 import Footer from "@/components/Footer";
