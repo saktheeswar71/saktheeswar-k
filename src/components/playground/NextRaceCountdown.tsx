@@ -12,9 +12,10 @@ const NextRaceCountdown = ({ races, calendar }: NextRaceCountdownProps) => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const now = new Date();
-  const completedRounds = races.map(r => parseInt(r.round));
+  const completedRounds = (races || []).map(r => parseInt(r.round));
 
   const nextRace = useMemo(() => {
+    if (!calendar || calendar.length === 0) return undefined;
     return calendar.find(r => {
       const raceDate = new Date(r.date + 'T' + (r.time || '12:00:00Z'));
       return raceDate > now;

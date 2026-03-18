@@ -9,13 +9,13 @@ interface F1InsightsProps {
 }
 
 const F1Insights = ({ standings, constructors, races, calendar }: F1InsightsProps) => {
-  if (standings.length === 0) return null;
+  if (!standings || standings.length === 0) return null;
 
   const leader = standings[0];
   const second = standings[1];
   const gap = leader && second ? parseInt(leader.points) - parseInt(second.points) : 0;
   const racesCompleted = races.length;
-  const totalRaces = calendar.length || 22;
+  const totalRaces = calendar?.length || 22;
   const racesRemaining = totalRaces - racesCompleted;
   const pointsRemaining = racesRemaining * 26; // 25 + 1 fastest lap
   const titleOpen = pointsRemaining > gap;
