@@ -17,10 +17,10 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
   const [drivers, setDrivers] = useState<Record<number, string>>({});
 
   useEffect(() => {
-    fetchSessions(2025).then((data: any[]) => {
-      // Also try 2024 if empty
+    // Try 2026 first, then fallback
+    fetchSessions(2026).then((data: any[]) => {
       if (!data || data.length === 0) {
-        fetchSessions(2024).then((data2: any[]) => {
+        fetchSessions(2025).then((data2: any[]) => {
           const raceSessions = (data2 || []).filter((s: any) => s.session_type === 'Race');
           setSessions(raceSessions);
           if (raceSessions.length > 0) setSelectedSession(raceSessions[raceSessions.length - 1].session_key?.toString());
@@ -39,7 +39,7 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
     Promise.all([
       fetchStints(selectedSession),
       fetchPits(selectedSession),
-      fetch(`https://api.openf1.org/v1/drivers?session_key=${selectedSession}`).then(r => r.json()).catch(() => []),
+      fetch(`https://api.openf1.org/v1/drivers?session_key=${selectedSession}`).then(r => r.ok ? r.json() : []).catch(() => []),
     ]).then(([stintData, pitData, driverData]) => {
       setStints(stintData || []);
       setPits(pitData || []);
@@ -65,7 +65,6 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
 
   return (
     <div>
-      {/* Session Selector */}
       <div className="flex items-center gap-3 mb-6 flex-wrap">
         <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--f1-muted)' }}>
           Session
@@ -90,16 +89,14 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
       </div>
 
       {loading ? (
-        <div className="h-[500px] rounded-xl animate-pulse" style={{ background: 'var(--f1-surface)' }} />
+        <div className="h-[500px] rounded-xl" style={{ background: 'linear-gradient(90deg, var(--f1-surface) 25%, var(--f1-surface2) 50%, var(--f1-surface) 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
       ) : stints.length > 0 ? (
         <>
-          {/* Tyre Timeline SVG */}
           <div className="rounded-xl p-4 overflow-x-auto" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
             <h3 className="text-sm font-bold mb-4" style={{ color: 'var(--f1-text)', fontFamily: "'Titillium Web', sans-serif" }}>
-              Tyre Strategy Timeline
+              Race Tyre Strategy — All Drivers
             </h3>
             <svg width={Math.max(700, maxLap * 10 + 120)} height={driverNumbers.length * 28 + 40} className="min-w-[700px]">
-              {/* X-axis labels */}
               {Array.from({ length: Math.ceil(maxLap / 10) + 1 }, (_, i) => i * 10).map(lap => (
                 <text key={lap} x={100 + lap * ((Math.max(700, maxLap * 10) - 120) / maxLap)} y={driverNumbers.length * 28 + 30} fill="var(--f1-muted)" fontSize={9} textAnchor="middle">
                   L{lap}
@@ -124,15 +121,7 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
 
                       return (
                         <g key={si}>
-                          <rect
-                            x={x1}
-                            y={y + 2}
-                            width={Math.max(width, 2)}
-                            height={18}
-                            rx={3}
-                            fill={color}
-                            opacity={0.85}
-                          >
+                          <rect x={x1} y={y + 2} width={Math.max(width, 2)} height={18} rx={3} fill={color} opacity={0.85}>
                             <title>
                               {drivers[num]} | {compound} | Laps {stint.lap_start}–{stint.lap_end || '?'} | {(stint.lap_end || stint.lap_start) - stint.lap_start + 1} laps
                             </title>
@@ -150,9 +139,8 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
               })}
             </svg>
 
-            {/* Legend */}
             <div className="flex flex-wrap gap-3 mt-4">
-              {Object.entries(TYRE_COLORS).filter(([k]) => k !== 'UNKNOWN').map(([compound, color]) => (
+              {Object.entries(TYRE_COLORS).filter(([k]) => k !== 'UNKNOWN' && k !== 'INTERMEDIATE').map(([compound, color]) => (
                 <div key={compound} className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-sm" style={{ background: color }} />
                   <span className="text-[10px] font-semibold" style={{ color: 'var(--f1-muted)' }}>{compound}</span>
@@ -161,7 +149,6 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
             </div>
           </div>
 
-          {/* Pit Stop Summary Table */}
           {pits.length > 0 && (
             <div className="rounded-xl overflow-hidden mt-4" style={{ border: '1px solid var(--f1-border)' }}>
               <div className="p-4 pb-2" style={{ background: 'var(--f1-surface)' }}>
@@ -183,7 +170,8 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
                       .sort((a: any, b: any) => (a.lap_number || 0) - (b.lap_number || 0))
                       .map((pit: any, i: number) => {
                         const duration = pit.pit_duration || pit.stop_duration || 0;
-                        const fastestDuration = Math.min(...pits.map((p: any) => p.pit_duration || p.stop_duration || 99));
+                        const allDurations = pits.map((p: any) => p.pit_duration || p.stop_duration || 99).filter(d => d > 0 && d < 99);
+                        const fastestDuration = allDurations.length > 0 ? Math.min(...allDurations) : 99;
                         const isFastest = duration > 0 && duration === fastestDuration;
 
                         return (
@@ -192,7 +180,7 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
                             <td className="px-3 py-2">{pit.lap_number || '--'}</td>
                             <td className="px-3 py-2 tabular-nums">
                               <span style={{
-                                color: duration < 2.5 ? '#39B54A' : duration < 3.5 ? '#FFD700' : duration < 99 ? 'var(--f1-accent)' : 'var(--f1-muted)',
+                                color: duration < 2.5 ? '#39B54A' : duration < 3.0 ? '#FFD700' : duration < 4.0 ? '#ff8000' : duration < 99 ? 'var(--f1-accent)' : 'var(--f1-muted)',
                               }}>
                                 {duration > 0 ? `${duration.toFixed(1)}s` : '--'}
                               </span>

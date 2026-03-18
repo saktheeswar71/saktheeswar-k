@@ -5,48 +5,54 @@ interface KPICardsProps {
   standings: any[];
   constructors: any[];
   races: any[];
+  totalRaces: number;
 }
 
-const KPICards = ({ standings, constructors, races }: KPICardsProps) => {
+const KPICards = ({ standings, constructors, races, totalRaces }: KPICardsProps) => {
   const leader = standings[0];
   const second = standings[1];
   const pointsGap = leader && second ? parseInt(leader.points) - parseInt(second.points) : 0;
   const topConstructor = constructors[0];
   const racesCompleted = races.length;
-  const totalRaces = 24;
+  const lastRace = races[races.length - 1];
+  const lastRaceWinner = lastRace?.Results?.[0];
 
   const cards = [
     {
-      borderColor: 'var(--f1-accent)',
-      label: '🏆 Championship Leader',
+      borderColor: 'var(--f1-gold)',
+      icon: '🏆',
+      label: "DRIVERS' LEADER",
       value: leader ? `${leader.Driver.givenName} ${leader.Driver.familyName}` : '--',
-      valueColor: 'var(--f1-gold)',
-      sub: leader ? `${leader.points} points · ${leader.wins} wins` : '',
-      badge: leader?.Constructors?.[0]?.name || '',
+      valueColor: 'var(--f1-text)',
+      sub: leader ? `${leader.points} pts · ${leader.wins} wins · ${leader.Constructors?.[0]?.name || ''}` : '',
+      badge: leader?.Constructors?.[0]?.name,
       badgeColor: leader ? getConstructorColor(leader.Constructors[0]?.constructorId) : undefined,
     },
     {
-      borderColor: 'var(--f1-blue)',
-      label: '📊 Gap to P2',
+      borderColor: 'var(--f1-silver)',
+      icon: '📊',
+      label: 'CHAMPIONSHIP GAP',
       value: `${pointsGap} points`,
       valueColor: 'var(--f1-text)',
-      sub: leader && second ? `${leader.Driver.familyName} vs ${second.Driver.familyName}` : '',
-      barPct: leader ? (parseInt(second?.points || '0') / parseInt(leader.points)) * 100 : 0,
+      sub: leader && second ? `${leader.Driver.familyName} leads ${second.Driver.familyName}` : '',
+      barPct: leader && parseInt(leader.points) > 0 ? (parseInt(second?.points || '0') / parseInt(leader.points)) * 100 : 0,
     },
     {
-      borderColor: '#39B54A',
-      label: '🏁 Races Completed',
-      value: `${racesCompleted} / ${totalRaces}`,
-      valueColor: 'var(--f1-text)',
-      sub: `${totalRaces - racesCompleted} races remaining`,
-      progressPct: (racesCompleted / totalRaces) * 100,
-    },
-    {
-      borderColor: topConstructor ? getConstructorColor(topConstructor.constructorId) : 'var(--f1-muted)',
-      label: '🔧 Leading Constructor',
+      borderColor: topConstructor ? getConstructorColor(topConstructor.Constructor?.constructorId) : 'var(--f1-muted)',
+      icon: '🔧',
+      label: "CONSTRUCTORS' LEADER",
       value: topConstructor?.Constructor?.name || '--',
-      valueColor: topConstructor ? getConstructorColor(topConstructor.constructorId) : 'var(--f1-text)',
-      sub: topConstructor ? `${topConstructor.points} points · ${topConstructor.wins} wins` : '',
+      valueColor: topConstructor ? getConstructorColor(topConstructor.Constructor?.constructorId) : 'var(--f1-text)',
+      sub: topConstructor ? `${topConstructor.points} pts · ${topConstructor.wins} wins` : '',
+    },
+    {
+      borderColor: 'var(--f1-accent)',
+      icon: '🏁',
+      label: 'LAST RACE WINNER',
+      value: lastRaceWinner ? `${lastRaceWinner.Driver.givenName} ${lastRaceWinner.Driver.familyName}` : '--',
+      valueColor: 'var(--f1-text)',
+      sub: lastRace ? `${lastRace.raceName} · ${lastRace.date}` : '',
+      extra: lastRaceWinner ? `Starting grid: P${lastRaceWinner.grid}` : undefined,
     },
   ];
 
@@ -69,19 +75,21 @@ const KPICards = ({ standings, constructors, races }: KPICardsProps) => {
               }}
             >
               <p className="text-[11px] font-semibold mb-2" style={{ color: 'var(--f1-muted)' }}>
-                {card.label}
+                {card.icon} {card.label}
               </p>
               <p className="text-xl sm:text-2xl font-bold truncate" style={{
                 color: card.valueColor,
                 fontFamily: "'Titillium Web', sans-serif",
-                fontVariantNumeric: 'tabular-nums',
               }}>
                 {card.value}
               </p>
               <p className="text-xs mt-1" style={{ color: 'var(--f1-muted)' }}>
                 {card.sub}
               </p>
-              {card.badge && (
+              {card.extra && (
+                <p className="text-[10px] mt-0.5" style={{ color: 'var(--f1-muted)' }}>{card.extra}</p>
+              )}
+              {card.badge && card.badgeColor && (
                 <span className="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold"
                   style={{ color: card.badgeColor, background: `${card.badgeColor}20` }}>
                   {card.badge}
@@ -90,11 +98,6 @@ const KPICards = ({ standings, constructors, races }: KPICardsProps) => {
               {card.barPct !== undefined && card.barPct > 0 && (
                 <div className="mt-3 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--f1-bg)' }}>
                   <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${card.barPct}%`, background: 'var(--f1-blue)' }} />
-                </div>
-              )}
-              {card.progressPct !== undefined && (
-                <div className="mt-3 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--f1-bg)' }}>
-                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${card.progressPct}%`, background: '#39B54A' }} />
                 </div>
               )}
             </motion.div>
