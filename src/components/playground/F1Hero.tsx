@@ -11,8 +11,8 @@ interface F1HeroProps {
 }
 
 const F1Hero = ({ loading, lastUpdated, onRefresh, racesCompleted, nextRaceName, standings }: F1HeroProps) => {
-  const leader = standings[0];
-  const leaderName = leader ? `${leader.Driver.givenName} ${leader.Driver.familyName}` : '--';
+  const leader = standings?.[0];
+  const leaderName = leader ? `${leader.Driver?.givenName} ${leader.Driver?.familyName}` : '--';
   const leaderTeam = leader?.Constructors?.[0]?.name || '';
   const leaderTeamId = leader?.Constructors?.[0]?.constructorId || '';
   const leaderPoints = leader?.points || '0';
