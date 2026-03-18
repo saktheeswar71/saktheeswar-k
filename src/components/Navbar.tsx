@@ -47,25 +47,30 @@ const Navbar = () => {
         <a href="#" className="text-lg md:text-xl font-bold text-slate whitespace-nowrap shrink-0">Saktheeswar K</a>
 
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`text-sm font-medium transition-colors relative pb-1 ${
-                activeSection === item.href
-                  ? "text-steel"
-                  : "text-slate hover:text-steel"
-              }`}
-            >
-              {item.label}
-              {activeSection === item.href && (
-                <motion.span
-                  layoutId="nav-underline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
-                />
-              )}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isRoute = (item as any).isRoute;
+            const Tag = isRoute ? 'a' : 'a';
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium transition-colors relative pb-1 ${
+                  activeSection === item.href
+                    ? "text-steel"
+                    : "text-slate hover:text-steel"
+                }`}
+                style={isRoute ? { color: undefined } : undefined}
+              >
+                {item.label}
+                {activeSection === item.href && !isRoute && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
+                  />
+                )}
+              </a>
+            );
+          })}
         </div>
 
         <button
