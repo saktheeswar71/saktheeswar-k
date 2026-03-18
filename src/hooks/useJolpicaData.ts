@@ -2,10 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 const JOLPICA = 'https://api.jolpi.ca/ergast/f1';
 
-export function useJolpicaData(season = '2025') {
+export function useJolpicaData(season = '2026') {
   const [standings, setStandings] = useState<any[]>([]);
   const [constructors, setConstructors] = useState<any[]>([]);
   const [races, setRaces] = useState<any[]>([]);
+  const [calendar, setCalendar] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -14,30 +15,33 @@ export function useJolpicaData(season = '2025') {
     setLoading(true);
     setError(null);
     try {
-      const [driverRes, constRes, raceRes] = await Promise.all([
+      const [driverRes, constRes, raceRes, calRes] = await Promise.all([
         fetch(`${JOLPICA}/${season}/driverstandings.json`),
         fetch(`${JOLPICA}/${season}/constructorstandings.json`),
         fetch(`${JOLPICA}/${season}/results.json?limit=500`),
+        fetch(`${JOLPICA}/${season}.json`),
       ]);
 
       if (!driverRes.ok || !constRes.ok || !raceRes.ok) {
         throw new Error('API request failed');
       }
 
-      const [driverData, constData, raceData] = await Promise.all([
-        driverRes.json(), constRes.json(), raceRes.json()
+      const [driverData, constData, raceData, calData] = await Promise.all([
+        driverRes.json(), constRes.json(), raceRes.json(), calRes.ok ? calRes.json() : { MRData: { RaceTable: { Races: [] } } },
       ]);
 
       const driverStandings = driverData.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings ?? [];
       const constructorStandings = constData.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings ?? [];
       const raceResults = raceData.MRData?.RaceTable?.Races ?? [];
+      const calendarRaces = calData.MRData?.RaceTable?.Races ?? [];
 
-      // If 2025 data is empty, try 2024 fallback
-      if (driverStandings.length === 0 && season === '2025') {
+      // If current season data is empty, try previous year fallback
+      if (driverStandings.length === 0) {
+        const fallbackSeason = String(parseInt(season) - 1);
         const [fb1, fb2, fb3] = await Promise.all([
-          fetch(`${JOLPICA}/2024/driverstandings.json`).then(r => r.json()),
-          fetch(`${JOLPICA}/2024/constructorstandings.json`).then(r => r.json()),
-          fetch(`${JOLPICA}/2024/results.json?limit=500`).then(r => r.json()),
+          fetch(`${JOLPICA}/${fallbackSeason}/driverstandings.json`).then(r => r.json()),
+          fetch(`${JOLPICA}/${fallbackSeason}/constructorstandings.json`).then(r => r.json()),
+          fetch(`${JOLPICA}/${fallbackSeason}/results.json?limit=500`).then(r => r.json()),
         ]);
         setStandings(fb1.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings ?? []);
         setConstructors(fb2.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings ?? []);
@@ -47,6 +51,7 @@ export function useJolpicaData(season = '2025') {
         setConstructors(constructorStandings);
         setRaces(raceResults);
       }
+      setCalendar(calendarRaces);
       setLastUpdated(new Date());
     } catch (err: any) {
       setError(err.message || 'Failed to fetch F1 data');
@@ -74,5 +79,5 @@ export function useJolpicaData(season = '2025') {
     };
   }, [season]);
 
-  return { standings, constructors, races, loading, error, lastUpdated, refetch: fetchAll, fetchRaceDetail };
+  return { standings, constructors, races, calendar, loading, error, lastUpdated, refetch: fetchAll, fetchRaceDetail };
 }
