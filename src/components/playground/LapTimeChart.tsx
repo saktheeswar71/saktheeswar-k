@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, Brush } from 'recharts';
-import { getConstructorColor } from '@/utils/teamColors';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, Brush, CartesianGrid } from 'recharts';
 import { formatLapTime, parseTimeToSeconds } from '@/utils/f1Helpers';
-import { useOpenF1Data } from '@/hooks/useOpenF1Data';
+
+const CHART_COLORS = ['#99CDD8', '#F3C3B2', '#CFD6C4', '#657166', '#DAEBE3'];
 
 interface LapTimeChartProps {
   races: any[];
@@ -29,7 +29,6 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
       fetchRaceDetail(selectedRound)
         .then((detail) => {
           setLapData(detail);
-          // Auto-select top 3 drivers
           const top3 = results.slice(0, 3).map((r: any) => r.Driver.driverId);
           setSelectedDrivers(top3);
         })
@@ -72,7 +71,7 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="rounded-lg p-3 text-xs" style={{ background: 'var(--f1-surface2)', border: '1px solid var(--f1-border)', color: 'var(--f1-text)' }}>
+      <div className="rounded-xl p-3 text-xs" style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
         <p className="font-bold mb-1">Lap {label}</p>
         {payload.map((p: any) => {
           const driver = allDrivers.find((d: any) => d.id === p.dataKey);
@@ -93,30 +92,30 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
         <select
           value={selectedRound}
           onChange={(e) => setSelectedRound(e.target.value)}
-          className="px-3 py-2 rounded-lg text-sm outline-none"
-          style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)', color: 'var(--f1-text)' }}
+          className="px-3 py-2 rounded-xl text-sm outline-none focus:ring-2"
+          style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166' }}
         >
           {races.map(race => (
             <option key={race.round} value={race.round}>R{race.round} — {race.raceName}</option>
           ))}
         </select>
-        <span className="text-[10px]" style={{ color: 'var(--f1-muted)' }}>Select up to 5 drivers</span>
+        <span className="text-[10px]" style={{ color: '#8a9e8f' }}>Select up to 5 drivers</span>
       </div>
 
       {/* Driver chips */}
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {allDrivers.map((driver: any) => {
+        {allDrivers.map((driver: any, idx: number) => {
           const active = selectedDrivers.includes(driver.id);
-          const color = getConstructorColor(driver.teamId);
+          const color = CHART_COLORS[idx % CHART_COLORS.length];
           return (
             <button
               key={driver.id}
               onClick={() => toggleDriver(driver.id)}
-              className="px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all"
+              className="px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all hover:-translate-y-0.5"
               style={{
-                background: active ? color : 'transparent',
-                color: active ? '#fff' : 'var(--f1-muted)',
-                border: `1px solid ${active ? color : 'var(--f1-border)'}`,
+                background: active ? color : '#fff',
+                color: active ? '#fff' : '#657166',
+                border: `1px solid ${active ? color : '#CFD6C4'}`,
               }}
             >
               {driver.name}
@@ -127,30 +126,29 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
 
       {/* Chart */}
       {loading ? (
-        <div className="h-[350px] rounded-xl animate-pulse" style={{ background: 'var(--f1-surface)' }} />
+        <div className="h-[350px] rounded-2xl" style={{ background: 'linear-gradient(90deg, #DAEBE3 25%, #FDE8D3 50%, #DAEBE3 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
       ) : chartData.length > 0 ? (
-        <div className="rounded-xl p-4" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
+        <div className="rounded-2xl p-4" style={{ background: '#fff', border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
-              <XAxis dataKey="lap" tick={{ fill: 'var(--f1-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#CFD6C4" opacity={0.6} />
+              <XAxis dataKey="lap" tick={{ fill: '#8a9e8f', fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fill: 'var(--f1-muted)', fontSize: 10 }}
+                tick={{ fill: '#8a9e8f', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
                 domain={['auto', 'auto']}
                 tickFormatter={(v) => formatLapTime(v)}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Brush dataKey="lap" height={20} stroke="var(--f1-border)" fill="var(--f1-bg)" />
-              {/* Pit stop reference lines */}
+              <Brush dataKey="lap" height={20} stroke="#CFD6C4" fill="#FAFBF9" />
               {selectedDrivers.flatMap(id =>
                 (pitStopLaps[id] || []).map(lap => (
-                  <ReferenceLine key={`${id}-${lap}`} x={lap} stroke="var(--f1-muted)" strokeDasharray="3 3" strokeOpacity={0.4} />
+                  <ReferenceLine key={`${id}-${lap}`} x={lap} stroke="#CFD6C4" strokeDasharray="3 3" strokeOpacity={0.6} />
                 ))
               )}
-              {selectedDrivers.map(id => {
-                const driver = allDrivers.find((d: any) => d.id === id);
-                const color = getConstructorColor(driver?.teamId);
+              {selectedDrivers.map((id, idx) => {
+                const color = CHART_COLORS[idx % CHART_COLORS.length];
                 return (
                   <Line
                     key={id}
@@ -159,7 +157,7 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
                     stroke={color}
                     strokeWidth={1.5}
                     dot={false}
-                    activeDot={{ r: 3, fill: color }}
+                    activeDot={{ r: 4, fill: color, stroke: '#fff', strokeWidth: 2 }}
                     connectNulls
                   />
                 );
@@ -168,8 +166,8 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <div className="h-[350px] rounded-xl flex items-center justify-center" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
-          <p className="text-sm" style={{ color: 'var(--f1-muted)' }}>
+        <div className="h-[350px] rounded-2xl flex items-center justify-center" style={{ background: '#fff', border: '1px solid #CFD6C4' }}>
+          <p className="text-sm" style={{ color: '#8a9e8f' }}>
             {races.length === 0 ? 'No race data available' : 'Select drivers to view lap times'}
           </p>
         </div>

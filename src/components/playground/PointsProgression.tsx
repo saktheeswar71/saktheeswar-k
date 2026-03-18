@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { getConstructorColor } from '@/utils/teamColors';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+
+const CHART_COLORS = ['#99CDD8', '#F3C3B2', '#CFD6C4', '#657166', '#DAEBE3'];
 
 interface PointsProgressionProps {
   races: any[];
@@ -52,7 +53,7 @@ const PointsProgression = ({ races, standings }: PointsProgressionProps) => {
     if (!active || !payload?.length) return null;
     const raceName = payload[0]?.payload?.raceName || label;
     return (
-      <div className="rounded-lg p-3 text-xs" style={{ background: 'var(--f1-surface2)', border: '1px solid var(--f1-border)', color: 'var(--f1-text)' }}>
+      <div className="rounded-xl p-3 text-xs" style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
         <p className="font-bold mb-1">After {raceName}</p>
         {payload.sort((a: any, b: any) => b.value - a.value).map((p: any) => (
           <p key={p.dataKey} style={{ color: p.color }}>
@@ -66,22 +67,23 @@ const PointsProgression = ({ races, standings }: PointsProgressionProps) => {
   if (data.length === 0) return null;
 
   return (
-    <div className="rounded-xl p-4 sm:p-5 mt-4" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
-      <h3 className="text-sm font-bold mb-1" style={{ color: 'var(--f1-text)', fontFamily: "'Titillium Web', sans-serif" }}>
+    <div className="rounded-2xl p-4 sm:p-5 mt-4" style={{ background: '#fff', border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+      <h3 className="text-sm font-bold mb-1" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
         Championship Battle — Points After Each Race
       </h3>
-      <p className="text-xs mb-4" style={{ color: 'var(--f1-muted)' }}>
+      <p className="text-xs mb-4" style={{ color: '#8a9e8f' }}>
         Auto-updates after every race weekend
       </p>
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
-          <XAxis dataKey="round" tick={{ fill: 'var(--f1-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: 'var(--f1-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#CFD6C4" opacity={0.6} />
+          <XAxis dataKey="round" tick={{ fill: '#8a9e8f', fontSize: 10 }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: '#8a9e8f', fontSize: 10 }} axisLine={false} tickLine={false} />
           <Tooltip content={<CustomTooltip />} />
-          {top5.map((driver) => {
+          {top5.map((driver, idx) => {
             const id = driver.Driver.driverId;
-            const color = getConstructorColor(driver.Constructors?.[0]?.constructorId);
+            const color = CHART_COLORS[idx % CHART_COLORS.length];
             return (
               <Line
                 key={id}
@@ -89,8 +91,8 @@ const PointsProgression = ({ races, standings }: PointsProgressionProps) => {
                 dataKey={id}
                 stroke={color}
                 strokeWidth={activeDrivers.includes(id) ? 2.5 : 0}
-                dot={{ r: 3, fill: color }}
-                activeDot={{ r: 5, fill: color }}
+                dot={{ r: 3, fill: color, stroke: '#fff', strokeWidth: 2 }}
+                activeDot={{ r: 5, fill: color, stroke: '#fff', strokeWidth: 2 }}
                 animationDuration={1200}
               />
             );
@@ -99,19 +101,19 @@ const PointsProgression = ({ races, standings }: PointsProgressionProps) => {
       </ResponsiveContainer>
 
       <div className="flex flex-wrap gap-2 mt-4">
-        {top5.map((driver) => {
+        {top5.map((driver, idx) => {
           const id = driver.Driver.driverId;
-          const color = getConstructorColor(driver.Constructors?.[0]?.constructorId);
+          const color = CHART_COLORS[idx % CHART_COLORS.length];
           const active = activeDrivers.includes(id);
           return (
             <button
               key={id}
               onClick={() => toggleDriver(id)}
-              className="px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200"
+              className="px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5"
               style={{
-                background: active ? color : 'transparent',
-                color: active ? '#fff' : 'var(--f1-muted)',
-                border: `1px solid ${active ? color : 'var(--f1-border)'}`,
+                background: active ? color : '#fff',
+                color: active ? '#fff' : '#657166',
+                border: `1px solid ${active ? color : '#CFD6C4'}`,
               }}
             >
               {driver.Driver.familyName}

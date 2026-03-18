@@ -1,7 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { TYRE_COLORS } from '@/utils/teamColors';
 import { useOpenF1Data } from '@/hooks/useOpenF1Data';
+
+const TYRE_COLORS_PASTEL: Record<string, string> = {
+  SOFT: '#F3C3B2',
+  MEDIUM: '#FDE8D3',
+  HARD: '#CFD6C4',
+  INTERMEDIATE: '#DAEBE3',
+  INTER: '#DAEBE3',
+  WET: '#99CDD8',
+  UNKNOWN: '#8a9e8f',
+};
 
 interface TyreStrategyChartProps {
   races: any[];
@@ -17,7 +25,6 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
   const [drivers, setDrivers] = useState<Record<number, string>>({});
 
   useEffect(() => {
-    // Try 2026 first, then fallback
     fetchSessions(2026).then((data: any[]) => {
       if (!data || data.length === 0) {
         fetchSessions(2025).then((data2: any[]) => {
@@ -66,14 +73,14 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6 flex-wrap">
-        <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--f1-muted)' }}>
+        <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#8a9e8f' }}>
           Session
         </label>
         <select
           value={selectedSession}
           onChange={(e) => setSelectedSession(e.target.value)}
-          className="px-3 py-2 rounded-lg text-sm outline-none"
-          style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)', color: 'var(--f1-text)' }}
+          className="px-3 py-2 rounded-xl text-sm outline-none focus:ring-2"
+          style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166' }}
         >
           {sessions.map(s => (
             <option key={s.session_key} value={s.session_key?.toString()}>
@@ -82,23 +89,23 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
           ))}
         </select>
         {currentSessionInfo && (
-          <span className="text-[10px]" style={{ color: 'var(--f1-muted)' }}>
+          <span className="text-[10px]" style={{ color: '#8a9e8f' }}>
             {currentSessionInfo.date_start?.split('T')[0]}
           </span>
         )}
       </div>
 
       {loading ? (
-        <div className="h-[500px] rounded-xl" style={{ background: 'linear-gradient(90deg, var(--f1-surface) 25%, var(--f1-surface2) 50%, var(--f1-surface) 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
+        <div className="h-[500px] rounded-2xl" style={{ background: 'linear-gradient(90deg, #DAEBE3 25%, #FDE8D3 50%, #DAEBE3 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
       ) : stints.length > 0 ? (
         <>
-          <div className="rounded-xl p-4 overflow-x-auto" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
-            <h3 className="text-sm font-bold mb-4" style={{ color: 'var(--f1-text)', fontFamily: "'Titillium Web', sans-serif" }}>
+          <div className="rounded-2xl p-4 overflow-x-auto" style={{ background: '#fff', border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+            <h3 className="text-sm font-bold mb-4" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
               Race Tyre Strategy — All Drivers
             </h3>
             <svg width={Math.max(700, maxLap * 10 + 120)} height={driverNumbers.length * 28 + 40} className="min-w-[700px]">
               {Array.from({ length: Math.ceil(maxLap / 10) + 1 }, (_, i) => i * 10).map(lap => (
-                <text key={lap} x={100 + lap * ((Math.max(700, maxLap * 10) - 120) / maxLap)} y={driverNumbers.length * 28 + 30} fill="var(--f1-muted)" fontSize={9} textAnchor="middle">
+                <text key={lap} x={100 + lap * ((Math.max(700, maxLap * 10) - 120) / maxLap)} y={driverNumbers.length * 28 + 30} fill="#8a9e8f" fontSize={9} textAnchor="middle">
                   L{lap}
                 </text>
               ))}
@@ -110,24 +117,24 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
 
                 return (
                   <g key={num}>
-                    <text x={0} y={y + 15} fill="var(--f1-muted)" fontSize={10} fontWeight={600}>
+                    <text x={0} y={y + 15} fill="#8a9e8f" fontSize={10} fontWeight={600}>
                       {drivers[num] || `#${num}`}
                     </text>
                     {driverStints.map((stint: any, si: number) => {
                       const x1 = 100 + (stint.lap_start - 1) * barWidth;
                       const width = ((stint.lap_end || stint.lap_start) - stint.lap_start + 1) * barWidth;
                       const compound = stint.compound || 'UNKNOWN';
-                      const color = TYRE_COLORS[compound] || TYRE_COLORS.UNKNOWN;
+                      const color = TYRE_COLORS_PASTEL[compound] || TYRE_COLORS_PASTEL.UNKNOWN;
 
                       return (
                         <g key={si}>
-                          <rect x={x1} y={y + 2} width={Math.max(width, 2)} height={18} rx={3} fill={color} opacity={0.85}>
+                          <rect x={x1} y={y + 2} width={Math.max(width, 2)} height={18} rx={5} fill={color} stroke="#CFD6C4" strokeWidth={0.5} opacity={0.9}>
                             <title>
                               {drivers[num]} | {compound} | Laps {stint.lap_start}–{stint.lap_end || '?'} | {(stint.lap_end || stint.lap_start) - stint.lap_start + 1} laps
                             </title>
                           </rect>
                           {width > 20 && (
-                            <text x={x1 + width / 2} y={y + 14} fill={compound === 'HARD' ? '#333' : '#fff'} fontSize={8} textAnchor="middle" fontWeight={600}>
+                            <text x={x1 + width / 2} y={y + 14} fill="#657166" fontSize={8} textAnchor="middle" fontWeight={600}>
                               {compound.charAt(0)}
                             </text>
                           )}
@@ -140,28 +147,28 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
             </svg>
 
             <div className="flex flex-wrap gap-3 mt-4">
-              {Object.entries(TYRE_COLORS).filter(([k]) => k !== 'UNKNOWN' && k !== 'INTERMEDIATE').map(([compound, color]) => (
+              {Object.entries(TYRE_COLORS_PASTEL).filter(([k]) => k !== 'UNKNOWN' && k !== 'INTERMEDIATE').map(([compound, color]) => (
                 <div key={compound} className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-sm" style={{ background: color }} />
-                  <span className="text-[10px] font-semibold" style={{ color: 'var(--f1-muted)' }}>{compound}</span>
+                  <span className="w-3 h-3 rounded-sm" style={{ background: color, border: '1px solid #CFD6C4' }} />
+                  <span className="text-[10px] font-semibold" style={{ color: '#8a9e8f' }}>{compound}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {pits.length > 0 && (
-            <div className="rounded-xl overflow-hidden mt-4" style={{ border: '1px solid var(--f1-border)' }}>
-              <div className="p-4 pb-2" style={{ background: 'var(--f1-surface)' }}>
-                <h3 className="text-sm font-bold" style={{ color: 'var(--f1-text)', fontFamily: "'Titillium Web', sans-serif" }}>
+            <div className="rounded-2xl overflow-hidden mt-4" style={{ border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+              <div className="p-4 pb-2" style={{ background: '#fff' }}>
+                <h3 className="text-sm font-bold" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
                   Pit Stop Summary
                 </h3>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-xs" style={{ color: 'var(--f1-text)' }}>
+                <table className="w-full text-xs" style={{ color: '#657166' }}>
                   <thead>
-                    <tr style={{ background: 'var(--f1-surface2)' }}>
+                    <tr style={{ background: '#DAEBE3' }}>
                       {['Driver', 'Lap', 'Duration'].map(h => (
-                        <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: 'var(--f1-muted)' }}>{h}</th>
+                        <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: '#8a9e8f' }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -175,17 +182,17 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
                         const isFastest = duration > 0 && duration === fastestDuration;
 
                         return (
-                          <tr key={i} style={{ background: i % 2 === 0 ? 'var(--f1-surface)' : 'var(--f1-bg)' }}>
+                          <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#FAFBF9' }}>
                             <td className="px-3 py-2 font-semibold">{drivers[pit.driver_number] || `#${pit.driver_number}`}</td>
                             <td className="px-3 py-2">{pit.lap_number || '--'}</td>
                             <td className="px-3 py-2 tabular-nums">
                               <span style={{
-                                color: duration < 2.5 ? '#39B54A' : duration < 3.0 ? '#FFD700' : duration < 4.0 ? '#ff8000' : duration < 99 ? 'var(--f1-accent)' : 'var(--f1-muted)',
+                                color: duration < 2.5 ? '#99CDD8' : duration < 3.0 ? '#CFD6C4' : duration < 4.0 ? '#F3C3B2' : duration < 99 ? '#657166' : '#8a9e8f',
                               }}>
                                 {duration > 0 ? `${duration.toFixed(1)}s` : '--'}
                               </span>
                               {isFastest && (
-                                <span className="ml-1.5 px-1.5 py-0.5 rounded text-[9px] font-bold" style={{ background: 'rgba(57,181,74,0.15)', color: '#39B54A' }}>
+                                <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-[9px] font-bold" style={{ background: '#DAEBE3', color: '#99CDD8' }}>
                                   ⚡ Fastest
                                 </span>
                               )}
@@ -200,8 +207,8 @@ const TyreStrategyChart = ({ races }: TyreStrategyChartProps) => {
           )}
         </>
       ) : (
-        <div className="h-[300px] rounded-xl flex items-center justify-center" style={{ background: 'var(--f1-surface)', border: '1px solid var(--f1-border)' }}>
-          <p className="text-sm" style={{ color: 'var(--f1-muted)' }}>No tyre strategy data available for this session</p>
+        <div className="h-[300px] rounded-2xl flex items-center justify-center" style={{ background: '#fff', border: '1px solid #CFD6C4' }}>
+          <p className="text-sm" style={{ color: '#8a9e8f' }}>No tyre strategy data available for this session</p>
         </div>
       )}
     </div>
