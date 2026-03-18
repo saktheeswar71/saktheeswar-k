@@ -9,7 +9,7 @@ interface F1InsightsProps {
 }
 
 const F1Insights = ({ standings, constructors, races, calendar }: F1InsightsProps) => {
-  if (standings.length === 0) return null;
+  if (!standings || standings.length === 0) return null;
 
   const leader = standings[0];
   const second = standings[1];
