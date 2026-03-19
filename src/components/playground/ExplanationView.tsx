@@ -27,7 +27,7 @@ const ExplanationView = ({ dataset, onPlayAgain, onNext, onRestart }: Props) => 
         {actionIds.map((actionId, i) => {
           const config = ACTION_CONFIG[actionId];
           const explanation = dataset.explanations[actionId];
-          const isCorrect = dataset.correctActions.includes(actionId);
+          const isCorrect = (dataset.correctActions as string[]).includes(actionId);
 
           return (
             <motion.div
