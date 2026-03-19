@@ -39,9 +39,9 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
 
       {/* Action feedback */}
       <div className="space-y-3 mb-8">
-        {allActions.map((actionId, i) => {
+      {allActions.map((actionId, i) => {
           const config = ACTION_CONFIG[actionId];
-          const isCorrect = correctSet.has(actionId);
+          const isCorrect = correctSet.has(actionId as any);
           const wasSelected = selectedSet.has(actionId);
 
           let status: 'hit' | 'missed' | 'extra' | 'neutral';
