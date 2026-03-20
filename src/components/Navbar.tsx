@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
   { label: "Home", href: "#" },
@@ -17,11 +18,17 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#");
+  const location = useLocation();
+
+  const isPlaygroundActive = location.pathname === "/playground";
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      const sections = navItems.map(i => i.href.replace("#", "")).filter(Boolean);
+      const sections = navItems
+        .filter(i => !i.isRoute)
+        .map(i => i.href.replace("#", ""))
+        .filter(Boolean);
       let current = "#";
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -32,6 +39,12 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isActive = (item: typeof navItems[0]) => {
+    if (item.isRoute) return isPlaygroundActive;
+    if (isPlaygroundActive) return false;
+    return activeSection === item.href;
+  };
 
   return (
     <motion.nav
@@ -44,25 +57,40 @@ const Navbar = () => {
       style={{ borderBottom: scrolled ? "1px solid hsl(100 12% 81%)" : "none" }}
     >
       <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
-        <a href="#" className="text-lg md:text-xl font-bold text-slate whitespace-nowrap shrink-0">Saktheeswar K</a>
+        <Link to="/" className="text-lg md:text-xl font-bold text-slate whitespace-nowrap shrink-0">Saktheeswar K</Link>
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => {
-            const isRoute = (item as any).isRoute;
-            const Tag = isRoute ? 'a' : 'a';
+            const active = isActive(item);
+            if (item.isRoute) {
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`text-sm font-medium transition-colors relative pb-1 ${
+                    active ? "text-steel" : "text-slate hover:text-steel"
+                  }`}
+                >
+                  {item.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
+                    />
+                  )}
+                </Link>
+              );
+            }
             return (
               <a
                 key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition-colors relative pb-1 ${
-                  activeSection === item.href
-                    ? "text-steel"
-                    : "text-slate hover:text-steel"
+                  active ? "text-steel" : "text-slate hover:text-steel"
                 }`}
-                style={isRoute ? { color: undefined } : undefined}
               >
                 {item.label}
-                {activeSection === item.href && !isRoute && (
+                {active && (
                   <motion.span
                     layoutId="nav-underline"
                     className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
@@ -91,18 +119,35 @@ const Navbar = () => {
             className="md:hidden bg-white/95 backdrop-blur-md border-t border-sage"
           >
             <div className="flex flex-col gap-4 p-6">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`text-sm font-medium transition-colors ${
-                    activeSection === item.href ? "text-steel" : "text-slate hover:text-steel"
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const active = isActive(item);
+                if (item.isRoute) {
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-sm font-medium transition-colors ${
+                        active ? "text-steel" : "text-slate hover:text-steel"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`text-sm font-medium transition-colors ${
+                      active ? "text-steel" : "text-slate hover:text-steel"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </div>
           </motion.div>
         )}
