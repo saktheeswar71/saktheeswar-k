@@ -34,9 +34,9 @@ const ProgressBar = ({ currentStep }: Props) => {
             <motion.div
               className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all"
               style={{
-                background: isActive ? "#99CDD8" : isCompleted ? "#DAEBE3" : "#FFFFFF",
-                color: isActive ? "#FFFFFF" : "#657166",
-                border: isActive ? "none" : isCompleted ? "none" : "1px solid #CFD6C4",
+                background: isActive ? "#c3110e" : isCompleted ? "#fce4d6" : "#FFFFFF",
+                color: isActive ? "#FFFFFF" : "#280905",
+                border: isActive ? "none" : isCompleted ? "none" : "1px solid #ddb8a0",
               }}
               initial={{ scale: 0.9 }}
               animate={{ scale: isActive ? 1.05 : 1 }}
@@ -51,7 +51,7 @@ const ProgressBar = ({ currentStep }: Props) => {
               </span>
             </motion.div>
             {i < STEPS.length - 1 && (
-              <div className="w-4 md:w-8 h-px mx-1" style={{ background: "#CFD6C4" }} />
+              <div className="w-4 md:w-8 h-px mx-1" style={{ background: "#ddb8a0" }} />
             )}
           </div>
         );

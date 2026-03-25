@@ -30,7 +30,7 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
         >
           <span
             className="inline-block px-4 py-1.5 rounded-full text-sm font-bold"
-            style={{ background: "#FDE8D3", color: "#657166" }}
+            style={{ background: "#fdd8c5", color: "#280905" }}
           >
             🔥 {streak} game streak!
           </span>
@@ -53,9 +53,9 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
           if (status === 'neutral') return null;
 
           const styles = {
-            hit: { bg: "#DAEBE3", border: "#99CDD8", label: "✓ Correct!", icon: "✅" },
-            missed: { bg: "#FDE8D3", border: "#F3C3B2", label: "✗ You missed this", icon: "❌" },
-            extra: { bg: "#FFFFFF", border: "#CFD6C4", label: "→ Not needed here", icon: "⚠️" },
+            hit: { bg: "#fce4d6", border: "#c3110e", label: "✓ Correct!", icon: "✅" },
+            missed: { bg: "#fdd8c5", border: "#e6501b", label: "✗ You missed this", icon: "❌" },
+            extra: { bg: "#FFFFFF", border: "#ddb8a0", label: "→ Not needed here", icon: "⚠️" },
           };
           const s = styles[status];
 
@@ -73,10 +73,10 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
                 borderLeftWidth: 4,
               }}
             >
-              <span className="text-sm font-medium" style={{ color: "#657166" }}>
+              <span className="text-sm font-medium" style={{ color: "#280905" }}>
                 {config.icon} {config.label}
               </span>
-              <span className="text-xs font-medium" style={{ color: "#8a9e8f" }}>
+              <span className="text-xs font-medium" style={{ color: "#740a03" }}>
                 {s.label}
               </span>
             </motion.div>
@@ -87,13 +87,13 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
       {/* Before / After mini tables */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div>
-          <h4 className="text-sm font-bold mb-2" style={{ color: "#657166" }}>
+          <h4 className="text-sm font-bold mb-2" style={{ color: "#280905" }}>
             Before (messy)
           </h4>
           <MiniTable columns={dataset.columns} rows={dataset.rows} highlight={false} />
         </div>
         <div>
-          <h4 className="text-sm font-bold mb-2" style={{ color: "#657166" }}>
+          <h4 className="text-sm font-bold mb-2" style={{ color: "#280905" }}>
             After (with your actions)
           </h4>
           <MiniTable columns={dataset.columns} rows={cleanedRows} highlight />
@@ -105,14 +105,14 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
         <button
           onClick={onExplain}
           className="px-6 py-2.5 rounded-full text-sm font-medium text-white"
-          style={{ background: "#99CDD8" }}
+          style={{ background: "#c3110e" }}
         >
           📖 See Full Explanation
         </button>
         <button
           onClick={onNext}
           className="px-6 py-2.5 rounded-full text-sm font-medium"
-          style={{ background: "#FFFFFF", border: "1px solid #CFD6C4", color: "#657166" }}
+          style={{ background: "#FFFFFF", border: "1px solid #ddb8a0", color: "#280905" }}
         >
           Next Dataset →
         </button>
@@ -130,12 +130,12 @@ const MiniTable = ({
   rows: any[];
   highlight: boolean;
 }) => (
-  <div className="overflow-x-auto rounded-xl" style={{ border: "1px solid #CFD6C4" }}>
+  <div className="overflow-x-auto rounded-xl" style={{ border: "1px solid #ddb8a0" }}>
     <table className="w-full text-[11px]">
       <thead>
-        <tr style={{ background: "#DAEBE3" }}>
+        <tr style={{ background: "#280905" }}>
           {columns.map((col) => (
-            <th key={col} className="px-2 py-1.5 text-left font-bold uppercase" style={{ color: "#657166" }}>
+            <th key={col} className="px-2 py-1.5 text-left font-bold uppercase" style={{ color: "#fce4d6" }}>
               {col}
             </th>
           ))}
@@ -146,14 +146,14 @@ const MiniTable = ({
           <tr
             key={ri}
             style={{
-              background: highlight ? "#FAFAF8" : ri % 2 === 0 ? "#FFFFFF" : "#FAFAF8",
-              borderBottom: "1px solid #CFD6C4",
+              background: highlight ? "#fef8f4" : ri % 2 === 0 ? "#FFFFFF" : "#fef8f4",
+              borderBottom: "1px solid #ddb8a0",
             }}
           >
             {columns.map((col) => (
-              <td key={col} className="px-2 py-1.5" style={{ color: "#4a5568" }}>
+              <td key={col} className="px-2 py-1.5" style={{ color: "#280905" }}>
                 {row[col] === null ? (
-                  <span className="px-1 rounded text-[9px]" style={{ background: "#CFD6C4", color: "#657166" }}>
+                  <span className="px-1 rounded text-[9px]" style={{ background: "#ddb8a0", color: "#280905" }}>
                     NULL
                   </span>
                 ) : (

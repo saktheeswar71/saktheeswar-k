@@ -11,7 +11,7 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
   return (
     <section
       className="py-20 px-4 md:px-8"
-      style={{ background: "linear-gradient(135deg, #FDE8D3, #DAEBE3)" }}
+      style={{ background: "linear-gradient(135deg, #280905, #740a03)" }}
     >
       <div className="container mx-auto max-w-[1200px]">
         <div className="flex flex-col md:flex-row items-center gap-12">
@@ -24,7 +24,7 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
           >
             <span
               className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-6"
-              style={{ background: "#DAEBE3", color: "#657166" }}
+              style={{ background: "rgba(230,80,27,0.2)", color: "#e6501b", border: "1px solid rgba(230,80,27,0.3)" }}
             >
               🧹 Interactive Data Challenge
             </span>
@@ -32,11 +32,11 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4"
               style={{ fontFamily: "'Plus Jakarta Sans', 'DM Sans', sans-serif" }}
             >
-              <span style={{ color: "#657166" }}>Fix the Data</span>
+              <span style={{ color: "#FFFFFF" }}>Fix the Data</span>
               <br />
-              <span style={{ color: "#99CDD8" }}>Playground</span>
+              <span style={{ color: "#e6501b" }}>Playground</span>
             </h1>
-            <p className="text-base md:text-lg max-w-md mb-6" style={{ color: "#8a9e8f" }}>
+            <p className="text-base md:text-lg max-w-md mb-6" style={{ color: "rgba(255,255,255,0.7)" }}>
               Think like a data analyst. Spot the issues, pick the right cleaning
               actions, and see how clean data changes everything.
             </p>
@@ -45,7 +45,7 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
                 <span
                   key={badge}
                   className="px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ background: "#DAEBE3", color: "#657166" }}
+                  style={{ background: "rgba(195,17,14,0.2)", color: "#fce4d6", border: "1px solid rgba(195,17,14,0.3)" }}
                 >
                   {badge}
                 </span>
@@ -63,12 +63,12 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
             <div
               className="rounded-2xl p-6"
               style={{
-                background: "#FFFFFF",
-                border: "1px solid #CFD6C4",
-                boxShadow: "0 2px 16px rgba(101,113,102,0.08)",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(230,80,27,0.3)",
+                backdropFilter: "blur(8px)",
               }}
             >
-              <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: "#8a9e8f" }}>
+              <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
                 Your Stats
               </h3>
               <div className="space-y-3">
@@ -78,17 +78,17 @@ const PlaygroundHero = ({ streak, totalPlayed, lastScore }: Props) => {
                   { icon: "⭐", label: "Last Score", value: lastScore ? `${lastScore.finalScore}/100` : "—" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex items-center justify-between">
-                    <span className="text-sm" style={{ color: "#657166" }}>
+                    <span className="text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>
                       {stat.icon} {stat.label}
                     </span>
-                    <span className="text-lg font-bold" style={{ color: "#657166" }}>
+                    <span className="text-lg font-bold" style={{ color: "#FFFFFF" }}>
                       {stat.value}
                     </span>
                   </div>
                 ))}
               </div>
             </div>
-            <p className="text-xs text-center mt-3" style={{ color: "#8a9e8f" }}>
+            <p className="text-xs text-center mt-3" style={{ color: "rgba(255,255,255,0.5)" }}>
               Data cleaning is 80% of a data analyst's job. Master it here.
             </p>
           </motion.div>
