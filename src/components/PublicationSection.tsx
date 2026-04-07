@@ -1,62 +1,62 @@
-import { BookOpen, Trophy, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
 
 const tags = ["TabNet", "XGBoost", "Healthcare Analytics", "Deep Learning", "ILPD Dataset"];
+const statPills = ["5–8% Better accuracy than XGBoost", "583 Patient records", "Healthcare AI"];
 
 const PublicationSection = () => (
-  <section id="publication" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
-    <div className="container mx-auto max-w-[1200px] relative z-10">
+  <section id="publication" className="fab-section">
+    <div className="fab-container">
+      <div className="fab-label">
+        <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>(04)</span>
+        <span className="font-display text-[13px]" style={{ color: "#888888" }}>Publication.</span>
+      </div>
+
       <AnimatedSection>
-        <p className="section-label">// RESEARCH</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Published Work</h2>
-        <p className="text-body text-sm mb-12">Yes, I've been published. My mom was impressed too.</p>
+        <h2 className="fab-heading mb-10">Publication.</h2>
       </AnimatedSection>
 
       <AnimatedSection delay={0.1}>
-        <div className="soft-card p-8 relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-steel" />
+        <div className="p-8 md:p-12" style={{ background: "#111111", border: "1px solid #222222" }}>
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8">
+            <div>
+              <span
+                className="inline-block font-mono-dm text-[12px] px-3 py-1 mb-4"
+                style={{ border: "1px solid #333333", borderRadius: 4, color: "#555555" }}
+              >
+                🏆 Conference Paper
+              </span>
 
-          <div className="flex items-start gap-5 flex-col sm:flex-row">
-            <div className="p-3 rounded-xl bg-steel/10 flex-shrink-0">
-              <BookOpen className="text-steel" size={28} />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-rose/50 text-slate font-medium">
-                  <Trophy size={12} /> Conference Paper — ICASET 2025
-                </span>
-              </div>
-
-              <h3 className="text-xl font-bold mb-2 text-slate">
+              <h3 className="font-display font-bold text-xl md:text-2xl text-[#f5f5f5] mb-3">
                 Liver Disease Prediction using Deep Learning: TabNet vs XGBoost
               </h3>
-              <p className="text-sm font-medium mb-1 text-steel">March 2025</p>
-              <p className="text-sm text-body mb-4">
-                Saktheeswar K, Venkatesan S · ICASET-2025
+
+              <p className="text-sm mb-1" style={{ color: "#888888" }}>
+                Saktheeswar K, Venkatesan S
+              </p>
+              <p className="font-mono-dm text-[12px] mb-6" style={{ color: "#555555" }}>
+                ICASET-2025 · March 2025
               </p>
 
-              <p className="text-sm text-body leading-relaxed mb-5">
-                Applied TabNet on the ILPD dataset (583 records) for early-stage liver disease
-                prediction — achieving 5–8% higher accuracy than XGBoost and improving model
-                interpretability through TabNet's feature-attention mechanism.
-                Presented at ICASET-2025.
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-5">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {tags.map((tag) => (
-                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-mint text-slate font-medium">
-                    {tag}
-                  </span>
+                  <span key={tag} className="fab-pill">{tag}</span>
                 ))}
               </div>
 
               <Link
                 to="/publications/liver-disease-tabnet"
-                className="inline-flex items-center gap-2 text-sm font-medium text-white bg-steel px-4 py-2 rounded-full hover:scale-105 transition-all"
+                className="inline-flex items-center gap-2 text-sm text-[#f5f5f5] hover:underline"
               >
-                View Full Case Study <ArrowRight size={14} />
+                Read More <ArrowRight size={14} />
               </Link>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              {statPills.map((s) => (
+                <span key={s} className="fab-pill text-center whitespace-nowrap">{s}</span>
+              ))}
             </div>
           </div>
         </div>

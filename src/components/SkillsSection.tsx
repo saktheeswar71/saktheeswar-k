@@ -1,68 +1,81 @@
-import { Brain, Code, Package, Wrench, Users } from "lucide-react";
+import { useState } from "react";
+import { Plus, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
-import noDataDino from "@/assets/no-data-dino.png";
 
 const skillGroups = [
-  { icon: Brain, category: "Technologies", skills: ["Data Science", "Data Analytics"] },
-  { icon: Code, category: "Languages", skills: ["Python", "SQL", "Java"] },
-  {
-    icon: Package,
-    category: "Frameworks & Libraries",
-    skills: ["Scikit-learn", "NumPy", "Pandas", "Matplotlib", "Seaborn", "ARIMA", "LSTM", "YOLOv7", "YOLOv8", "YOLOv9", "TabNet", "XGBoost"],
-  },
-  { icon: Wrench, category: "Tools", skills: ["VSCode", "PyCharm", "Power BI", "MySQL", "Git", "Jupyter", "HTML", "CSS"] },
-  { icon: Users, category: "Soft Skills", skills: ["Leadership", "Team Management", "Creativity"] },
+  { num: "001", category: "Technologies", skills: ["Data Science", "Data Analytics"], count: "2" },
+  { num: "002", category: "Languages", skills: ["Python", "SQL", "Java"], count: "3" },
+  { num: "003", category: "Frameworks & Libraries", skills: ["Scikit-learn", "NumPy", "Pandas", "Matplotlib", "Seaborn", "ARIMA", "LSTM", "YOLOv7", "YOLOv8", "YOLOv9", "TabNet", "XGBoost"], count: "12" },
+  { num: "004", category: "Tools & Platforms", skills: ["VSCode", "PyCharm", "Power BI", "MySQL", "Git", "Jupyter", "HTML", "CSS"], count: "8" },
+  { num: "005", category: "Soft Skills", skills: ["Leadership", "Team Management", "Creativity"], count: "3" },
 ];
 
-const SkillsSection = () => (
-  <section id="skills" className="section-padding relative bg-white">
-    <div className="container mx-auto max-w-[1200px] relative z-10">
-      <AnimatedSection>
-        <p className="section-label">// WHAT I WORK WITH</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Skills & Tools</h2>
-        <p className="text-body text-sm mb-12">Things I can actually do — not just list on a resume.</p>
-      </AnimatedSection>
+const SkillsSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {skillGroups.map((group, gi) => (
-          <AnimatedSection key={group.category} delay={gi * 0.1}>
-            <div className="rounded-[20px] p-6 h-full border border-sage" style={{ background: "hsl(150 30% 90%)" }}>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-xl bg-white">
-                  <group.icon className="text-steel" size={20} />
-                </div>
-                <h3 className="font-semibold text-sm uppercase tracking-wider text-slate">
-                  {group.category}
-                </h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 rounded-full text-sm font-medium bg-white text-slate hover:bg-rose transition-all duration-300 cursor-default"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        ))}
+  return (
+    <section id="skills" className="fab-section">
+      <div className="fab-container">
+        <div className="fab-label">
+          <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>(02)</span>
+          <span className="font-display text-[13px]" style={{ color: "#888888" }}>Skills.</span>
+        </div>
 
-        {/* Fun dino card */}
-        <AnimatedSection delay={0.5}>
-          <div className="rounded-[20px] p-6 h-full border border-sage bg-white flex flex-col items-center justify-center text-center">
-            <img
-              src={noDataDino}
-              alt="No Data Found - pixel art dinosaur"
-              className="w-48 h-auto mb-3"
-            />
-            <p className="text-body text-xs italic">what happens when I forget to import pandas</p>
-          </div>
+        <AnimatedSection>
+          <h2 className="fab-heading mb-10">Skills.</h2>
         </AnimatedSection>
+
+        <div>
+          {skillGroups.map((group, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <AnimatedSection key={group.category} delay={i * 0.06}>
+                <div
+                  className="fab-row cursor-pointer"
+                  style={{ borderBottom: i === skillGroups.length - 1 ? "none" : undefined }}
+                >
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between py-5 md:py-6 px-0"
+                  >
+                    <div className="flex items-center gap-6">
+                      <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>({group.num})</span>
+                      <span className="text-[18px] font-medium text-[#f5f5f5]">{group.category}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>{group.count}+</span>
+                      <span style={{ color: "#888888" }}>
+                        {isOpen ? <X size={18} /> : <Plus size={18} />}
+                      </span>
+                    </div>
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="flex flex-wrap gap-2 pb-6 px-0">
+                          {group.skills.map((skill) => (
+                            <span key={skill} className="fab-pill">{skill}</span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </AnimatedSection>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default SkillsSection;

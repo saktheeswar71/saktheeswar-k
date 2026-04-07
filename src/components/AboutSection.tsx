@@ -1,73 +1,112 @@
-import { BarChart3, Brain, Award, GraduationCap } from "lucide-react";
+import { motion } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
-import dataOverwhelm from "@/assets/data-overwhelm.png";
+import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { icon: BarChart3, label: "2+ Projects", sub: "Completed" },
-  { icon: Brain, label: "1 Publication", sub: "Research" },
-  { icon: Award, label: "3 Certifications", sub: "Earned" },
-  { icon: GraduationCap, label: "CGPA: 6.53", sub: "B.Tech AI & DS" },
+  { value: 2, suffix: "+", label: "Projects Completed" },
+  { value: 1, suffix: "", label: "Research Publication" },
+  { value: 3, suffix: "", label: "Certifications" },
+  { value: 6.53, suffix: "", label: "CGPA — B.Tech AI & DS", isDecimal: true },
 ];
 
+const CountUp = ({ target, suffix, isDecimal }: { target: number; suffix: string; isDecimal?: boolean }) => {
+  const [val, setVal] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const dur = 1200;
+          const start = performance.now();
+          const step = (now: number) => {
+            const t = Math.min((now - start) / dur, 1);
+            const ease = 1 - Math.pow(1 - t, 3);
+            setVal(isDecimal ? parseFloat((target * ease).toFixed(2)) : Math.floor(target * ease));
+            if (t < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, isDecimal]);
+
+  return (
+    <div ref={ref} className="font-mono-dm text-[32px] text-[#f5f5f5]">
+      {isDecimal ? val.toFixed(2) : val}{suffix}
+    </div>
+  );
+};
+
 const AboutSection = () => (
-  <section id="about" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
-    <div className="container mx-auto max-w-[1200px] relative z-10">
-      <AnimatedSection>
-        <p className="section-label">// WHO AM I</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-slate">
-          A little about me
-        </h2>
-      </AnimatedSection>
-
-      <div className="grid lg:grid-cols-2 gap-12 items-start">
-        {/* Left — pixel art illustration */}
-        <AnimatedSection delay={0.1}>
-          <div className="relative w-full max-w-sm mx-auto aspect-square rounded-[20px] bg-white shadow-sm flex items-center justify-center overflow-hidden p-6">
-            <img
-              src={dataOverwhelm}
-              alt="Pixel art of a data analyst surrounded by charts and code"
-              className="w-full h-full object-contain"
-            />
-            {/* Decorative elements */}
-            <div className="absolute top-4 right-4 w-12 h-12 border-2 border-steel/30 rounded-lg rotate-12" />
-            <div className="absolute bottom-6 left-6 w-8 h-8 border-2 border-rose/50 rounded-full" />
-          </div>
-          <p className="text-center text-body text-xs mt-3 italic">me, trying to explain my model to the professor</p>
-        </AnimatedSection>
-
-        {/* Right — text */}
-        <AnimatedSection delay={0.2}>
-          <div className="space-y-5 text-body text-sm md:text-base leading-relaxed">
-            <p>
-              I'm <span className="text-slate font-semibold">Saktheeswar</span>, a fresh B.Tech graduate from
-              St. Joseph's Institute of Technology, Chennai, where I spent four years studying Artificial
-              Intelligence and Data Science — and trying to understand why my models worked in the notebook
-              but not in production.
-            </p>
-            <p>
-              I specialize in data analysis, time-series forecasting, computer vision, and deep learning.
-              I've built ML pipelines, published research, and wrangled over a million data records without
-              losing my mind (mostly).
-            </p>
-            <p>
-              When I'm not training models, I'm probably overthinking a Power BI dashboard, or explaining
-              to someone why correlation doesn't equal causation — again.
-            </p>
-          </div>
-        </AnimatedSection>
+  <section id="about" className="fab-section">
+    <div className="fab-container">
+      {/* Label row */}
+      <div className="fab-label">
+        <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>(01)</span>
+        <span className="font-display text-[13px]" style={{ color: "#888888" }}>About.</span>
       </div>
 
-      {/* Stats row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
-        {stats.map((s, i) => (
-          <AnimatedSection key={s.label} delay={0.3 + i * 0.1}>
-            <div className="soft-card p-5 text-center" style={{ background: "hsl(28 93% 91%)" }}>
-              <s.icon className="mx-auto mb-3 text-steel" size={24} />
-              <p className="font-bold text-slate">{s.label}</p>
-              <p className="text-body text-xs mt-1">{s.sub}</p>
+      <div className="grid lg:grid-cols-[40%_1fr] gap-0">
+        {/* Left */}
+        <div className="lg:border-r" style={{ borderColor: "#222222" }}>
+          <div className="pr-0 lg:pr-12">
+            <AnimatedSection>
+              <h2 className="fab-heading mb-10">About.</h2>
+            </AnimatedSection>
+
+            {/* Stat rows */}
+            <div>
+              {stats.map((s) => (
+                <div
+                  key={s.label}
+                  className="py-4"
+                  style={{ borderBottom: "1px solid #222222" }}
+                >
+                  <CountUp target={s.value} suffix={s.suffix} isDecimal={s.isDecimal} />
+                  <p className="text-[13px] mt-1" style={{ color: "#888888" }}>{s.label}</p>
+                </div>
+              ))}
             </div>
+          </div>
+        </div>
+
+        {/* Right */}
+        <div className="pl-0 lg:pl-12 pt-8 lg:pt-0">
+          <AnimatedSection delay={0.15}>
+            <div className="space-y-6" style={{ color: "#888888", fontWeight: 300, fontSize: 16, lineHeight: 1.8 }}>
+              <p>
+                I'm <span className="text-[#f5f5f5] font-normal">Saktheeswar K</span>, a B.Tech graduate in Artificial
+                Intelligence and Data Science (2021–2025) from
+                St. Joseph's Institute of Technology, Chennai.
+              </p>
+              <p>
+                I specialize in data analysis, machine learning,
+                and deep learning — transforming complex datasets
+                into clear, actionable decisions.
+              </p>
+              <p>
+                When I'm not training models, I'm probably
+                overthinking a Power BI dashboard or explaining
+                to someone why correlation ≠ causation — again.
+              </p>
+            </div>
+
+            <a
+              href="#projects"
+              className="inline-block mt-8 text-sm text-[#f5f5f5] hover:underline transition-all"
+            >
+              Read full story →
+            </a>
           </AnimatedSection>
-        ))}
+        </div>
       </div>
     </div>
   </section>
