@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import MarqueeTicker from "@/components/MarqueeTicker";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -12,10 +11,9 @@ import Footer from "@/components/Footer";
 import ChatbotWidget from "@/components/ChatbotWidget";
 
 const Index = () => (
-  <div className="min-h-screen page-enter" style={{ background: "#0a0a0a" }}>
+  <div className="min-h-screen bg-background page-enter">
     <Navbar />
     <HeroSection />
-    <MarqueeTicker />
     <AboutSection />
     <SkillsSection />
     <ProjectsSection />

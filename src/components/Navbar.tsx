@@ -9,20 +9,26 @@ const navItems = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Publication", href: "#publication" },
+  { label: "Playground", href: "/playground", isRoute: true },
   { label: "Experience", href: "#experience" },
-  { label: "F1 🏎️", href: "/playground", isRoute: true },
   { label: "Contact", href: "#contact" },
 ];
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#");
   const location = useLocation();
-  const isPlayground = location.pathname === "/playground";
+
+  const isPlaygroundActive = location.pathname === "/playground";
 
   useEffect(() => {
     const onScroll = () => {
-      const sections = navItems.filter(i => !i.isRoute).map(i => i.href.replace("#", "")).filter(Boolean);
+      setScrolled(window.scrollY > 50);
+      const sections = navItems
+        .filter(i => !i.isRoute)
+        .map(i => i.href.replace("#", ""))
+        .filter(Boolean);
       let current = "#";
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -35,147 +41,118 @@ const Navbar = () => {
   }, []);
 
   const isActive = (item: typeof navItems[0]) => {
-    if (item.isRoute) return isPlayground;
-    if (isPlayground) return false;
+    if (item.isRoute) return isPlaygroundActive;
+    if (isPlaygroundActive) return false;
     return activeSection === item.href;
   };
 
   return (
-    <>
-      <motion.nav
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className="fixed top-0 left-0 right-0 z-50"
-        style={{ background: "#0a0a0a", borderBottom: "1px solid #222222", height: 64 }}
-      >
-        <div className="fab-container flex items-center justify-between h-full px-5 md:px-10">
-          {/* Logo */}
-          <Link to="/" className="font-display italic text-[22px] text-[#f5f5f5] shrink-0">
-            SK
-          </Link>
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+      }`}
+      style={{ borderBottom: scrolled ? "1px solid hsl(100 12% 81%)" : "none" }}
+    >
+      <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
+        <Link to="/" className="text-lg md:text-xl font-bold text-slate whitespace-nowrap shrink-0">Saktheeswar K</Link>
 
-          {/* Center nav links */}
-          <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => {
-              const active = isActive(item);
-              const el = item.isRoute ? (
+        <div className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => {
+            const active = isActive(item);
+            if (item.isRoute) {
+              return (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="relative text-sm tracking-[0.02em] transition-colors duration-300"
-                  style={{ color: active ? "#f5f5f5" : "#888888", fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 14 }}
+                  className={`text-sm font-medium transition-colors relative pb-1 ${
+                    active ? "text-steel" : "text-slate hover:text-steel"
+                  }`}
                 >
                   {item.label}
                   {active && (
                     <motion.span
-                      layoutId="nav-dot"
-                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-                      style={{ background: "#e8343a" }}
+                      layoutId="nav-underline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
                     />
                   )}
                 </Link>
-              ) : (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="relative text-sm tracking-[0.02em] transition-colors duration-300 hover:text-[#f5f5f5]"
-                  style={{ color: active ? "#f5f5f5" : "#888888", fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 14 }}
-                >
-                  {item.label}
-                  {active && (
-                    <motion.span
-                      layoutId="nav-dot"
-                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-                      style={{ background: "#e8343a" }}
-                    />
-                  )}
-                </a>
               );
-              return el;
-            })}
-          </div>
-
-          {/* Right: availability pill */}
-          <div className="hidden md:flex items-center">
-            <span
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs tracking-[0.02em] transition-all duration-200 hover:border-[#f5f5f5]"
-              style={{
-                border: "1px solid #222222",
-                color: "#888888",
-                fontFamily: "'DM Mono', monospace",
-                borderRadius: 20,
-              }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: "#4ade80" }} />
-              Available for work
-            </span>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden text-[#f5f5f5]"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu size={24} />
-          </button>
+            }
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium transition-colors relative pb-1 ${
+                  active ? "text-steel" : "text-slate hover:text-steel"
+                }`}
+              >
+                {item.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-steel"
+                  />
+                )}
+              </a>
+            );
+          })}
         </div>
-      </motion.nav>
 
-      {/* Full-screen mobile menu */}
+        <button
+          className="md:hidden text-slate"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] flex flex-col"
-            style={{ background: "#0a0a0a" }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white/95 backdrop-blur-md border-t border-sage"
           >
-            <div className="flex items-center justify-between px-5 h-16">
-              <span className="font-display italic text-[22px] text-[#f5f5f5]">SK</span>
-              <button onClick={() => setMobileOpen(false)} className="text-[#f5f5f5]" aria-label="Close menu">
-                <X size={24} />
-              </button>
-            </div>
-            <div className="flex-1 flex flex-col justify-center px-10 gap-6">
-              {navItems.map((item, i) => {
+            <div className="flex flex-col gap-4 p-6">
+              {navItems.map((item) => {
                 const active = isActive(item);
+                if (item.isRoute) {
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-sm font-medium transition-colors ${
+                        active ? "text-steel" : "text-slate hover:text-steel"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
                 return (
-                  <motion.div
+                  <a
                     key={item.href}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.08, duration: 0.3 }}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`text-sm font-medium transition-colors ${
+                      active ? "text-steel" : "text-slate hover:text-steel"
+                    }`}
                   >
-                    {item.isRoute ? (
-                      <Link
-                        to={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="font-display text-[32px] transition-colors duration-300"
-                        style={{ color: active ? "#f5f5f5" : "#555555" }}
-                      >
-                        {item.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="font-display text-[32px] transition-colors duration-300"
-                        style={{ color: active ? "#f5f5f5" : "#555555" }}
-                      >
-                        {item.label}
-                      </a>
-                    )}
-                  </motion.div>
+                    {item.label}
+                  </a>
                 );
               })}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </motion.nav>
   );
 };
 

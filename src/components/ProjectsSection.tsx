@@ -1,92 +1,136 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
+
+type Category = "All" | "Machine Learning" | "Computer Vision" | "Forecasting";
 
 const projects = [
   {
     title: "Netflix Subscriptions Forecasting",
     slug: "netflix-forecasting",
     date: "Feb 2024",
-    tech: ["Python", "ARIMA", "LSTM", "Pandas"],
+    tag: "Machine Learning • Forecasting",
+    description:
+      "Because who wouldn't want to predict the future of Netflix? Built ARIMA and LSTM models on subscription data, achieving 10–15% better forecast accuracy — and a reusable pipeline that does 30–40% of the boring work automatically.",
+    impacts: ["18% better reliability", "1M+ records", "40% less manual effort"],
+    tech: ["Python", "NumPy", "Pandas", "Matplotlib", "Seaborn", "ARIMA", "LSTM", "Git"],
+    github: "https://github.com/saktheeswar71",
+    categories: ["Machine Learning", "Forecasting"] as Category[],
+    featured: true,
   },
   {
     title: "Wildlife Animal Classification",
     slug: "wildlife-classification",
     date: "Mar 2024",
-    tech: ["YOLOv7", "YOLOv8", "YOLOv9", "Python"],
+    tag: "Computer Vision • Deep Learning",
+    description:
+      "Taught a computer to identify animals from camera trap photos. Used YOLOv7, v8, and v9 — because one YOLO model just wasn't dramatic enough. Achieved 88% accuracy on 2096 images over 150 epochs.",
+    impacts: ["88% accuracy", "2096 images", "25% better robustness"],
+    tech: ["Python", "YOLOv7", "YOLOv8", "YOLOv9", "NumPy", "Pandas", "Git"],
+    github: "https://github.com/saktheeswar71",
+    categories: ["Machine Learning", "Computer Vision"] as Category[],
+    featured: false,
   },
 ];
 
+const filters: Category[] = ["All", "Machine Learning", "Computer Vision", "Forecasting"];
+
 const ProjectsSection = () => {
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [active, setActive] = useState<Category>("All");
+  const filtered = active === "All" ? projects : projects.filter((p) => p.categories.includes(active));
 
   return (
-    <section id="projects" className="fab-section">
-      <div className="fab-container">
-        <div className="fab-label">
-          <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>(03)</span>
-          <span className="font-display text-[13px]" style={{ color: "#888888" }}>Projects.</span>
-        </div>
+    <section id="projects" className="section-padding relative" style={{ background: "hsl(28 93% 91%)" }}>
+      <div className="container mx-auto max-w-[1200px] relative z-10">
+        <AnimatedSection>
+          <p className="section-label">// THINGS I BUILT</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Featured Projects</h2>
+          <p className="text-body text-sm mb-8">Real projects. Real data. Real results. (No lorem ipsum was harmed.)</p>
+        </AnimatedSection>
 
-        <div className="flex items-end justify-between mb-10">
-          <AnimatedSection>
-            <h2 className="fab-heading">Projects.</h2>
-          </AnimatedSection>
-          <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>({projects.length})</span>
-        </div>
-
-        <div>
-          {projects.map((proj, i) => (
-            <AnimatedSection key={proj.slug} delay={i * 0.06}>
-              <Link
-                to={`/projects/${proj.slug}`}
-                className="fab-row block py-6 md:py-8 group relative"
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
+        <AnimatedSection delay={0.1}>
+          <div className="flex flex-wrap gap-3 mb-10">
+            {filters.map((f) => (
+              <button
+                key={f}
+                onClick={() => setActive(f)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  active === f
+                    ? "bg-steel text-white"
+                    : "bg-white text-slate hover:bg-rose/50"
+                }`}
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
-                    <span className="font-mono-dm text-[12px] shrink-0" style={{ color: "#555555" }}>{proj.date}</span>
-                    <span
-                      className="font-display font-bold italic text-xl md:text-[28px] transition-colors duration-200"
-                      style={{ color: hoveredIdx === i ? "#e8343a" : "#f5f5f5" }}
-                    >
-                      {proj.title}
-                    </span>
-                  </div>
+                {f}
+              </button>
+            ))}
+          </div>
+        </AnimatedSection>
 
-                  <div className="flex items-center gap-4">
-                    <div className="hidden md:flex gap-2">
-                      {proj.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="font-mono-dm text-[12px] px-2.5 py-1"
-                          style={{ border: "1px solid #333333", borderRadius: 4, color: "#555555" }}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <ArrowRight
-                      size={18}
-                      className="transition-colors duration-200 shrink-0"
-                      style={{ color: hoveredIdx === i ? "#f5f5f5" : "#555555" }}
-                    />
-                  </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            {filtered.map((proj) => (
+              <div
+                key={proj.title}
+                className={`soft-card p-6 flex flex-col ${proj.featured ? "md:col-span-2" : ""}`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-medium text-body">{proj.date}</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-rose/50 text-slate font-medium">
+                    {proj.tag}
+                  </span>
                 </div>
-              </Link>
-            </AnimatedSection>
-          ))}
-          {/* Bottom border */}
-          <div style={{ borderTop: "1px solid #222222" }} />
-        </div>
+                <h3 className="text-lg font-bold mb-3 text-slate">{proj.title}</h3>
+                <p className="text-body text-sm mb-4 leading-relaxed">{proj.description}</p>
 
-        <div className="mt-6">
-          <a href="#projects" className="text-sm transition-colors duration-200 hover:text-[#f5f5f5]" style={{ color: "#888888" }}>
-            All projects ({projects.length}) →
-          </a>
-        </div>
+                {/* Impact pills */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {proj.impacts.map((impact) => (
+                    <span
+                      key={impact}
+                      className="text-xs font-semibold px-3 py-1 rounded-full bg-steel/10 text-steel"
+                    >
+                      {impact}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {proj.tech.map((t) => (
+                    <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-mint text-slate font-medium">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  <Link
+                    to={`/projects/${proj.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-white bg-steel px-4 py-2 rounded-full hover:scale-105 transition-all"
+                  >
+                    Case Study <ArrowRight size={14} />
+                  </Link>
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-steel hover:text-slate transition-colors"
+                  >
+                    <Github size={16} /> GitHub 🐙
+                  </a>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

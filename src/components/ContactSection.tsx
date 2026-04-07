@@ -1,36 +1,53 @@
 import { useState } from "react";
-import { Send, Loader2 } from "lucide-react";
+import { Mail, Linkedin, Github, Send, Phone, MapPin, Loader2 } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import contactRobot from "@/assets/contact-robot.png";
+
+const contactInfo = [
+  { icon: Mail, label: "saktheeswar71.k@gmail.com", href: "mailto:saktheeswar71.k@gmail.com" },
+  { icon: Phone, label: "+91 8939703436", href: "tel:+918939703436" },
+  { icon: MapPin, label: "Chennai, Tamil Nadu, India", href: undefined },
+  { icon: Linkedin, label: "linkedin.com/in/saktheeswar-k", href: "https://www.linkedin.com/in/saktheeswar-k-a888b61a7/" },
+  { icon: Github, label: "github.com/saktheeswar71", href: "https://github.com/saktheeswar71" },
+];
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [focused, setFocused] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [lastSent, setLastSent] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       toast.error("Please fill in all required fields.");
       return;
     }
+
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       toast.error("Please enter a valid email address.");
       return;
     }
+
+    // Simple spam protection: 30s cooldown
     if (Date.now() - lastSent < 30000) {
       toast.error("Please wait a moment before sending another message.");
       return;
     }
+
     setSending(true);
     try {
       const { data, error } = await supabase.functions.invoke("send-contact-email", {
         body: { name: form.name.trim(), email: form.email.trim(), message: form.message.trim() },
       });
+
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      toast.success("Message sent! I'll get back to you soon.");
+
+      toast.success("Message sent! I'll get back to you before my next git commit. 🎉");
       setForm({ name: "", email: "", message: "" });
       setLastSent(Date.now());
     } catch (err) {
@@ -42,117 +59,102 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="fab-section">
-      <div className="fab-container">
-        <div className="fab-label">
-          <span className="font-mono-dm text-[12px]" style={{ color: "#555555" }}>(07)</span>
-          <span className="font-display text-[13px]" style={{ color: "#888888" }}>Contact.</span>
+    <section id="contact" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
+      <div className="container mx-auto max-w-[1200px] relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+          <AnimatedSection>
+            <p className="section-label">// LET'S TALK</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Get In Touch</h2>
+            <p className="text-body text-sm">
+              Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <img src={contactRobot} alt="Pixel art robot" className="w-32 h-32 object-contain hidden md:block" />
+          </AnimatedSection>
         </div>
 
-        {/* Large CTA heading */}
-        <AnimatedSection>
-          <div className="text-center mb-12">
-            <h2 className="font-display leading-[0.95] mb-6" style={{ fontSize: "clamp(48px, 8vw, 120px)", color: "#f5f5f5" }}>
-              <span className="font-bold">Let's work</span>
-              <br />
-              <span className="italic font-normal">together.</span>
-            </h2>
-            <p className="text-base max-w-md mx-auto mb-8" style={{ color: "#888888", fontWeight: 300 }}>
-              Open to opportunities, collaborations, and research discussions.
-            </p>
-          </div>
-        </AnimatedSection>
+        <div className="grid md:grid-cols-2 gap-8">
+          <AnimatedSection delay={0.1}>
+            <div className="space-y-4">
+              {contactInfo.map(({ icon: Icon, label, href }) => {
+                const content = (
+                  <div className="soft-card p-4 flex items-center gap-4">
+                    <div className="p-2.5 rounded-xl bg-steel/10">
+                      <Icon className="text-steel" size={18} />
+                    </div>
+                    <span className="text-sm text-body">{label}</span>
+                  </div>
+                );
+                return href ? (
+                  <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} className="block">
+                    {content}
+                  </a>
+                ) : (
+                  <div key={label}>{content}</div>
+                );
+              })}
+            </div>
+          </AnimatedSection>
 
-        {/* Contact form */}
-        <AnimatedSection delay={0.1}>
-          <form onSubmit={handleSubmit} className="max-w-lg mx-auto mb-16">
-            {[
-              { key: "name", label: "Name", type: "text" },
-              { key: "email", label: "Email", type: "email" },
-            ].map((f) => (
-              <div key={f.key} className="mb-4">
-                <label className="text-[13px] uppercase tracking-[0.05em] mb-2 block" style={{ color: "#555555" }}>
-                  {f.label}
+          <AnimatedSection delay={0.2}>
+            <form onSubmit={handleSubmit} className="soft-card p-8 space-y-5">
+              {[
+                { key: "name", label: "Name", type: "text" },
+                { key: "email", label: "Email", type: "email" },
+              ].map((f) => (
+                <div key={f.key}>
+                  <label className="text-xs font-medium text-body mb-1.5 block">
+                    {f.label} <span className="text-steel">*</span>
+                  </label>
+                  <input
+                    type={f.type}
+                    maxLength={f.key === "email" ? 255 : 100}
+                    value={form[f.key as keyof typeof form]}
+                    onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
+                    onFocus={() => setFocused(f.key)}
+                    onBlur={() => setFocused(null)}
+                    className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300"
+                    style={{
+                      borderColor: focused === f.key ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
+                      boxShadow: focused === f.key ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
+                    }}
+                    placeholder={f.label}
+                    required
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="text-xs font-medium text-body mb-1.5 block">
+                  Message <span className="text-steel">*</span>
                 </label>
-                <input
-                  type={f.type}
-                  maxLength={f.key === "email" ? 255 : 100}
-                  value={form[f.key as keyof typeof form]}
-                  onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
-                  className="w-full px-4 py-3 text-sm text-[#f5f5f5] focus:outline-none transition-colors"
-                  style={{ background: "#111111", border: "1px solid #222222" }}
-                  placeholder={f.label}
+                <textarea
+                  rows={4}
+                  maxLength={1000}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  onFocus={() => setFocused("message")}
+                  onBlur={() => setFocused(null)}
+                  className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300 resize-none"
+                  style={{
+                    borderColor: focused === "message" ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
+                    boxShadow: focused === "message" ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
+                  }}
+                  placeholder="Your message..."
                   required
                 />
               </div>
-            ))}
-            <div className="mb-6">
-              <label className="text-[13px] uppercase tracking-[0.05em] mb-2 block" style={{ color: "#555555" }}>
-                Message
-              </label>
-              <textarea
-                rows={4}
-                maxLength={1000}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full px-4 py-3 text-sm text-[#f5f5f5] focus:outline-none resize-none transition-colors"
-                style={{ background: "#111111", border: "1px solid #222222" }}
-                placeholder="Your message..."
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={sending}
-              className="fab-btn w-full flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-              {sending ? "Sending..." : "Get in touch →"}
-            </button>
-          </form>
-        </AnimatedSection>
-
-        {/* 3-column info */}
-        <AnimatedSection delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {[
-              {
-                label: "Email",
-                content: (
-                  <a href="mailto:saktheeswar71.k@gmail.com" className="text-sm text-[#f5f5f5] hover:underline">
-                    saktheeswar71.k@gmail.com
-                  </a>
-                ),
-              },
-              {
-                label: "Based in",
-                content: <span className="text-sm text-[#f5f5f5]">Chennai, Tamil Nadu, India</span>,
-              },
-              {
-                label: "Social",
-                content: (
-                  <span className="text-sm text-[#f5f5f5]">
-                    <a href="https://github.com/saktheeswar71" target="_blank" rel="noopener noreferrer" className="hover:underline">GitHub</a>
-                    <span className="mx-2" style={{ color: "#555555" }}>·</span>
-                    <a href="https://www.linkedin.com/in/saktheeswar-k-a888b61a7/" target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a>
-                  </span>
-                ),
-              },
-            ].map((item, i) => (
-              <div
-                key={item.label}
-                className="py-6 px-0 md:px-6"
-                style={{
-                  borderTop: "1px solid #222222",
-                  borderLeft: i > 0 ? "1px solid #222222" : "none",
-                }}
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-sm disabled:opacity-60"
               >
-                <p className="text-[13px] uppercase tracking-[0.05em] mb-2" style={{ color: "#555555" }}>{item.label}</p>
-                {item.content}
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
+                {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                {sending ? "Sending..." : "Send It 🚀"}
+              </button>
+            </form>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
   );
