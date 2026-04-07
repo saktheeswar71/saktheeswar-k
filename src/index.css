@@ -4,42 +4,46 @@
 
 @layer base {
   :root {
-    --background: 28 75% 95%;
-    --foreground: 140 12% 40%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 140 12% 40%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 140 12% 40%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 193 46% 72%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 150 22% 82%;
-    --secondary-foreground: 140 12% 40%;
+    --secondary: 0 0% 7%;
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 150 22% 82%;
-    --muted-foreground: 215 14% 45%;
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 53%;
 
-    --accent: 15 92% 91%;
-    --accent-foreground: 140 12% 40%;
+    --accent: 357 78% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 357 78% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 100 12% 81%;
-    --input: 100 12% 81%;
-    --ring: 193 46% 72%;
+    --border: 0 0% 13%;
+    --input: 0 0% 13%;
+    --ring: 0 0% 96%;
 
-    --radius: 1.25rem;
+    --radius: 0rem;
 
-    --rose: 14 62% 82%;
-    --sage: 100 12% 81%;
-    --slate: 140 12% 40%;
-    --peach: 28 93% 91%;
-    --mint: 150 30% 90%;
-    --steel: 193 46% 72%;
+    --fab-bg: 0 0% 4%;
+    --fab-surface: 0 0% 7%;
+    --fab-card: 0 0% 9%;
+    --fab-hover: 0 0% 12%;
+    --fab-border: 0 0% 13%;
+    --fab-border-light: 0 0% 18%;
+    --fab-text: 0 0% 96%;
+    --fab-text-muted: 0 0% 53%;
+    --fab-text-dim: 0 0% 33%;
+    --fab-red: 357 78% 55%;
   }
 }
 
@@ -49,9 +53,10 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background: linear-gradient(135deg, hsl(28 93% 91%) 0%, hsl(150 30% 90%) 50%, hsl(28 93% 91%) 100%);
-    background-attachment: fixed;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #f5f5f5;
   }
 
   html {
@@ -60,104 +65,112 @@
 }
 
 @layer utilities {
-  .text-heading {
-    color: hsl(var(--slate));
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
-  .text-body {
-    color: #4a5568;
+  .font-mono-dm {
+    font-family: 'DM Mono', monospace;
   }
 
-  .section-padding {
-    @apply py-20 md:py-[80px] px-4 md:px-8;
+  .fab-section {
+    @apply py-[60px] md:py-[120px] px-5 md:px-10;
+    border-top: 1px solid #222222;
   }
 
-  .section-label {
-    @apply text-xs font-semibold uppercase tracking-[0.2em] mb-4;
-    color: hsl(var(--steel));
+  .fab-container {
+    @apply mx-auto max-w-[1280px];
   }
 
-  .btn-primary {
-    @apply font-semibold rounded-full transition-all duration-300 px-6 py-3 text-sm;
-    background: hsl(var(--steel));
-    color: white;
+  .fab-label {
+    @apply flex items-center justify-between mb-8 md:mb-12;
   }
 
-  .btn-primary:hover {
-    transform: scale(1.04);
-    box-shadow: 0 8px 25px -5px hsla(193, 46%, 72%, 0.4);
+  .fab-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply font-bold leading-[0.95];
+    font-size: clamp(36px, 5vw, 72px);
+    color: #f5f5f5;
   }
 
-  .btn-outline {
-    @apply font-semibold rounded-full transition-all duration-300 px-6 py-3 text-sm;
-    border: 2px solid hsl(var(--slate));
-    color: hsl(var(--slate));
+  .fab-row {
+    border-top: 1px solid #222222;
+    @apply transition-colors duration-150;
   }
 
-  .btn-outline:hover {
-    background: hsl(var(--slate));
-    color: white;
+  .fab-row:hover {
+    background: #111111;
   }
 
-  .soft-card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 2px 20px -5px rgba(0,0,0,0.06);
-    @apply transition-all duration-300;
+  .fab-pill {
+    border: 1px solid #333333;
+    @apply px-3.5 py-1.5 text-xs transition-all duration-150;
+    border-radius: 4px;
+    color: #888888;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
   }
 
-  .soft-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px -8px rgba(0,0,0,0.1);
+  .fab-pill:hover {
+    border-color: #f5f5f5;
+    color: #f5f5f5;
   }
 
-  .card-hover {
-    @apply transition-all duration-300;
+  .fab-btn {
+    border: 1px solid #f5f5f5;
+    @apply px-7 py-3.5 text-sm font-normal transition-all duration-200;
+    color: #f5f5f5;
+    background: transparent;
   }
 
-  .card-hover:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px -8px rgba(0,0,0,0.1);
+  .fab-btn:hover {
+    background: #f5f5f5;
+    color: #0a0a0a;
+  }
+
+  .fab-btn-muted {
+    border: 1px solid #333333;
+    @apply px-7 py-3.5 text-sm font-normal transition-all duration-200;
+    color: #888888;
+    background: transparent;
+  }
+
+  .fab-btn-muted:hover {
+    border-color: #f5f5f5;
+    color: #f5f5f5;
   }
 }
 
-/* Page load animation */
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pulse for availability dot */
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+/* Page load */
 .page-enter {
   animation: page-fade 0.6s ease-out;
 }
 
 @keyframes page-fade {
-  0% { opacity: 0; transform: scale(0.98); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes blob-float {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -20px) scale(1.1); }
-  100% { transform: translate(-20px, 20px) scale(0.95); }
-}
-
-.blob-peach {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, hsla(14, 62%, 82%, 0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: blob-float 8s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.blob-mint {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, hsla(150, 30%, 90%, 0.4) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: blob-float 10s ease-in-out infinite alternate-reverse;
-  pointer-events: none;
-}
-
-@keyframes pulse-dot {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2); opacity: 0; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

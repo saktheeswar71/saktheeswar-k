@@ -1,47 +1,40 @@
-import { Github, Linkedin, Mail } from "lucide-react";
-import noInternetDino from "@/assets/no-internet-dino.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => (
-  <footer className="py-12 px-4" style={{ background: "hsl(140 12% 40%)" }}>
-    <div className="container mx-auto max-w-[1200px] text-center">
-      <h3 className="text-xl font-bold text-white mb-2">Saktheeswar K</h3>
-      <p className="text-white/70 text-sm mb-6">Data Analyst & AI Graduate • Chennai</p>
+  <footer style={{ borderTop: "1px solid #222222", background: "#0a0a0a" }}>
+    <div className="fab-container px-5 md:px-10 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        {/* Left */}
+        <div>
+          <p className="text-sm font-medium text-[#f5f5f5] mb-1">Saktheeswar K</p>
+          <p className="text-[13px]" style={{ color: "#555555" }}>Data Analyst & AI Graduate</p>
+        </div>
 
-      <div className="flex justify-center gap-4 mb-8">
-        {[
-          { icon: Github, href: "https://github.com/saktheeswar71", label: "GitHub" },
-          { icon: Linkedin, href: "https://www.linkedin.com/in/saktheeswar-k-a888b61a7/", label: "LinkedIn" },
-          { icon: Mail, href: "mailto:saktheeswar71.k@gmail.com", label: "Email" },
-        ].map(({ icon: Icon, href, label }) => (
-          <a
-            key={label}
-            href={href}
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 text-white/70 hover:text-steel"
-            aria-label={label}
-          >
-            <Icon size={18} />
-          </a>
-        ))}
+        {/* Center */}
+        <div className="flex flex-wrap gap-4 justify-start md:justify-center">
+          {[
+            { label: "Home", href: "/" },
+            { label: "About", href: "/#about" },
+            { label: "Projects", href: "/#projects" },
+            { label: "Contact", href: "/#contact" },
+          ].map((l) => (
+            <Link
+              key={l.label}
+              to={l.href}
+              className="text-[13px] hover:text-[#f5f5f5] transition-colors"
+              style={{ color: "#555555" }}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Right */}
+        <div className="text-left md:text-right">
+          <p className="text-[13px]" style={{ color: "#555555" }}>© 2025 Saktheeswar K</p>
+          <p className="text-[11px] mt-1" style={{ color: "#333333" }}>Built with React + Lovable</p>
+        </div>
       </div>
-
-      {/* Fun dino easter egg */}
-      <div className="mb-6">
-        <img
-          src={noInternetDino}
-          alt="No Internet dino - try touching some plants"
-          className="w-48 h-auto mx-auto rounded-xl opacity-60 hover:opacity-100 transition-opacity duration-500"
-        />
-        <p className="text-white/30 text-[10px] mt-2">↑ easter egg for scrollers</p>
-      </div>
-
-      <p className="text-white/60 text-xs mb-1">
-        Built with way too many cups of coffee ☕ and React + Lovable
-      </p>
-      <p className="text-white/40 text-xs">
-        © 2025 Saktheeswar K — No neural networks were overfitted in the making of this site.
-      </p>
     </div>
   </footer>
 );
