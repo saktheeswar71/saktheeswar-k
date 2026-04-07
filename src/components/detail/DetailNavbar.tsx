@@ -12,23 +12,22 @@ const DetailNavbar = ({ backLabel, backTo }: DetailNavbarProps) => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm"
-      style={{ borderBottom: "1px solid hsl(100 12% 81%)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{ background: "#0a0a0a", borderBottom: "1px solid #222222", height: 64 }}
     >
-      <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
+      <div className="fab-container flex items-center justify-between h-full px-5 md:px-10">
         <button
           onClick={() => navigate(backTo)}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate hover:text-steel transition-colors"
+          className="inline-flex items-center gap-2 text-sm transition-colors hover:text-[#f5f5f5]"
+          style={{ color: "#888888" }}
         >
           <ArrowLeft size={18} />
           {backLabel}
         </button>
-        <a href="/" className="text-lg font-bold text-slate">
-          Saktheeswar K
-        </a>
+        <a href="/" className="font-display italic text-[22px] text-[#f5f5f5]">SK</a>
       </div>
     </motion.nav>
   );
