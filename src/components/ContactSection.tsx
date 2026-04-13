@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Mail, Linkedin, Github, Send, Phone, MapPin, Loader2 } from "lucide-react";
+import { Mail, Linkedin, Github, Send, Phone, MapPin, Loader2, ArrowUpRight } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import contactRobot from "@/assets/contact-robot.png";
 
-const contactInfo = [
+const contactLinks = [
   { icon: Mail, label: "saktheeswar71.k@gmail.com", href: "mailto:saktheeswar71.k@gmail.com" },
   { icon: Phone, label: "+91 8939703436", href: "tel:+918939703436" },
-  { icon: MapPin, label: "Chennai, Tamil Nadu, India", href: undefined },
-  { icon: Linkedin, label: "linkedin.com/in/saktheeswar-k", href: "https://www.linkedin.com/in/saktheeswar-k-a888b61a7/" },
-  { icon: Github, label: "github.com/saktheeswar71", href: "https://github.com/saktheeswar71" },
+  { icon: MapPin, label: "Chennai, Tamil Nadu, India" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/saktheeswar-k-a888b61a7/" },
+  { icon: Github, label: "GitHub", href: "https://github.com/saktheeswar71" },
 ];
 
 const ContactSection = () => {
@@ -21,33 +20,26 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       toast.error("Please fill in all required fields.");
       return;
     }
-
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       toast.error("Please enter a valid email address.");
       return;
     }
-
-    // Simple spam protection: 30s cooldown
     if (Date.now() - lastSent < 30000) {
       toast.error("Please wait a moment before sending another message.");
       return;
     }
-
     setSending(true);
     try {
       const { data, error } = await supabase.functions.invoke("send-contact-email", {
         body: { name: form.name.trim(), email: form.email.trim(), message: form.message.trim() },
       });
-
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-
-      toast.success("Message sent! I'll get back to you before my next git commit. 🎉");
+      toast.success("Message sent! I'll get back to you soon. 🎉");
       setForm({ name: "", email: "", message: "" });
       setLastSent(Date.now());
     } catch (err) {
@@ -58,53 +50,58 @@ const ContactSection = () => {
     }
   };
 
-  return (
-    <section id="contact" className="section-padding relative" style={{ background: "hsl(150 30% 90%)" }}>
-      <div className="container mx-auto max-w-[1200px] relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
-          <AnimatedSection>
-            <p className="section-label">// LET'S TALK</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-slate">Get In Touch</h2>
-            <p className="text-body text-sm">
-              Whether it's a job, a collab, or just to debate which YOLO model is best — I'm here for it.
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1}>
-            <img src={contactRobot} alt="Pixel art robot" className="w-32 h-32 object-contain hidden md:block" />
-          </AnimatedSection>
-        </div>
+  const inputClass = (key: string) =>
+    `w-full px-4 py-3 rounded-xl bg-white/80 backdrop-blur-sm border text-slate text-sm focus:outline-none transition-all duration-300 ${
+      focused === key ? "border-steel shadow-[0_0_0_3px_hsla(193,46%,72%,0.12)]" : "border-sage/40"
+    }`;
 
-        <div className="grid md:grid-cols-2 gap-8">
+  return (
+    <section id="contact" className="section-padding relative">
+      <div className="container mx-auto max-w-[1200px] relative z-10">
+        <AnimatedSection>
+          <div className="text-center max-w-xl mx-auto mb-14">
+            <p className="section-label">Contact</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate tracking-tight">
+              Let's build something impactful together
+            </h2>
+            <p className="text-body text-sm">
+              Have a project in mind or just want to connect? I'd love to hear from you.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <AnimatedSection delay={0.1}>
-            <div className="space-y-4">
-              {contactInfo.map(({ icon: Icon, label, href }) => {
-                const content = (
-                  <div className="soft-card p-4 flex items-center gap-4">
-                    <div className="p-2.5 rounded-xl bg-steel/10">
-                      <Icon className="text-steel" size={18} />
+            <div className="space-y-3">
+              {contactLinks.map(({ icon: Icon, label, href }) => {
+                const inner = (
+                  <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-sage/30 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                    <div className="w-9 h-9 rounded-xl bg-steel/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="text-steel" size={16} />
                     </div>
-                    <span className="text-sm text-body">{label}</span>
+                    <span className="text-sm text-slate/80 font-medium">{label}</span>
+                    {href && <ArrowUpRight size={14} className="ml-auto text-steel/40" />}
                   </div>
                 );
                 return href ? (
                   <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} className="block">
-                    {content}
+                    {inner}
                   </a>
                 ) : (
-                  <div key={label}>{content}</div>
+                  <div key={label}>{inner}</div>
                 );
               })}
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <form onSubmit={handleSubmit} className="soft-card p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="rounded-2xl p-7 bg-white/70 backdrop-blur-sm border border-sage/30 shadow-sm space-y-4">
               {[
                 { key: "name", label: "Name", type: "text" },
                 { key: "email", label: "Email", type: "email" },
               ].map((f) => (
                 <div key={f.key}>
-                  <label className="text-xs font-medium text-body mb-1.5 block">
+                  <label className="text-xs font-medium text-slate/60 mb-1.5 block">
                     {f.label} <span className="text-steel">*</span>
                   </label>
                   <input
@@ -114,18 +111,14 @@ const ContactSection = () => {
                     onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
                     onFocus={() => setFocused(f.key)}
                     onBlur={() => setFocused(null)}
-                    className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300"
-                    style={{
-                      borderColor: focused === f.key ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
-                      boxShadow: focused === f.key ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
-                    }}
+                    className={inputClass(f.key)}
                     placeholder={f.label}
                     required
                   />
                 </div>
               ))}
               <div>
-                <label className="text-xs font-medium text-body mb-1.5 block">
+                <label className="text-xs font-medium text-slate/60 mb-1.5 block">
                   Message <span className="text-steel">*</span>
                 </label>
                 <textarea
@@ -135,11 +128,7 @@ const ContactSection = () => {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   onFocus={() => setFocused("message")}
                   onBlur={() => setFocused(null)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border text-slate text-sm focus:outline-none transition-all duration-300 resize-none"
-                  style={{
-                    borderColor: focused === "message" ? "hsl(193 46% 72%)" : "hsl(100 12% 81%)",
-                    boxShadow: focused === "message" ? "0 0 0 3px hsla(193, 46%, 72%, 0.15)" : "none",
-                  }}
+                  className={`${inputClass("message")} resize-none`}
                   placeholder="Your message..."
                   required
                 />
@@ -147,10 +136,10 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-sm disabled:opacity-60"
+                className="w-full py-3 rounded-xl font-semibold text-sm text-white bg-slate hover:bg-steel transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:shadow-steel/20 disabled:opacity-60"
               >
                 {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-                {sending ? "Sending..." : "Send It 🚀"}
+                {sending ? "Sending..." : "Send Message"}
               </button>
             </form>
           </AnimatedSection>
