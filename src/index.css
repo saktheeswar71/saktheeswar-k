@@ -50,7 +50,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: linear-gradient(135deg, hsl(28 93% 91%) 0%, hsl(150 30% 90%) 50%, hsl(28 93% 91%) 100%);
+    background: linear-gradient(180deg, hsl(28 93% 93%) 0%, hsl(150 30% 92%) 50%, hsl(28 93% 93%) 100%);
     background-attachment: fixed;
   }
 
@@ -69,7 +69,7 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-[80px] px-4 md:px-8;
+    @apply py-24 md:py-32 px-4 md:px-8;
   }
 
   .section-label {
@@ -84,19 +84,21 @@
   }
 
   .btn-primary:hover {
-    transform: scale(1.04);
+    transform: translateY(-2px);
     box-shadow: 0 8px 25px -5px hsla(193, 46%, 72%, 0.4);
   }
 
   .btn-outline {
     @apply font-semibold rounded-full transition-all duration-300 px-6 py-3 text-sm;
-    border: 2px solid hsl(var(--slate));
+    border: 1.5px solid hsl(var(--sage));
     color: hsl(var(--slate));
+    background: white/60;
   }
 
   .btn-outline:hover {
-    background: hsl(var(--slate));
-    color: white;
+    border-color: hsl(var(--steel));
+    color: hsl(var(--steel));
+    transform: translateY(-2px);
   }
 
   .soft-card {
@@ -107,16 +109,7 @@
   }
 
   .soft-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px -8px rgba(0,0,0,0.1);
-  }
-
-  .card-hover {
-    @apply transition-all duration-300;
-  }
-
-  .card-hover:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow: 0 12px 30px -8px rgba(0,0,0,0.1);
   }
 }
@@ -127,37 +120,6 @@
 }
 
 @keyframes page-fade {
-  0% { opacity: 0; transform: scale(0.98); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes blob-float {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -20px) scale(1.1); }
-  100% { transform: translate(-20px, 20px) scale(0.95); }
-}
-
-.blob-peach {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, hsla(14, 62%, 82%, 0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: blob-float 8s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.blob-mint {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, hsla(150, 30%, 90%, 0.4) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: blob-float 10s ease-in-out infinite alternate-reverse;
-  pointer-events: none;
-}
-
-@keyframes pulse-dot {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2); opacity: 0; }
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
