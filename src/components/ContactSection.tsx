@@ -51,20 +51,20 @@ const ContactSection = () => {
   };
 
   const inputClass = (key: string) =>
-    `w-full px-4 py-3 rounded-xl bg-white/80 backdrop-blur-sm border text-slate text-sm focus:outline-none transition-all duration-300 ${
-      focused === key ? "border-steel shadow-[0_0_0_3px_hsla(193,46%,72%,0.12)]" : "border-sage/40"
+    `w-full px-4 py-3 rounded-lg bg-card border text-foreground text-sm focus:outline-none transition-all duration-300 ${
+      focused === key ? "border-primary shadow-[0_0_0_3px_hsla(27,89%,53%,0.12)]" : "border-border"
     }`;
 
   return (
-    <section id="contact" className="section-padding relative">
+    <section id="contact" className="section-padding relative bg-background">
       <div className="container mx-auto max-w-[1200px] relative z-10">
         <AnimatedSection>
           <div className="text-center max-w-xl mx-auto mb-14">
             <p className="section-label">Contact</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate tracking-tight">
-              Let's build something impactful together
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground tracking-tight">
+              Let's build something <span className="text-primary">impactful</span> together
             </h2>
-            <p className="text-body text-sm">
+            <p className="text-muted-foreground text-sm">
               Have a project in mind or just want to connect? I'd love to hear from you.
             </p>
           </div>
@@ -75,12 +75,12 @@ const ContactSection = () => {
             <div className="space-y-3">
               {contactLinks.map(({ icon: Icon, label, href }) => {
                 const inner = (
-                  <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-sage/30 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                    <div className="w-9 h-9 rounded-xl bg-steel/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="text-steel" size={16} />
+                  <div className="flex items-center gap-4 px-5 py-4 rounded-xl bg-card border border-border shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-primary/30 transition-all duration-300">
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="text-primary" size={16} />
                     </div>
-                    <span className="text-sm text-slate/80 font-medium">{label}</span>
-                    {href && <ArrowUpRight size={14} className="ml-auto text-steel/40" />}
+                    <span className="text-sm text-foreground/80 font-medium">{label}</span>
+                    {href && <ArrowUpRight size={14} className="ml-auto text-primary/40" />}
                   </div>
                 );
                 return href ? (
@@ -95,14 +95,14 @@ const ContactSection = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <form onSubmit={handleSubmit} className="rounded-2xl p-7 bg-white/70 backdrop-blur-sm border border-sage/30 shadow-sm space-y-4">
+            <form onSubmit={handleSubmit} className="rounded-xl p-7 bg-card border border-border shadow-sm space-y-4">
               {[
                 { key: "name", label: "Name", type: "text" },
                 { key: "email", label: "Email", type: "email" },
               ].map((f) => (
                 <div key={f.key}>
-                  <label className="text-xs font-medium text-slate/60 mb-1.5 block">
-                    {f.label} <span className="text-steel">*</span>
+                  <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                    {f.label} <span className="text-primary">*</span>
                   </label>
                   <input
                     type={f.type}
@@ -118,8 +118,8 @@ const ContactSection = () => {
                 </div>
               ))}
               <div>
-                <label className="text-xs font-medium text-slate/60 mb-1.5 block">
-                  Message <span className="text-steel">*</span>
+                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                  Message <span className="text-primary">*</span>
                 </label>
                 <textarea
                   rows={4}
@@ -136,7 +136,7 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-3 rounded-xl font-semibold text-sm text-white bg-slate hover:bg-steel transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:shadow-steel/20 disabled:opacity-60"
+                className="w-full py-3 rounded-lg font-semibold text-sm bg-accent text-accent-foreground hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                 {sending ? "Sending..." : "Send Message"}

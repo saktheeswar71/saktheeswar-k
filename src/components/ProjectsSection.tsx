@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Github, ArrowRight, ExternalLink } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import AnimatedSection from "./AnimatedSection";
@@ -42,12 +42,12 @@ const ProjectsSection = () => {
   const filtered = active === "All" ? projects : projects.filter((p) => p.categories.includes(active));
 
   return (
-    <section id="projects" className="section-padding relative">
+    <section id="projects" className="section-padding relative bg-background">
       <div className="container mx-auto max-w-[1200px] relative z-10">
         <AnimatedSection>
           <p className="section-label">Projects</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-slate tracking-tight">Featured Projects</h2>
-          <p className="text-body text-sm mb-10 max-w-md">Real projects with real data and measurable results.</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground tracking-tight">Featured Projects</h2>
+          <p className="text-muted-foreground text-sm mb-10 max-w-md">Real projects with real data and measurable results.</p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>
@@ -56,10 +56,10 @@ const ProjectsSection = () => {
               <button
                 key={f}
                 onClick={() => setActive(f)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border ${
                   active === f
-                    ? "bg-slate text-white border-slate shadow-sm"
-                    : "bg-white/60 text-slate/70 border-sage/40 hover:border-steel hover:text-steel"
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
                 }`}
               >
                 {f}
@@ -80,36 +80,34 @@ const ProjectsSection = () => {
             {filtered.map((proj) => (
               <div
                 key={proj.title}
-                className={`group rounded-2xl p-6 flex flex-col bg-white/70 backdrop-blur-sm border border-sage/30 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-400 ${
+                className={`group rounded-xl p-6 flex flex-col bg-card border border-border shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-primary/30 transition-all duration-400 ${
                   proj.featured ? "md:col-span-2" : ""
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-medium text-body/60">{proj.date}</span>
-                  <span className="text-xs px-3 py-1 rounded-full bg-steel/10 text-steel font-medium">
+                  <span className="text-xs font-medium text-muted-foreground">{proj.date}</span>
+                  <span className="text-xs px-3 py-1 rounded-md bg-primary/10 text-primary font-medium">
                     {proj.tag}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold mb-3 text-slate group-hover:text-steel transition-colors">{proj.title}</h3>
-                <p className="text-body text-sm mb-5 leading-relaxed">{proj.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">{proj.title}</h3>
+                <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{proj.description}</p>
 
-                {/* Impact metrics */}
                 <div className="flex flex-wrap gap-2 mb-5">
                   {proj.impacts.map((impact) => (
                     <span
                       key={impact}
-                      className="text-xs font-semibold px-3 py-1.5 rounded-full bg-mint/60 text-slate border border-sage/20"
+                      className="text-xs font-semibold px-3 py-1.5 rounded-md bg-accent/15 text-accent-foreground border border-accent/20"
                     >
                       {impact}
                     </span>
                   ))}
                 </div>
 
-                {/* Tech stack */}
                 <div className="flex flex-wrap gap-1.5 mb-6">
                   {proj.tech.map((t) => (
-                    <span key={t} className="text-[11px] px-2.5 py-1 rounded-full bg-sage/30 text-slate/70 font-medium">
+                    <span key={t} className="text-[11px] px-2.5 py-1 rounded-md bg-muted text-muted-foreground font-medium">
                       {t}
                     </span>
                   ))}
@@ -118,7 +116,7 @@ const ProjectsSection = () => {
                 <div className="flex flex-wrap gap-3 mt-auto">
                   <Link
                     to={`/projects/${proj.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-white bg-slate px-5 py-2.5 rounded-full hover:bg-steel hover:shadow-lg hover:shadow-steel/20 transition-all duration-300"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground bg-primary px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
                   >
                     Case Study <ArrowRight size={14} />
                   </Link>
@@ -126,7 +124,7 @@ const ProjectsSection = () => {
                     href={proj.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-slate/60 hover:text-steel transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Github size={16} /> GitHub
                   </a>
