@@ -51,60 +51,52 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_30px_-10px_rgba(0,0,0,0.08)]"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-dark"
     >
       <div className="container mx-auto max-w-[1200px] flex items-center justify-between py-4 px-4 md:px-8">
         <Link to="/" className="group flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-slate flex items-center justify-center text-white text-xs font-bold tracking-tight transition-transform duration-300 group-hover:scale-110">
+          <div className="w-9 h-9 rounded-lg bg-orange flex items-center justify-center text-white text-xs font-bold tracking-tight transition-transform duration-300 group-hover:scale-110">
             SK
           </div>
-          <span className="text-base font-semibold text-slate hidden sm:block">Saktheeswar K</span>
+          <span className="text-base font-semibold text-white hidden sm:block">Saktheeswar K</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const active = isActive(item);
-            const className = `relative px-3.5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+            const className = `relative px-3.5 py-2 text-sm font-medium transition-all duration-300 ${
               active
-                ? "text-slate bg-sage/50"
-                : "text-slate/60 hover:text-slate hover:bg-sage/30"
+                ? "text-orange"
+                : "text-white/70 hover:text-orange"
             }`;
+
+            const underline = active && (
+              <motion.div
+                layoutId="nav-underline"
+                className="absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-orange rounded-full"
+                transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+              />
+            );
 
             if (item.isRoute) {
               return (
                 <Link key={item.href} to={item.href} className={className}>
                   {item.label}
-                  {active && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-sage/50 -z-10"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                    />
-                  )}
+                  {underline}
                 </Link>
               );
             }
             return (
               <a key={item.href} href={item.href} className={className}>
                 {item.label}
-                {active && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-sage/50 -z-10"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                  />
-                )}
+                {underline}
               </a>
             );
           })}
         </div>
 
         <button
-          className="md:hidden p-2 rounded-xl text-slate hover:bg-sage/30 transition-colors"
+          className="md:hidden p-2 rounded-lg text-white hover:text-orange transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -118,15 +110,15 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-xl border-t border-sage/30"
+            className="md:hidden bg-dark border-t border-white/10"
           >
             <div className="flex flex-col gap-1 p-4">
               {navItems.map((item) => {
                 const active = isActive(item);
-                const className = `px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 ${
+                const className = `px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 ${
                   active
-                    ? "text-slate bg-sage/40"
-                    : "text-slate/60 hover:text-slate hover:bg-sage/20"
+                    ? "text-orange bg-white/5"
+                    : "text-white/70 hover:text-orange hover:bg-white/5"
                 }`;
                 if (item.isRoute) {
                   return (
