@@ -11,8 +11,9 @@ const floatingCards = [
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center section-padding pt-28 overflow-hidden bg-background">
-    {/* Subtle glow */}
-    <div className="absolute top-20 right-10 w-[500px] h-[500px] rounded-full opacity-15 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, hsl(27 89% 53% / 0.4), transparent 70%)" }} />
+    {/* Radial glow */}
+    <div className="absolute top-20 right-10 w-[600px] h-[600px] rounded-full opacity-20 blur-[100px] pointer-events-none" style={{ background: "radial-gradient(circle, hsl(27 89% 53% / 0.5), transparent 70%)" }} />
+    <div className="absolute bottom-20 left-10 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] pointer-events-none" style={{ background: "radial-gradient(circle, hsl(27 100% 63% / 0.3), transparent 70%)" }} />
 
     <div className="relative z-10 container mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-16 items-center">
       {/* Left — Content */}
@@ -96,7 +97,7 @@ const HeroSection = () => (
               href={href}
               target={href.startsWith("http") ? "_blank" : undefined}
               rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="p-2.5 rounded-lg bg-card border border-border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 text-foreground hover:text-primary"
+              className="p-2.5 rounded-lg bg-card border border-border shadow-sm hover:shadow-md hover:shadow-primary/10 hover:-translate-y-0.5 transition-all duration-300 text-muted-foreground hover:text-primary"
               aria-label={label}
             >
               <Icon size={18} />
@@ -117,7 +118,7 @@ const HeroSection = () => (
       >
         <div className="relative">
           <div className="absolute -inset-4 rounded-full bg-primary/10 blur-2xl" />
-          <div className="relative w-44 h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-[3px] border-card shadow-2xl shadow-primary/15">
+          <div className="relative w-44 h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-[3px] border-card shadow-2xl shadow-primary/20">
             <img
               src={profileImg}
               alt="Saktheeswar K"
@@ -151,7 +152,7 @@ const HeroSection = () => (
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 + card.delay, duration: 0.5 }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-card border border-border shadow-sm text-sm font-medium text-foreground hover:shadow-md hover:-translate-y-1 hover:border-primary/30 transition-all duration-300 cursor-default"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-card border border-border shadow-sm text-sm font-medium text-foreground hover:shadow-md hover:shadow-primary/10 hover:-translate-y-1 hover:border-primary/30 transition-all duration-300 cursor-default"
             >
               <card.icon size={16} className="text-primary" />
               {card.label}

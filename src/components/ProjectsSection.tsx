@@ -58,8 +58,8 @@ const ProjectsSection = () => {
                 onClick={() => setActive(f)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border ${
                   active === f
-                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                    : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20"
+                    : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-primary"
                 }`}
               >
                 {f}
@@ -80,7 +80,7 @@ const ProjectsSection = () => {
             {filtered.map((proj) => (
               <div
                 key={proj.title}
-                className={`group rounded-xl p-6 flex flex-col bg-card border border-border shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-primary/30 transition-all duration-400 ${
+                className={`group rounded-xl p-6 flex flex-col bg-card border border-border shadow-sm hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 hover:border-primary/30 transition-all duration-400 ${
                   proj.featured ? "md:col-span-2" : ""
                 }`}
               >
@@ -98,7 +98,7 @@ const ProjectsSection = () => {
                   {proj.impacts.map((impact) => (
                     <span
                       key={impact}
-                      className="text-xs font-semibold px-3 py-1.5 rounded-md bg-accent/15 text-accent-foreground border border-accent/20"
+                      className="text-xs font-semibold px-3 py-1.5 rounded-md bg-primary/10 text-primary border border-primary/20"
                     >
                       {impact}
                     </span>
@@ -116,7 +116,7 @@ const ProjectsSection = () => {
                 <div className="flex flex-wrap gap-3 mt-auto">
                   <Link
                     to={`/projects/${proj.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground bg-primary px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground bg-primary px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
                   >
                     Case Study <ArrowRight size={14} />
                   </Link>
