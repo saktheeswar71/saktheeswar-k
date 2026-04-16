@@ -19,7 +19,7 @@ const CertificationsSection = () => (
       <div className="grid sm:grid-cols-3 gap-5">
         {certs.map((cert, i) => (
           <AnimatedSection key={cert.name} delay={i * 0.1}>
-            <div className="rounded-xl p-6 text-center h-full bg-card border border-border shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-primary/30 transition-all duration-300">
+            <div className="rounded-xl p-6 text-center h-full bg-card border border-border shadow-sm hover:shadow-md hover:shadow-primary/5 hover:-translate-y-1 hover:border-primary/30 transition-all duration-300">
               <div className="mx-auto mb-4 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                 <cert.icon className="text-primary" size={20} />
               </div>

@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    --background: 10 29% 94%;
-    --foreground: 0 0% 15%;
+    --background: 0 0% 15%;
+    --foreground: 0 0% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 15%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 15%;
+    --popover: 0 0% 18%;
+    --popover-foreground: 0 0% 90%;
 
     --primary: 27 89% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 15%;
 
-    --secondary: 210 50% 4%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 20 12% 93%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 10 15% 88%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 22%;
+    --muted-foreground: 0 0% 65%;
 
     --accent: 27 100% 63%;
-    --accent-foreground: 20 30% 10%;
+    --accent-foreground: 0 0% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 10 10% 85%;
-    --input: 10 10% 85%;
+    --border: 0 0% 22%;
+    --input: 0 0% 22%;
     --ring: 27 89% 53%;
 
     --radius: 0.75rem;
@@ -37,11 +37,12 @@
     /* Custom tokens */
     --orange: 27 89% 53%;
     --orange-light: 27 100% 63%;
-    --dark: 210 50% 4%;
-    --cream: 10 29% 94%;
-    --text-primary: 0 0% 15%;
-    --text-muted: 0 0% 40%;
-    --btn-text: 20 30% 12%;
+    --dark: 0 0% 12%;
+    --dark-lighter: 0 0% 18%;
+    --cream: 20 12% 93%;
+    --text-primary: 0 0% 90%;
+    --text-muted: 0 0% 65%;
+    --btn-text: 0 0% 15%;
   }
 }
 
@@ -77,8 +78,8 @@
 
   .btn-primary:hover {
     background: hsl(27 89% 48%);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 25px -5px hsla(27, 89%, 53%, 0.35);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 30px -5px hsla(27, 89%, 53%, 0.4);
   }
 
   .btn-outline {
@@ -90,25 +91,31 @@
 
   .btn-outline:hover {
     background: hsl(var(--orange));
-    color: hsl(var(--dark));
+    color: hsl(var(--btn-text));
     transform: translateY(-2px);
   }
 
   .soft-card {
-    background: white;
+    background: hsl(var(--dark-lighter));
     border-radius: 12px;
-    box-shadow: 0 2px 20px -5px rgba(0,0,0,0.06);
+    border: 1px solid hsl(0 0% 25%);
     @apply transition-all duration-300;
   }
 
   .soft-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 30px -8px rgba(242, 129, 29, 0.15);
+    box-shadow: 0 12px 40px -8px rgba(242, 129, 29, 0.15);
+    border-color: hsl(27 89% 53% / 0.3);
   }
 
   .dark-section {
     background: hsl(var(--dark));
-    color: white;
+    color: hsl(0 0% 90%);
+  }
+
+  .contrast-section {
+    background: hsl(var(--cream));
+    color: hsl(0 0% 15%);
   }
 }
 
