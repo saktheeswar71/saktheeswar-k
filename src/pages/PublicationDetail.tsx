@@ -94,7 +94,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Problem */}
-          <motion.section id="problem" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="problem" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <span className="text-2xl">🔬</span>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mt-2 mb-3 sm:mb-4">Research Problem</h2>
             <p className="text-sm sm:text-base text-body leading-relaxed">{pub.problem}</p>
@@ -107,7 +107,7 @@ const PublicationDetail = () => {
               <table className="w-full text-xs sm:text-sm min-w-[400px]">
                 <tbody>
                   {pub.dataset.map((row, i) => (
-                    <tr key={row.property} className={i % 2 === 0 ? "bg-white" : "bg-mint/30"}>
+                    <tr key={row.property} className={i % 2 === 0 ? "bg-card" : "bg-mint/30"}>
                       <td className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-slate whitespace-nowrap">{row.property}</td>
                       <td className="px-3 sm:px-5 py-2.5 sm:py-3 text-body">{row.detail}</td>
                     </tr>
@@ -118,7 +118,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Methodology */}
-          <motion.section id="methodology" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(28 93% 91%)" }} {...fadeIn}>
+          <motion.section id="methodology" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--muted))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Methodology</h2>
             <p className="text-xs sm:text-sm text-body mb-6 sm:mb-10">A structured approach to clinical prediction.</p>
             <div className="relative">
@@ -144,7 +144,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Results */}
-          <motion.section id="results" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="results" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Results</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 mt-4 sm:mt-6">
               {pub.results.metrics.map((m) => (
@@ -155,7 +155,7 @@ const PublicationDetail = () => {
                 </div>
               ))}
             </div>
-            <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-xl border border-sage bg-white">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-xl border border-sage bg-card">
               <table className="w-full text-xs sm:text-sm min-w-[400px]">
                 <thead>
                   <tr className="bg-steel/10">
@@ -205,7 +205,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Findings */}
-          <motion.section id="findings" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(28 93% 91%)" }} {...fadeIn}>
+          <motion.section id="findings" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--muted))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-4 sm:mb-6">Key Findings</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {pub.findings.map((f) => (
@@ -231,7 +231,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Citation */}
-          <motion.section id="citation" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="citation" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-3 sm:mb-4">Cite This Paper</h2>
             <div className="relative bg-white rounded-xl p-4 sm:p-5 border border-sage">
               <p className="text-xs sm:text-sm text-body font-mono leading-relaxed pr-8 sm:pr-10 break-words">{pub.citation}</p>
