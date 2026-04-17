@@ -50,8 +50,8 @@ const ProjectDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-slate mb-2">Project not found</h1>
-          <Link to="/#projects" className="text-steel hover:underline">← Back to Projects</Link>
+          <h1 className="text-2xl font-bold text-foreground mb-2">Project not found</h1>
+          <Link to="/#projects" className="text-primary hover:underline">← Back to Projects</Link>
         </div>
       </div>
     );
@@ -60,21 +60,31 @@ const ProjectDetail = () => {
   const related = projects.filter((p) => project.relatedSlugs.includes(p.slug));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background page-enter">
       <DetailNavbar backLabel="← Back to Projects" backTo="/#projects" />
 
       {/* Hero */}
-      <section className="pt-20" style={{ background: project.heroGradient }}>
-        <div className="container mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
+      <section
+        className="pt-20 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(var(--dark-lighter)) 0%, hsl(var(--background)) 100%)",
+        }}
+      >
+        <div
+          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none"
+          style={{ background: "radial-gradient(circle, hsl(var(--orange)) 0%, transparent 70%)" }}
+        />
+        <div className="container mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24 relative">
           <motion.div {...fadeIn}>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate mb-3 leading-tight">{project.title}</h1>
-            <p className="text-base sm:text-lg text-body mb-4 sm:mb-5 max-w-2xl">{project.subtitle}</p>
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-3 leading-tight">{project.title}</h1>
+            <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-5 max-w-2xl">{project.subtitle}</p>
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
               {project.tags.map((t) => (
-                <span key={t} className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-white/60 text-slate font-medium">{t}</span>
+                <span key={t} className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-muted text-foreground font-medium border border-border">{t}</span>
               ))}
             </div>
-            <span className="inline-block text-xs px-3 py-1 rounded-full bg-steel/20 text-slate font-medium mb-5 sm:mb-6">{project.date}</span>
+            <span className="inline-block text-xs px-3 py-1 rounded-full bg-primary/15 text-primary font-medium mb-5 sm:mb-6">{project.date}</span>
             <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
               <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center gap-2 text-xs sm:text-sm">
                 <Github size={16} /> View Source Code 🐙
