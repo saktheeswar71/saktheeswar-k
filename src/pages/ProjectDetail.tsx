@@ -156,7 +156,7 @@ const ProjectDetail = () => {
               <div className="space-y-6 sm:space-y-10">
                 {project.methodology.map((step, i) => (
                   <div key={i} className="md:pl-16 relative">
-                    <div className="hidden md:flex absolute left-0 w-12 h-12 items-center justify-center rounded-full bg-white text-lg shadow-sm border border-sage">
+                    <div className="hidden md:flex absolute left-0 w-12 h-12 items-center justify-center rounded-full bg-card text-lg shadow-sm border border-border">
                       {step.icon}
                     </div>
                     <div className="soft-card p-4 sm:p-5">
