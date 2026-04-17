@@ -35,7 +35,7 @@ const HintPanel = ({ visible, onUseHint, hintsUsed, datasetId }: Props) => {
         <button
           onClick={onUseHint}
           className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80"
-          style={{ background: "#FFFFFF", border: "1px solid #ddb8a0", color: "#740a03" }}
+          style={{ background: "#2E2E2E", border: "1px solid #3A3A3A", color: "#A0A0A0" }}
         >
           💡 Need a hint? (-10 pts)
         </button>
@@ -52,21 +52,21 @@ const HintPanel = ({ visible, onUseHint, hintsUsed, datasetId }: Props) => {
       transition={{ duration: 0.25 }}
       className="mt-4 rounded-2xl p-4"
       style={{
-        background: "#fdd8c5",
-        borderLeft: "4px solid #e6501b",
+        background: "#3A3A3A",
+        borderLeft: "4px solid #FF9A40",
       }}
     >
-      <p className="text-sm font-semibold mb-2" style={{ color: "#280905" }}>
+      <p className="text-sm font-semibold mb-2" style={{ color: "#1F1F1F" }}>
         Hints for this dataset:
       </p>
       <ul className="space-y-1">
         {hints.map((hint, i) => (
-          <li key={i} className="text-xs" style={{ color: "#280905" }}>
+          <li key={i} className="text-xs" style={{ color: "#1F1F1F" }}>
             • {hint}
           </li>
         ))}
       </ul>
-      <p className="text-[10px] mt-2" style={{ color: "#740a03" }}>
+      <p className="text-[10px] mt-2" style={{ color: "#A0A0A0" }}>
         Hints used: {hintsUsed} (−{hintsUsed * 10} pts penalty)
       </p>
     </motion.div>

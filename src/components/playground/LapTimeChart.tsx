@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, Brush, CartesianGrid } from 'recharts';
 import { formatLapTime, parseTimeToSeconds } from '@/utils/f1Helpers';
 
-const CHART_COLORS = ['#99CDD8', '#F3C3B2', '#CFD6C4', '#657166', '#DAEBE3'];
+const CHART_COLORS = ['#F2811D', '#FF9A40', '#3A3A3A', '#E5E5E5', '#333333'];
 
 interface LapTimeChartProps {
   races: any[];
@@ -71,7 +71,7 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="rounded-xl p-3 text-xs" style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+      <div className="rounded-xl p-3 text-xs" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', color: '#E5E5E5', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
         <p className="font-bold mb-1">Lap {label}</p>
         {payload.map((p: any) => {
           const driver = allDrivers.find((d: any) => d.id === p.dataKey);
@@ -93,13 +93,13 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
           value={selectedRound}
           onChange={(e) => setSelectedRound(e.target.value)}
           className="px-3 py-2 rounded-xl text-sm outline-none focus:ring-2"
-          style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166' }}
+          style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', color: '#E5E5E5' }}
         >
           {races.map(race => (
             <option key={race.round} value={race.round}>R{race.round} — {race.raceName}</option>
           ))}
         </select>
-        <span className="text-[10px]" style={{ color: '#8a9e8f' }}>Select up to 5 drivers</span>
+        <span className="text-[10px]" style={{ color: '#A0A0A0' }}>Select up to 5 drivers</span>
       </div>
 
       {/* Driver chips */}
@@ -113,9 +113,9 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
               onClick={() => toggleDriver(driver.id)}
               className="px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all hover:-translate-y-0.5"
               style={{
-                background: active ? color : '#fff',
-                color: active ? '#fff' : '#657166',
-                border: `1px solid ${active ? color : '#CFD6C4'}`,
+                background: active ? color : '#2E2E2E',
+                color: active ? '#2E2E2E' : '#E5E5E5',
+                border: `1px solid ${active ? color : '#3A3A3A'}`,
               }}
             >
               {driver.name}
@@ -126,25 +126,25 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
 
       {/* Chart */}
       {loading ? (
-        <div className="h-[350px] rounded-2xl" style={{ background: 'linear-gradient(90deg, #DAEBE3 25%, #FDE8D3 50%, #DAEBE3 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
+        <div className="h-[350px] rounded-2xl" style={{ background: 'linear-gradient(90deg, #2E2E2E 25%, #333333 50%, #2E2E2E 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
       ) : chartData.length > 0 ? (
-        <div className="rounded-2xl p-4" style={{ background: '#fff', border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+        <div className="rounded-2xl p-4" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#CFD6C4" opacity={0.6} />
-              <XAxis dataKey="lap" tick={{ fill: '#8a9e8f', fontSize: 10 }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#3A3A3A" opacity={0.6} />
+              <XAxis dataKey="lap" tick={{ fill: '#A0A0A0', fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fill: '#8a9e8f', fontSize: 10 }}
+                tick={{ fill: '#A0A0A0', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
                 domain={['auto', 'auto']}
                 tickFormatter={(v) => formatLapTime(v)}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Brush dataKey="lap" height={20} stroke="#CFD6C4" fill="#FAFBF9" />
+              <Brush dataKey="lap" height={20} stroke="#3A3A3A" fill="#262626" />
               {selectedDrivers.flatMap(id =>
                 (pitStopLaps[id] || []).map(lap => (
-                  <ReferenceLine key={`${id}-${lap}`} x={lap} stroke="#CFD6C4" strokeDasharray="3 3" strokeOpacity={0.6} />
+                  <ReferenceLine key={`${id}-${lap}`} x={lap} stroke="#3A3A3A" strokeDasharray="3 3" strokeOpacity={0.6} />
                 ))
               )}
               {selectedDrivers.map((id, idx) => {
@@ -157,7 +157,7 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
                     stroke={color}
                     strokeWidth={1.5}
                     dot={false}
-                    activeDot={{ r: 4, fill: color, stroke: '#fff', strokeWidth: 2 }}
+                    activeDot={{ r: 4, fill: color, stroke: '#2E2E2E', strokeWidth: 2 }}
                     connectNulls
                   />
                 );
@@ -166,8 +166,8 @@ const LapTimeChart = ({ races, fetchRaceDetail }: LapTimeChartProps) => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <div className="h-[350px] rounded-2xl flex items-center justify-center" style={{ background: '#fff', border: '1px solid #CFD6C4' }}>
-          <p className="text-sm" style={{ color: '#8a9e8f' }}>
+        <div className="h-[350px] rounded-2xl flex items-center justify-center" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A' }}>
+          <p className="text-sm" style={{ color: '#A0A0A0' }}>
             {races.length === 0 ? 'No race data available' : 'Select drivers to view lap times'}
           </p>
         </div>

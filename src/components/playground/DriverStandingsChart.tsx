@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList, CartesianGrid } from 'recharts';
 
-const CHART_COLORS = ['#99CDD8', '#F3C3B2', '#CFD6C4', '#657166', '#DAEBE3'];
+const CHART_COLORS = ['#F2811D', '#FF9A40', '#3A3A3A', '#E5E5E5', '#333333'];
 
 interface DriverStandingsChartProps {
   standings: any[];
@@ -22,9 +22,9 @@ const DriverStandingsChart = ({ standings }: DriverStandingsChartProps) => {
     if (!active || !payload?.[0]) return null;
     const d = payload[0].payload;
     return (
-      <div className="rounded-xl p-3 text-xs" style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+      <div className="rounded-xl p-3 text-xs" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', color: '#E5E5E5', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
         <p className="font-bold">{d.fullName}</p>
-        <p style={{ color: '#8a9e8f' }}>{d.team}</p>
+        <p style={{ color: '#A0A0A0' }}>{d.team}</p>
         <p>Points: {d.points}</p>
         <p>Wins: {d.wins}</p>
       </div>
@@ -32,21 +32,21 @@ const DriverStandingsChart = ({ standings }: DriverStandingsChartProps) => {
   };
 
   return (
-    <div className="rounded-2xl p-4 sm:p-5" style={{ background: '#fff', border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
-      <h3 className="text-sm font-bold mb-4" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
+    <div className="rounded-2xl p-4 sm:p-5" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
+      <h3 className="text-sm font-bold mb-4" style={{ color: '#E5E5E5', fontFamily: "'Titillium Web', sans-serif" }}>
         Driver Championship Standings
       </h3>
       <ResponsiveContainer width="100%" height={Math.max(400, data.length * 28)}>
         <BarChart data={data} layout="vertical" margin={{ top: 0, right: 40, bottom: 0, left: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#CFD6C4" opacity={0.6} horizontal={false} />
-          <XAxis type="number" tick={{ fill: '#8a9e8f', fontSize: 10 }} axisLine={false} tickLine={false} />
-          <YAxis type="category" dataKey="name" tick={{ fill: '#8a9e8f', fontSize: 10 }} width={80} axisLine={false} tickLine={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#3A3A3A" opacity={0.6} horizontal={false} />
+          <XAxis type="number" tick={{ fill: '#A0A0A0', fontSize: 10 }} axisLine={false} tickLine={false} />
+          <YAxis type="category" dataKey="name" tick={{ fill: '#A0A0A0', fontSize: 10 }} width={80} axisLine={false} tickLine={false} />
           <Tooltip content={<CustomTooltip />} cursor={false} />
           <Bar dataKey="points" radius={[0, 6, 6, 0]} animationDuration={800}>
             {data.map((entry, index) => (
               <Cell key={index} fill={CHART_COLORS[entry.colorIdx]} />
             ))}
-            <LabelList dataKey="points" position="right" style={{ fill: '#8a9e8f', fontSize: 10 }} />
+            <LabelList dataKey="points" position="right" style={{ fill: '#A0A0A0', fontSize: 10 }} />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

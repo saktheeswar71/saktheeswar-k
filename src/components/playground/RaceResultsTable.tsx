@@ -26,22 +26,22 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
 
   const podium = results.slice(0, 3);
   const podiumOrder = podium.length >= 3 ? [podium[1], podium[0], podium[2]] : podium;
-  const podiumBgs = ['#DAEBE3', '#FDE8D3', '#F3C3B2'];
-  const podiumBorders = ['#CFD6C4', '#99CDD8', '#CFD6C4'];
+  const podiumBgs = ['#333333', '#333333', '#FF9A40'];
+  const podiumBorders = ['#3A3A3A', '#F2811D', '#3A3A3A'];
   const podiumHeights = ['h-24', 'h-32', 'h-20'];
 
   return (
     <div>
       {/* Race Selector */}
       <div className="flex items-center gap-3 mb-6 flex-wrap">
-        <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#8a9e8f' }}>
+        <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#A0A0A0' }}>
           Select Race
         </label>
         <select
           value={selectedRound}
           onChange={(e) => setSelectedRound(e.target.value)}
           className="px-3 py-2 rounded-xl text-sm outline-none focus:ring-2"
-          style={{ background: '#fff', border: '1px solid #CFD6C4', color: '#657166' }}
+          style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', color: '#E5E5E5' }}
         >
           {races.map(race => (
             <option key={race.round} value={race.round}>
@@ -66,20 +66,20 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
                 style={{
                   background: podiumBgs[i],
                   borderTop: `3px solid ${podiumBorders[i]}`,
-                  border: '1px solid #CFD6C4',
+                  border: '1px solid #3A3A3A',
                   minWidth: 100,
                 }}
               >
-                <span className="text-2xl font-bold" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
+                <span className="text-2xl font-bold" style={{ color: '#E5E5E5', fontFamily: "'Titillium Web', sans-serif" }}>
                   P{pos}
                 </span>
-                <span className="text-xs font-bold mt-1 truncate max-w-[90px]" style={{ color: '#657166' }}>
+                <span className="text-xs font-bold mt-1 truncate max-w-[90px]" style={{ color: '#E5E5E5' }}>
                   {driver.Driver.familyName}
                 </span>
-                <span className="text-[10px] mt-0.5" style={{ color: '#8a9e8f' }}>
+                <span className="text-[10px] mt-0.5" style={{ color: '#A0A0A0' }}>
                   {driver.Constructor?.name}
                 </span>
-                <span className="text-[10px] mt-0.5" style={{ color: '#99CDD8' }}>
+                <span className="text-[10px] mt-0.5" style={{ color: '#F2811D' }}>
                   +{[25, 18, 15][pos - 1]} pts
                 </span>
               </motion.div>
@@ -89,13 +89,13 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
       )}
 
       {/* Full Results Table */}
-      <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid #CFD6C4', boxShadow: '0 2px 16px rgba(101,113,102,0.08)' }}>
+      <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid #3A3A3A', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs" style={{ color: '#657166' }}>
+          <table className="w-full text-xs" style={{ color: '#E5E5E5' }}>
             <thead>
-              <tr style={{ background: '#DAEBE3' }}>
+              <tr style={{ background: '#333333' }}>
                 {['Pos', 'Driver', 'Team', 'Grid', 'Laps', 'Time/Gap', 'Points', 'Status'].map(h => (
-                  <th key={h} className="px-3 py-2.5 text-left font-semibold whitespace-nowrap" style={{ color: '#8a9e8f' }}>
+                  <th key={h} className="px-3 py-2.5 text-left font-semibold whitespace-nowrap" style={{ color: '#A0A0A0' }}>
                     {h}
                   </th>
                 ))}
@@ -106,14 +106,14 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
                 const pos = parseInt(r.position);
                 const posChange = getPositionChange(r.grid, r.position);
                 const isDNF = r.status !== 'Finished' && !r.status?.includes('Lap');
-                const borderColor = pos === 1 ? '#99CDD8' : pos === 2 ? '#CFD6C4' : pos === 3 ? '#F3C3B2' : 'transparent';
+                const borderColor = pos === 1 ? '#F2811D' : pos === 2 ? '#3A3A3A' : pos === 3 ? '#FF9A40' : 'transparent';
 
                 return (
                   <tr
                     key={r.Driver.driverId}
                     className="transition-colors"
                     style={{
-                      background: i % 2 === 0 ? '#fff' : '#FAFBF9',
+                      background: i % 2 === 0 ? '#2E2E2E' : '#262626',
                       borderLeft: `3px solid ${borderColor}`,
                       opacity: isDNF ? 0.5 : 1,
                     }}
@@ -121,9 +121,9 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
                     <td className="px-3 py-2 font-bold">{pos}</td>
                     <td className="px-3 py-2 font-semibold whitespace-nowrap">
                       {r.Driver.givenName} {r.Driver.familyName}
-                      <span className="ml-1.5 text-[10px] font-normal" style={{ color: '#8a9e8f' }}>#{r.number}</span>
+                      <span className="ml-1.5 text-[10px] font-normal" style={{ color: '#A0A0A0' }}>#{r.number}</span>
                     </td>
-                    <td className="px-3 py-2 whitespace-nowrap" style={{ color: '#8a9e8f' }}>
+                    <td className="px-3 py-2 whitespace-nowrap" style={{ color: '#A0A0A0' }}>
                       {r.Constructor?.name}
                     </td>
                     <td className="px-3 py-2">{r.grid}</td>
@@ -134,12 +134,12 @@ const RaceResultsTable = ({ races, fetchRaceDetail }: RaceResultsTableProps) => 
                     <td className="px-3 py-2 font-semibold">{r.points}</td>
                     <td className="px-3 py-2 whitespace-nowrap">
                       {isDNF ? (
-                        <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold" style={{ background: '#FDE8D3', color: '#F3C3B2' }}>
+                        <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold" style={{ background: '#333333', color: '#FF9A40' }}>
                           DNF
                         </span>
                       ) : (
                         <span className={`text-[10px] font-semibold`}
-                          style={{ color: posChange > 0 ? '#99CDD8' : posChange < 0 ? '#F3C3B2' : '#8a9e8f' }}>
+                          style={{ color: posChange > 0 ? '#F2811D' : posChange < 0 ? '#FF9A40' : '#A0A0A0' }}>
                           {posChange > 0 ? `↑${posChange}` : posChange < 0 ? `↓${Math.abs(posChange)}` : '–'}
                         </span>
                       )}
