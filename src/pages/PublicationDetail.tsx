@@ -52,24 +52,34 @@ const PublicationDetail = () => {
     <div className="min-h-screen bg-background">
       <DetailNavbar backLabel="← Back to Publication" backTo="/#publication" />
 
-      {/* Hero - academic dark style */}
-      <section className="pt-20" style={{ background: "hsl(140 12% 40%)" }}>
-        <div className="container mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
+      {/* Hero - dark academic style */}
+      <section
+        className="pt-20 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(var(--dark-lighter)) 0%, hsl(var(--background)) 100%)",
+        }}
+      >
+        <div
+          className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none"
+          style={{ background: "radial-gradient(circle, hsl(var(--orange)) 0%, transparent 70%)" }}
+        />
+        <div className="container mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24 relative">
           <motion.div {...fadeIn}>
-            <span className="inline-block text-[10px] sm:text-xs px-3 py-1 rounded-full bg-white/20 text-white font-medium mb-3 sm:mb-4">
+            <span className="inline-block text-[10px] sm:text-xs px-3 py-1 rounded-full bg-primary/15 text-primary font-medium mb-3 sm:mb-4 border border-primary/30">
               {pub.badge}
             </span>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-3 leading-tight">{pub.title}</h1>
-            <p className="text-white/70 text-sm sm:text-base mb-1">{pub.authors} · {pub.conference}</p>
-            <p className="text-white/50 text-xs sm:text-sm mb-4 sm:mb-5">{pub.date}</p>
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-3 leading-tight">{pub.title}</h1>
+            <p className="text-muted-foreground text-sm sm:text-base mb-1">{pub.authors} · {pub.conference}</p>
+            <p className="text-muted-foreground/70 text-xs sm:text-sm mb-4 sm:mb-5">{pub.date}</p>
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
               {pub.tags.map((t) => (
-                <span key={t} className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-white/10 text-white/80 font-medium">{t}</span>
+                <span key={t} className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-muted text-foreground font-medium border border-border">{t}</span>
               ))}
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
               <a href="#abstract" className="btn-primary text-center text-xs sm:text-sm">Read Abstract 📄</a>
-              <a href="#results" className="inline-flex items-center justify-center gap-2 font-semibold rounded-full px-6 py-3 text-xs sm:text-sm border-2 border-white/40 text-white hover:bg-white/10 transition-all">
+              <a href="#results" className="btn-outline inline-flex items-center justify-center gap-2 text-xs sm:text-sm">
                 View Results 📊
               </a>
             </div>
@@ -94,7 +104,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Problem */}
-          <motion.section id="problem" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="problem" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <span className="text-2xl">🔬</span>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mt-2 mb-3 sm:mb-4">Research Problem</h2>
             <p className="text-sm sm:text-base text-body leading-relaxed">{pub.problem}</p>
@@ -107,7 +117,7 @@ const PublicationDetail = () => {
               <table className="w-full text-xs sm:text-sm min-w-[400px]">
                 <tbody>
                   {pub.dataset.map((row, i) => (
-                    <tr key={row.property} className={i % 2 === 0 ? "bg-white" : "bg-mint/30"}>
+                    <tr key={row.property} className={i % 2 === 0 ? "bg-card" : "bg-mint/30"}>
                       <td className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-slate whitespace-nowrap">{row.property}</td>
                       <td className="px-3 sm:px-5 py-2.5 sm:py-3 text-body">{row.detail}</td>
                     </tr>
@@ -118,7 +128,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Methodology */}
-          <motion.section id="methodology" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(28 93% 91%)" }} {...fadeIn}>
+          <motion.section id="methodology" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--muted))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Methodology</h2>
             <p className="text-xs sm:text-sm text-body mb-6 sm:mb-10">A structured approach to clinical prediction.</p>
             <div className="relative">
@@ -126,7 +136,7 @@ const PublicationDetail = () => {
               <div className="space-y-6 sm:space-y-10">
                 {pub.methodology.map((step, i) => (
                   <div key={i} className="md:pl-16 relative">
-                    <div className="hidden md:flex absolute left-0 w-12 h-12 items-center justify-center rounded-full bg-white text-lg shadow-sm border border-sage">
+                    <div className="hidden md:flex absolute left-0 w-12 h-12 items-center justify-center rounded-full bg-card text-lg shadow-sm border border-border">
                       {step.icon}
                     </div>
                     <div className="soft-card p-4 sm:p-5">
@@ -144,7 +154,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Results */}
-          <motion.section id="results" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="results" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-2">Results</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 mt-4 sm:mt-6">
               {pub.results.metrics.map((m) => (
@@ -155,7 +165,7 @@ const PublicationDetail = () => {
                 </div>
               ))}
             </div>
-            <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-xl border border-sage bg-white">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 rounded-xl border border-sage bg-card">
               <table className="w-full text-xs sm:text-sm min-w-[400px]">
                 <thead>
                   <tr className="bg-steel/10">
@@ -205,7 +215,7 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Findings */}
-          <motion.section id="findings" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(28 93% 91%)" }} {...fadeIn}>
+          <motion.section id="findings" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--muted))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-4 sm:mb-6">Key Findings</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {pub.findings.map((f) => (
@@ -231,9 +241,9 @@ const PublicationDetail = () => {
           </motion.section>
 
           {/* Citation */}
-          <motion.section id="citation" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(150 30% 90%)" }} {...fadeIn}>
+          <motion.section id="citation" className="py-10 sm:py-16 px-4 sm:px-6 md:px-10 rounded-2xl mb-6 sm:mb-8" style={{ background: "hsl(var(--dark-lighter))" }} {...fadeIn}>
             <h2 className="text-xl sm:text-2xl font-bold text-slate mb-3 sm:mb-4">Cite This Paper</h2>
-            <div className="relative bg-white rounded-xl p-4 sm:p-5 border border-sage">
+            <div className="relative bg-card rounded-xl p-4 sm:p-5 border border-sage">
               <p className="text-xs sm:text-sm text-body font-mono leading-relaxed pr-8 sm:pr-10 break-words">{pub.citation}</p>
               <button
                 onClick={handleCopy}
@@ -275,7 +285,7 @@ const PublicationDetail = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-steel text-white shadow-lg"
+          className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-110 transition-transform"
           aria-label="Back to top"
         >
           <ArrowUp size={20} />

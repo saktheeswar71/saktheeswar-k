@@ -139,41 +139,61 @@ const ChatbotWidget = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="mb-3 w-[340px] sm:w-[380px] rounded-2xl shadow-xl border overflow-hidden"
-            style={{ background: "hsl(150 30% 96%)", borderColor: "hsl(100 12% 81%)" }}
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="mb-3 w-[340px] sm:w-[380px] rounded-2xl overflow-hidden backdrop-blur-xl"
+            style={{
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border))",
+              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.6), 0 0 40px -10px hsl(var(--orange) / 0.25)",
+            }}
           >
             {/* Header */}
             <div
               className="flex items-center justify-between px-4 py-3 cursor-grab active:cursor-grabbing select-none"
-              style={{ background: "hsl(193 30% 73%)" }}
+              style={{
+                background: "hsl(var(--dark-lighter))",
+                borderBottom: "1px solid hsl(var(--border))",
+              }}
               onMouseDown={handleMouseDown}
             >
               <div className="flex items-center gap-2">
-                <GripVertical size={14} className="text-white/70" />
-                <span className="text-white font-semibold text-sm">Portfolio Assistant 🤖</span>
+                <GripVertical size={14} className="text-muted-foreground" />
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-foreground font-semibold text-sm">Portfolio Assistant</span>
               </div>
-              <button onClick={() => setOpen(false)} className="text-white/80 hover:text-white transition-colors">
+              <button
+                onClick={() => setOpen(false)}
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Close chat"
+              >
                 <X size={18} />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="h-[300px] overflow-y-auto p-3 space-y-2" style={{ scrollbarWidth: "thin" }}>
+            <div
+              className="h-[320px] overflow-y-auto p-3 space-y-2"
+              style={{ scrollbarWidth: "thin", background: "hsl(var(--background))" }}
+            >
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-[80%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
+                    className="max-w-[80%] px-3 py-2 rounded-xl text-sm leading-relaxed"
+                    style={
                       msg.role === "user"
-                        ? "text-white"
-                        : "text-slate"
-                    }`}
-                    style={{
-                      background: msg.role === "user" ? "hsl(193 30% 73%)" : "white",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
-                    }}
+                        ? {
+                            background: "hsl(var(--orange-light))",
+                            color: "hsl(var(--btn-text))",
+                          }
+                        : {
+                            background: "hsl(var(--dark-lighter))",
+                            color: "hsl(var(--text-primary))",
+                            border: "1px solid hsl(var(--border))",
+                          }
+                    }
                   >
                     {msg.text}
                   </div>
@@ -183,21 +203,36 @@ const ChatbotWidget = () => {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t" style={{ borderColor: "hsl(100 12% 81%)" }}>
+            <div
+              className="p-3"
+              style={{
+                background: "hsl(var(--card))",
+                borderTop: "1px solid hsl(var(--border))",
+              }}
+            >
               <div className="flex gap-2">
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Ask about skills, projects..."
-                  className="flex-1 px-3 py-2 rounded-xl text-sm bg-white border focus:outline-none transition-colors"
-                  style={{ borderColor: "hsl(100 12% 81%)", color: "hsl(145 10% 40%)" }}
+                  className="flex-1 px-3 py-2 rounded-xl text-sm focus:outline-none transition-colors focus:border-primary"
+                  style={{
+                    background: "hsl(var(--background))",
+                    border: "1px solid hsl(var(--border))",
+                    color: "hsl(var(--text-primary))",
+                  }}
                   maxLength={200}
                 />
                 <button
                   onClick={handleSend}
-                  className="p-2 rounded-xl text-white transition-transform hover:scale-105"
-                  style={{ background: "hsl(193 30% 73%)" }}
+                  className="p-2 rounded-xl transition-all hover:scale-105"
+                  style={{
+                    background: "hsl(var(--orange-light))",
+                    color: "hsl(var(--btn-text))",
+                    boxShadow: "0 4px 12px -2px hsl(var(--orange) / 0.4)",
+                  }}
+                  aria-label="Send"
                 >
                   <Send size={16} />
                 </button>
@@ -213,8 +248,13 @@ const ChatbotWidget = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setOpen(true)}
-          className="w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-white transition-shadow hover:shadow-xl"
-          style={{ background: "hsl(193 30% 73%)" }}
+          className="w-14 h-14 rounded-full flex items-center justify-center transition-shadow"
+          style={{
+            background: "hsl(var(--orange))",
+            color: "hsl(var(--btn-text))",
+            boxShadow: "0 8px 24px -4px hsl(var(--orange) / 0.5), 0 0 0 4px hsl(var(--orange) / 0.15)",
+          }}
+          aria-label="Open chat"
         >
           <MessageCircle size={24} />
         </motion.button>
