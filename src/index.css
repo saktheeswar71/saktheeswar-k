@@ -65,6 +65,22 @@
     @apply py-24 md:py-32 px-4 md:px-8;
   }
 
+  /* Legacy color aliases — mapped to the dark theme so old class usages stay on-brand */
+  .text-slate { color: hsl(var(--text-primary)); }
+  .text-body { color: hsl(var(--text-muted)); }
+  .text-steel { color: hsl(var(--orange)); }
+  .bg-mint { background-color: hsl(var(--muted)); }
+  .bg-mint\/30 { background-color: hsl(var(--muted) / 0.4); }
+  .bg-mint\/20 { background-color: hsl(var(--muted) / 0.3); }
+  .bg-sage { background-color: hsl(var(--border)); }
+  .bg-sage\/30 { background-color: hsl(var(--border) / 0.6); }
+  .bg-sage\/50 { background-color: hsl(var(--border)); }
+  .border-sage { border-color: hsl(var(--border)); }
+  .bg-steel { background-color: hsl(var(--orange)); }
+  .bg-steel\/10 { background-color: hsl(var(--orange) / 0.15); }
+  .bg-steel\/20 { background-color: hsl(var(--orange) / 0.25); }
+  .text-slate\/60 { color: hsl(var(--text-muted)); }
+
   .section-label {
     @apply text-xs font-semibold uppercase tracking-[0.2em] mb-4;
     color: hsl(var(--orange));

@@ -43,25 +43,20 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
           setCurrentIndex(index);
           setLightboxOpen(true);
         }}
-        className={`group cursor-pointer bg-white rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 ${
+        className={`group cursor-pointer soft-card p-4 ${
           chart.fullWidth ? "col-span-1 sm:col-span-2" : "col-span-1"
         }`}
-        style={{
-          boxShadow: "0 4px 20px rgba(101, 113, 102, 0.1)",
-        }}
       >
-        <img
-          src={chart.src}
-          alt={chart.title}
-          className="w-full rounded-xl object-contain"
-          loading="lazy"
-        />
-        <p className="text-sm font-bold mt-3" style={{ color: "#657166" }}>
-          {chart.title}
-        </p>
-        <p className="text-xs italic mt-1.5" style={{ color: "#94A3B8" }}>
-          {chart.caption}
-        </p>
+        <div className="rounded-xl overflow-hidden bg-white">
+          <img
+            src={chart.src}
+            alt={chart.title}
+            className="w-full object-contain"
+            loading="lazy"
+          />
+        </div>
+        <p className="text-sm font-bold mt-3 text-foreground">{chart.title}</p>
+        <p className="text-xs italic mt-1.5 text-muted-foreground">{chart.caption}</p>
       </div>
 
       {/* Lightbox */}
@@ -73,7 +68,7 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            style={{ background: "rgba(0,0,0,0.85)" }}
+            style={{ background: "rgba(0,0,0,0.92)" }}
             onClick={() => setLightboxOpen(false)}
           >
             <button
@@ -81,7 +76,7 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
                 e.stopPropagation();
                 setLightboxOpen(false);
               }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-primary/30 text-white transition-colors"
               aria-label="Close"
             >
               <X size={24} />
@@ -93,7 +88,7 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
                   e.stopPropagation();
                   setCurrentIndex((i) => i - 1);
                 }}
-                className="absolute left-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                className="absolute left-4 p-2 rounded-full bg-white/10 hover:bg-primary/30 text-white transition-colors"
                 aria-label="Previous"
               >
                 <ChevronLeft size={24} />
@@ -106,7 +101,7 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
                   e.stopPropagation();
                   setCurrentIndex((i) => i + 1);
                 }}
-                className="absolute right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                className="absolute right-4 p-2 rounded-full bg-white/10 hover:bg-primary/30 text-white transition-colors"
                 aria-label="Next"
               >
                 <ChevronRight size={24} />
@@ -120,7 +115,7 @@ const ChartCard = ({ chart, index, allCharts }: ChartCardProps) => {
               <img
                 src={current.src}
                 alt={current.title}
-                className="max-w-full max-h-[80vh] object-contain rounded-xl"
+                className="max-w-full max-h-[80vh] object-contain rounded-xl bg-white"
               />
               <p className="text-white text-sm font-medium mt-3">{current.title}</p>
               <p className="text-white/60 text-xs italic mt-1">{current.caption}</p>
