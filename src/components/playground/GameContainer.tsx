@@ -50,7 +50,7 @@ const GameContainer = ({ gameHook }: Props) => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <h2 className="text-xl font-bold mb-1" style={{ color: "#1F1F1F" }}>
+                <h2 className="text-xl font-bold mb-1" style={{ color: "#E5E5E5" }}>
                   Step 1: Inspect the Data
                 </h2>
                 <p className="text-sm mb-5" style={{ color: "#A0A0A0" }}>

@@ -56,12 +56,12 @@ const HintPanel = ({ visible, onUseHint, hintsUsed, datasetId }: Props) => {
         borderLeft: "4px solid #FF9A40",
       }}
     >
-      <p className="text-sm font-semibold mb-2" style={{ color: "#1F1F1F" }}>
+      <p className="text-sm font-semibold mb-2" style={{ color: "#E5E5E5" }}>
         Hints for this dataset:
       </p>
       <ul className="space-y-1">
         {hints.map((hint, i) => (
-          <li key={i} className="text-xs" style={{ color: "#1F1F1F" }}>
+          <li key={i} className="text-xs" style={{ color: "#E5E5E5" }}>
             • {hint}
           </li>
         ))}

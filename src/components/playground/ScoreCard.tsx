@@ -9,9 +9,9 @@ interface Props {
 const gradeStyles: Record<string, { bg: string; color: string }> = {
   S: { bg: "#F2811D", color: "#2E2E2E" },
   A: { bg: "#FF9A40", color: "#2E2E2E" },
-  B: { bg: "#3A3A3A", color: "#1F1F1F" },
-  C: { bg: "#3A3A3A", color: "#1F1F1F" },
-  D: { bg: "#333333", color: "#1F1F1F" },
+  B: { bg: "#3A3A3A", color: "#E5E5E5" },
+  C: { bg: "#3A3A3A", color: "#E5E5E5" },
+  D: { bg: "#333333", color: "#E5E5E5" },
 };
 
 const ScoreCard = ({ result }: Props) => {
@@ -34,7 +34,7 @@ const ScoreCard = ({ result }: Props) => {
 
   return (
     <div className="text-center mb-8">
-      <div className="text-6xl font-bold mb-2" style={{ color: "#1F1F1F" }}>
+      <div className="text-6xl font-bold mb-2" style={{ color: "#E5E5E5" }}>
         {displayScore}
         <span className="text-2xl font-normal" style={{ color: "#A0A0A0" }}>
           /100
@@ -62,7 +62,7 @@ const ScoreCard = ({ result }: Props) => {
             className="rounded-xl px-4 py-3 text-center"
             style={{ background: "#262626", border: "1px solid #3A3A3A" }}
           >
-            <div className="text-lg font-bold" style={{ color: "#1F1F1F" }}>
+            <div className="text-lg font-bold" style={{ color: "#E5E5E5" }}>
               {item.icon} {item.value}
             </div>
             <div className="text-xs" style={{ color: "#A0A0A0" }}>
@@ -75,12 +75,12 @@ const ScoreCard = ({ result }: Props) => {
       {/* Bonus/Penalty */}
       <div className="flex justify-center gap-4 mt-3">
         {result.timeBonus > 0 && (
-          <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#333333", color: "#1F1F1F" }}>
+          <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#333333", color: "#E5E5E5" }}>
             ⚡ Speed bonus: +{result.timeBonus} pts
           </span>
         )}
         {result.hintPenalty > 0 && (
-          <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#3A3A3A", color: "#1F1F1F" }}>
+          <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#3A3A3A", color: "#E5E5E5" }}>
             💡 Hint penalty: −{result.hintPenalty} pts
           </span>
         )}

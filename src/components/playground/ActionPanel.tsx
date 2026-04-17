@@ -14,7 +14,7 @@ const allActions = Object.values(ACTION_CONFIG);
 const ActionPanel = ({ selectedActions, onToggle, onSubmit, onBack }: Props) => {
   return (
     <div>
-      <h2 className="text-xl font-bold mb-1" style={{ color: "#1F1F1F" }}>
+      <h2 className="text-xl font-bold mb-1" style={{ color: "#E5E5E5" }}>
         Step 2: Choose Your Cleaning Actions
       </h2>
       <p className="text-sm mb-6" style={{ color: "#A0A0A0" }}>
@@ -49,7 +49,7 @@ const ActionPanel = ({ selectedActions, onToggle, onSubmit, onBack }: Props) => 
                 </div>
               )}
               <div className="text-2xl mb-2">{action.icon}</div>
-              <div className="font-bold text-sm mb-1" style={{ color: "#1F1F1F" }}>
+              <div className="font-bold text-sm mb-1" style={{ color: "#E5E5E5" }}>
                 {action.label}
               </div>
               <p className="text-xs" style={{ color: "#A0A0A0" }}>

@@ -74,7 +74,7 @@ const DataTable = ({ dataset }: Props) => {
                         className="px-4 py-3 relative"
                         style={{
                           background: issue ? issueBg[issue.type] : undefined,
-                          color: "#1F1F1F",
+                          color: "#E5E5E5",
                         }}
                         onMouseEnter={() => issue && setHoveredCell(cellKey)}
                         onMouseLeave={() => setHoveredCell(null)}
@@ -82,7 +82,7 @@ const DataTable = ({ dataset }: Props) => {
                         {value === null ? (
                           <span
                             className="inline-block px-2 py-0.5 rounded text-xs font-medium"
-                            style={{ background: "#3A3A3A", color: "#1F1F1F" }}
+                            style={{ background: "#3A3A3A", color: "#E5E5E5" }}
                           >
                             NULL
                           </span>
@@ -108,7 +108,7 @@ const DataTable = ({ dataset }: Props) => {
                               background: "#2E2E2E",
                               border: `1px solid ${issueBg[issue.type]}`,
                               boxShadow: "0 4px 16px rgba(0,0,0,0.5)",
-                              color: "#1F1F1F",
+                              color: "#E5E5E5",
                             }}
                           >
                             <span className="font-bold">

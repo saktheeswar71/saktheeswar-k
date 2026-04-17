@@ -16,7 +16,7 @@ const ExplanationView = ({ dataset, onPlayAgain, onNext, onRestart }: Props) => 
 
   return (
     <div style={{ background: "#333333" }} className="rounded-2xl p-6 md:p-8">
-      <h2 className="text-xl font-bold mb-1" style={{ color: "#1F1F1F" }}>
+      <h2 className="text-xl font-bold mb-1" style={{ color: "#E5E5E5" }}>
         Step 4: The Full Explanation
       </h2>
       <p className="text-sm mb-6" style={{ color: "#A0A0A0" }}>
@@ -43,20 +43,20 @@ const ExplanationView = ({ dataset, onPlayAgain, onNext, onRestart }: Props) => 
               }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-bold" style={{ color: "#1F1F1F" }}>
+                <span className="text-sm font-bold" style={{ color: "#E5E5E5" }}>
                   {config.icon} {config.label}
                 </span>
                 <span
                   className="text-xs px-2 py-0.5 rounded-full font-medium"
                   style={{
                     background: isCorrect ? "#333333" : "#262626",
-                    color: "#1F1F1F",
+                    color: "#E5E5E5",
                   }}
                 >
                   {isCorrect ? "✓ Needed" : "— Not needed"}
                 </span>
               </div>
-              <p className="text-sm" style={{ color: "#1F1F1F" }}>
+              <p className="text-sm" style={{ color: "#E5E5E5" }}>
                 {explanation || "This action was not required for this dataset."}
               </p>
             </motion.div>
@@ -75,7 +75,7 @@ const ExplanationView = ({ dataset, onPlayAgain, onNext, onRestart }: Props) => 
           borderLeft: "4px solid #FF9A40",
         }}
       >
-        <p className="text-sm font-bold mb-1" style={{ color: "#1F1F1F" }}>
+        <p className="text-sm font-bold mb-1" style={{ color: "#E5E5E5" }}>
           💡 Did you know?
         </p>
         <p className="text-sm italic" style={{ color: "#A0A0A0" }}>
@@ -88,7 +88,7 @@ const ExplanationView = ({ dataset, onPlayAgain, onNext, onRestart }: Props) => 
         <button
           onClick={onPlayAgain}
           className="px-5 py-2.5 rounded-full text-sm font-medium"
-          style={{ background: "#2E2E2E", border: "1px solid #3A3A3A", color: "#1F1F1F" }}
+          style={{ background: "#2E2E2E", border: "1px solid #3A3A3A", color: "#E5E5E5" }}
         >
           🎮 Play Again (same dataset)
         </button>

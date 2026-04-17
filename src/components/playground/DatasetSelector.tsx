@@ -22,7 +22,7 @@ const DatasetSelector = ({ activeIndex, onSelect }: Props) => {
   return (
     <section className="py-12 px-4 md:px-8" style={{ background: "#262626" }}>
       <div className="container mx-auto max-w-[1200px]">
-        <h2 className="text-xl font-bold mb-6" style={{ color: "#1F1F1F" }}>
+        <h2 className="text-xl font-bold mb-6" style={{ color: "#E5E5E5" }}>
           Choose a Dataset
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -42,7 +42,7 @@ const DatasetSelector = ({ activeIndex, onSelect }: Props) => {
               }}
             >
               <div className="text-3xl mb-2">{ds.emoji}</div>
-              <div className="font-bold text-sm mb-1" style={{ color: "#1F1F1F" }}>
+              <div className="font-bold text-sm mb-1" style={{ color: "#E5E5E5" }}>
                 {ds.name}
               </div>
               <span

@@ -30,7 +30,7 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
         >
           <span
             className="inline-block px-4 py-1.5 rounded-full text-sm font-bold"
-            style={{ background: "#3A3A3A", color: "#1F1F1F" }}
+            style={{ background: "#3A3A3A", color: "#E5E5E5" }}
           >
             🔥 {streak} game streak!
           </span>
@@ -73,7 +73,7 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
                 borderLeftWidth: 4,
               }}
             >
-              <span className="text-sm font-medium" style={{ color: "#1F1F1F" }}>
+              <span className="text-sm font-medium" style={{ color: "#E5E5E5" }}>
                 {config.icon} {config.label}
               </span>
               <span className="text-xs font-medium" style={{ color: "#A0A0A0" }}>
@@ -87,13 +87,13 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
       {/* Before / After mini tables */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div>
-          <h4 className="text-sm font-bold mb-2" style={{ color: "#1F1F1F" }}>
+          <h4 className="text-sm font-bold mb-2" style={{ color: "#E5E5E5" }}>
             Before (messy)
           </h4>
           <MiniTable columns={dataset.columns} rows={dataset.rows} highlight={false} />
         </div>
         <div>
-          <h4 className="text-sm font-bold mb-2" style={{ color: "#1F1F1F" }}>
+          <h4 className="text-sm font-bold mb-2" style={{ color: "#E5E5E5" }}>
             After (with your actions)
           </h4>
           <MiniTable columns={dataset.columns} rows={cleanedRows} highlight />
@@ -112,7 +112,7 @@ const ResultView = ({ result, dataset, cleanedRows, streak, onExplain, onNext }:
         <button
           onClick={onNext}
           className="px-6 py-2.5 rounded-full text-sm font-medium"
-          style={{ background: "#2E2E2E", border: "1px solid #3A3A3A", color: "#1F1F1F" }}
+          style={{ background: "#2E2E2E", border: "1px solid #3A3A3A", color: "#E5E5E5" }}
         >
           Next Dataset →
         </button>
@@ -151,9 +151,9 @@ const MiniTable = ({
             }}
           >
             {columns.map((col) => (
-              <td key={col} className="px-2 py-1.5" style={{ color: "#1F1F1F" }}>
+              <td key={col} className="px-2 py-1.5" style={{ color: "#E5E5E5" }}>
                 {row[col] === null ? (
-                  <span className="px-1 rounded text-[9px]" style={{ background: "#3A3A3A", color: "#1F1F1F" }}>
+                  <span className="px-1 rounded text-[9px]" style={{ background: "#3A3A3A", color: "#E5E5E5" }}>
                     NULL
                   </span>
                 ) : (

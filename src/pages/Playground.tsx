@@ -48,7 +48,7 @@ const Playground = () => {
       background: 'linear-gradient(135deg, #262626, #1F1F1F)',
       fontFamily: "'Titillium Web', 'DM Sans', sans-serif",
       fontVariantNumeric: 'tabular-nums',
-      color: '#1F1F1F',
+      color: '#E5E5E5',
     }}>
 
       {/* Minimal navbar */}
@@ -57,7 +57,7 @@ const Playground = () => {
           <Link to="/" className="text-sm font-semibold transition-colors hover:opacity-80" style={{ color: '#A0A0A0' }}>
             ← Back to Portfolio
           </Link>
-          <span className="text-sm font-bold" style={{ color: '#1F1F1F', fontFamily: "'Titillium Web', sans-serif" }}>
+          <span className="text-sm font-bold" style={{ color: '#E5E5E5', fontFamily: "'Titillium Web', sans-serif" }}>
             F1 2026 <span style={{ color: '#F2811D' }}>Live Dashboard</span>
           </span>
         </div>
@@ -71,7 +71,7 @@ const Playground = () => {
           <div className="flex flex-wrap items-center justify-between gap-3 py-2.5 px-4 rounded-xl text-xs" style={{ background: '#333333', border: '1px solid #3A3A3A' }}>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#F2811D' }} />
-              <span style={{ color: '#1F1F1F' }}>Live 2026 Season Data</span>
+              <span style={{ color: '#E5E5E5' }}>Live 2026 Season Data</span>
               {lastCompletedRace && (
                 <span style={{ color: '#A0A0A0' }}>· Last updated: Monday after {lastCompletedRace.raceName}</span>
               )}
@@ -81,7 +81,7 @@ const Playground = () => {
               <div className="w-24 h-1.5 rounded-full overflow-hidden" style={{ background: '#3A3A3A' }}>
                 <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${(racesCompleted / (calendar.length || 22)) * 100}%`, background: '#F2811D' }} />
               </div>
-              <button onClick={refetch} className="px-2 py-1 rounded-full text-[10px] font-semibold transition-all hover:-translate-y-0.5" style={{ color: '#1F1F1F', border: '1px solid #3A3A3A', background: '#2E2E2E' }}>
+              <button onClick={refetch} className="px-2 py-1 rounded-full text-[10px] font-semibold transition-all hover:-translate-y-0.5" style={{ color: '#E5E5E5', border: '1px solid #3A3A3A', background: '#2E2E2E' }}>
                 🔄 Refresh
               </button>
             </div>
@@ -94,7 +94,7 @@ const Playground = () => {
           <div className="container mx-auto max-w-[1200px]">
             <div className="rounded-2xl p-8 text-center" style={{ background: '#2E2E2E', border: '1px solid #3A3A3A', borderLeft: '4px solid #FF9A40', boxShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>
               <p className="text-2xl mb-2">🚨</p>
-              <p className="text-lg font-bold mb-2" style={{ color: '#1F1F1F' }}>Failed to load F1 data</p>
+              <p className="text-lg font-bold mb-2" style={{ color: '#E5E5E5' }}>Failed to load F1 data</p>
               <p className="text-sm mb-4" style={{ color: '#A0A0A0' }}>The Jolpica API updates Mondays after race weekends. Data may be temporarily unavailable.</p>
               <button onClick={refetch} className="px-4 py-2 rounded-full text-sm font-semibold" style={{ background: '#F2811D', color: '#2E2E2E' }}>
                 Retry
@@ -183,7 +183,7 @@ const Playground = () => {
           <section className="px-4 md:px-8 mb-12">
             <div className="container mx-auto max-w-[1200px]">
               <div className="mb-4">
-                <h3 className="text-sm font-bold" style={{ color: '#1F1F1F', fontFamily: "'Titillium Web', sans-serif" }}>
+                <h3 className="text-sm font-bold" style={{ color: '#E5E5E5', fontFamily: "'Titillium Web', sans-serif" }}>
                   2026 Season Calendar
                 </h3>
                 <p className="text-xs" style={{ color: '#A0A0A0' }}>
