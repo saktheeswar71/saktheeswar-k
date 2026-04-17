@@ -36,9 +36,9 @@ const GameContainer = ({ gameHook }: Props) => {
         <div
           className="rounded-2xl p-6 md:p-8"
           style={{
-            background: "#FFFFFF",
-            border: "1px solid #ddb8a0",
-            boxShadow: "0 2px 16px rgba(40,9,5,0.08)",
+            background: "#2E2E2E",
+            border: "1px solid #3A3A3A",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.4)",
           }}
         >
           <AnimatePresence mode="wait">
@@ -50,10 +50,10 @@ const GameContainer = ({ gameHook }: Props) => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <h2 className="text-xl font-bold mb-1" style={{ color: "#280905" }}>
+                <h2 className="text-xl font-bold mb-1" style={{ color: "#E5E5E5" }}>
                   Step 1: Inspect the Data
                 </h2>
-                <p className="text-sm mb-5" style={{ color: "#740a03" }}>
+                <p className="text-sm mb-5" style={{ color: "#A0A0A0" }}>
                   Study this dataset carefully. Can you spot what's wrong?
                 </p>
                 <DataTable dataset={currentDataset} />
@@ -67,7 +67,7 @@ const GameContainer = ({ gameHook }: Props) => {
                   <button
                     onClick={goToAct}
                     className="w-full sm:w-auto px-6 py-2.5 rounded-full text-sm font-medium text-white transition-all hover:shadow-md"
-                    style={{ background: "#c3110e" }}
+                    style={{ background: "#F2811D" }}
                   >
                     I've spotted the issues → Choose Actions
                   </button>

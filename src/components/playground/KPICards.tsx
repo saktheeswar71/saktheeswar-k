@@ -7,7 +7,7 @@ interface KPICardsProps {
   totalRaces: number;
 }
 
-const KPI_ACCENTS = ['#99CDD8', '#F3C3B2', '#CFD6C4', '#657166'];
+const KPI_ACCENTS = ['#F2811D', '#FF9A40', '#3A3A3A', '#E5E5E5'];
 
 const KPICards = ({ standings, constructors, races, totalRaces }: KPICardsProps) => {
   const leader = standings[0];
@@ -59,31 +59,31 @@ const KPICards = ({ standings, constructors, races, totalRaces }: KPICardsProps)
               transition={{ duration: 0.4, delay: 0.1 * i }}
               className="rounded-2xl p-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1"
               style={{
-                background: '#fff',
-                border: '1px solid #CFD6C4',
+                background: '#2E2E2E',
+                border: '1px solid #3A3A3A',
                 borderTopWidth: '3px',
                 borderTopColor: KPI_ACCENTS[i],
-                boxShadow: '0 2px 16px rgba(101,113,102,0.08)',
+                boxShadow: '0 2px 16px rgba(0,0,0,0.4)',
               }}
             >
-              <p className="text-[11px] font-semibold mb-2" style={{ color: '#8a9e8f' }}>
+              <p className="text-[11px] font-semibold mb-2" style={{ color: '#A0A0A0' }}>
                 {card.icon} {card.label}
               </p>
               <p className="text-xl sm:text-2xl font-bold truncate" style={{
-                color: '#657166',
+                color: '#E5E5E5',
                 fontFamily: "'Titillium Web', sans-serif",
               }}>
                 {card.value}
               </p>
-              <p className="text-xs mt-1" style={{ color: '#8a9e8f' }}>
+              <p className="text-xs mt-1" style={{ color: '#A0A0A0' }}>
                 {card.sub}
               </p>
               {card.extra && (
-                <p className="text-[10px] mt-0.5" style={{ color: '#8a9e8f' }}>{card.extra}</p>
+                <p className="text-[10px] mt-0.5" style={{ color: '#A0A0A0' }}>{card.extra}</p>
               )}
               {card.barPct !== undefined && card.barPct > 0 && (
-                <div className="mt-3 h-1.5 rounded-full overflow-hidden" style={{ background: '#CFD6C4' }}>
-                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${card.barPct}%`, background: '#99CDD8' }} />
+                <div className="mt-3 h-1.5 rounded-full overflow-hidden" style={{ background: '#3A3A3A' }}>
+                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${card.barPct}%`, background: '#F2811D' }} />
                 </div>
               )}
             </motion.div>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const INSIGHT_BORDERS = ['#99CDD8', '#F3C3B2', '#99CDD8', '#CFD6C4', '#657166'];
+const INSIGHT_BORDERS = ['#F2811D', '#FF9A40', '#F2811D', '#3A3A3A', '#E5E5E5'];
 
 interface F1InsightsProps {
   standings: any[];
@@ -81,13 +81,13 @@ const F1Insights = ({ standings, constructors, races, calendar }: F1InsightsProp
     <section className="px-4 md:px-8 mb-12">
       <div className="container mx-auto max-w-[1200px]">
         <div className="mb-6">
-          <span className="text-xs font-mono tracking-widest uppercase" style={{ color: '#99CDD8', letterSpacing: '0.2em' }}>
+          <span className="text-xs font-mono tracking-widest uppercase" style={{ color: '#F2811D', letterSpacing: '0.2em' }}>
             // AUTO ANALYTICS
           </span>
-          <h2 className="text-xl sm:text-2xl font-bold mt-1" style={{ color: '#657166', fontFamily: "'Titillium Web', sans-serif" }}>
+          <h2 className="text-xl sm:text-2xl font-bold mt-1" style={{ color: '#E5E5E5', fontFamily: "'Titillium Web', sans-serif" }}>
             What the 2026 data is telling us so far
           </h2>
-          <p className="text-xs mt-1" style={{ color: '#8a9e8f' }}>
+          <p className="text-xs mt-1" style={{ color: '#A0A0A0' }}>
             Auto-generated from live race data. Recalculates every time new data loads.
           </p>
         </div>
@@ -101,17 +101,17 @@ const F1Insights = ({ standings, constructors, races, calendar }: F1InsightsProp
               transition={{ delay: 0.15 * i, duration: 0.4 }}
               className="rounded-2xl p-4"
               style={{
-                background: '#fff',
-                border: '1px solid #CFD6C4',
+                background: '#2E2E2E',
+                border: '1px solid #3A3A3A',
                 borderLeftWidth: '4px',
                 borderLeftColor: INSIGHT_BORDERS[i],
-                boxShadow: '0 2px 16px rgba(101,113,102,0.08)',
+                boxShadow: '0 2px 16px rgba(0,0,0,0.4)',
               }}
             >
-              <p className="text-sm leading-relaxed" style={{ color: '#657166' }}>
+              <p className="text-sm leading-relaxed" style={{ color: '#E5E5E5' }}>
                 {insight.text}
               </p>
-              <p className="text-[10px] mt-2" style={{ color: '#8a9e8f' }}>
+              <p className="text-[10px] mt-2" style={{ color: '#A0A0A0' }}>
                 Computed from Jolpica API · {new Date().toLocaleDateString()}
               </p>
             </motion.div>
